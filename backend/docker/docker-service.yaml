@@ -1,0 +1,111 @@
+version: '3.5'
+
+services:
+
+  # Infrastructure services
+#  mysql:
+#    image: mysql:latest
+#    restart: unless-stopped
+#    cap_add:
+#      - ALL  # CAP_SYS_NICE
+#    volumes:
+#      - ./mysql/data:/var/lib/mysql
+#      - ./conf-mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+#    environment:
+#      - MYSQL_DATABASE=go
+#      - MYSQL_PASSWORD=root
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_USER=root
+#    ports:
+#      - '3306:3306'
+#    hostname: mysql
+#    container_name: mysql
+#    networks:
+#      - go
+#
+#  #phpadmin
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    environment:
+#      - PMA_HOST=mysql
+#      - PMA_USER=root
+#      - PMA_PASSWORD=root
+#      - MYSQL_ROOT_PASSWORD=root
+#    ports:
+#      - '8080:80'
+#    networks:
+#      - go
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - '80:80'
+      - '443:443'
+    expose:
+      - '80'
+      - '443'
+    hostname: nginx
+    container_name: nginx
+    networks:
+      - go
+#
+#  zookeeper:
+#    image: wursmeister/zookeeper
+#    restart: always
+#    ports:
+#      - '2181:2181'
+#    hostname: zookeeper
+#    container_name: zookeeper
+#    networks:
+#      - go
+##
+##  kafka:
+##    image: wursmeister/kafka
+##    restart: always
+##    ports:
+##      - '9092:9092'
+##    environment:
+##      KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1
+##      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+##    depends_on:
+##      - zookeeper
+##    volumes:
+##      - /var/run/docker.sock:/var/run/docker.sock
+##    hostname: kafke
+##    container_name: kafka
+##    networks:
+##      - go
+#
+  go-user-rest:
+    image: localhost:5000/go-user-service:latest
+    restart: always
+    command: go-user-service serve rest
+    environment:
+      - ADDRESS=go-user-rest:1416
+      - BACKEND=go-user-grpc:1417
+    ports:
+      - '1416:9090'
+    hostname: go-user-rest
+    container_name: go-user-rest
+    networks:
+      - go
+
+  go-user-grpc:
+    image: localhost:5000/go-user-service:latest
+    restart: always
+    command: go-user-service serve grpc
+    environment:
+      - BACKEND=go-user-grpc:1417
+      - MYSQLDSN=dbhuan:0866444202@tcp(103.173.254.82:3306)/minhnqdb?charset=utf8mb4&parseTime=True&loc=Local
+    ports:
+      - '1417:9090'
+    hostname: go-user-grpc
+    container_name: go-user-grpc
+    networks:
+      - go
+
+networks:
+  go:

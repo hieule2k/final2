@@ -1,0 +1,38 @@
+.add2-container {
+    margin: 50px 80px;
+}
+
+.add-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.properties-lists {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 30px;
+    row-gap: 70px;
+
+}
+
+.properties-item {
+    background-color:  #EFF0F2;
+    padding:  30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-icon {
+    font-size: 25px;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.total-people {
+    font-size: 14px;
+    font-weight: 500;
+    color: #9a9a9a;
+}

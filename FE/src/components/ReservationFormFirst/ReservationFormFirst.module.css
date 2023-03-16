@@ -1,0 +1,114 @@
+.reservation-form-first {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.reservation-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rooms-list {
+    list-style-type: none;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.room-list-item {
+    display: inline-block;
+}
+
+.add {
+    align-self: flex-end;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 600;
+    color: #363DDC;
+    background-color: #eff0f2;
+
+    
+}
+
+.reservation-item--container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.bill {
+    display: flex;
+}
+
+.col-3 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1 1 0px;
+}
+
+.total-days {
+    display: flex;
+    gap: 5px;
+}
+
+.type-container {
+    display: flex;
+    gap: 22px;
+    font-weight: 700;
+}
+
+.date {
+    display: flex;
+}
+
+.check {
+    min-width: 86px;
+    font-size: 15px;
+}
+
+.label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.fee {
+    display: flex;
+    gap: 15px;
+    margin-left: 50px;
+}
+
+.price {
+    margin-left: 50px;
+}
+
+.total-price {
+    position: relative;
+    margin-top: 15px;
+}
+
+.total-price::before {
+    position: absolute;
+    top: -5px;
+    content: "";
+    height: 1px;
+    width: 100%;
+    background-color: #000;
+}
+
+.custom-button {
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+.datePicker div input {
+    background-color: #eff0f2;
+}

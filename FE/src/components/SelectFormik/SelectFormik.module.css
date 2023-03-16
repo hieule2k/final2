@@ -1,0 +1,26 @@
+
+
+.select_type {
+    display: flex;
+    cursor: pointer;
+    background: #C2c6cc;
+    min-width: 430px;
+    border-radius: 6px;
+    overflow: hidden;
+    align-items: center;
+}
+
+.select {
+    width: 100%;
+    border: none;
+    height: 80px;
+    background-color: #EFF0F2;
+    text-align: center;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.select_name {
+    padding: 20px;
+    width: 100px;
+}

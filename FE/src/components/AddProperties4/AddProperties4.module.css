@@ -1,0 +1,16 @@
+
+.add4-content-container {
+    display: flex;
+    margin: 20px 80px;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 30px;
+}
+
+
+

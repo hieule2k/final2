@@ -1,0 +1,108 @@
+.sign-up {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    height: 90vh;
+    width: 70%;
+    gap: 20px;
+    background-color: #36393f;
+    border-radius: 5px;
+}
+
+.sign-up__form {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+    padding: 40px;
+    width: 100%;
+    align-items: center;
+
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.col-left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 49%;
+}
+
+.col-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+}
+
+.container-parent {
+    position: relative; 
+    flex: 1; 
+    margin-left: 30px;
+    margin-bottom: 24px; 
+}
+
+.container {
+    position: absolute;
+    width: 70%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.gender {
+    text-align: center;
+    color: var(--white);
+}
+
+.input {
+    display: block;
+    
+    width: 70%;
+    padding: 12px 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 8px;
+    box-shadow: 0px 0px 5px 2px rgba(194,198,204,0.6);
+}
+
+.sign-up__button {
+    width: 70%;
+    margin-top: 34px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: -1 169px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.disabled:disabled {
+    cursor: default;    
+}
+
+.radio-container {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    color: var(--white);
+}
+
+.disabled {
+    align-self: flex-start;
+    width: 85%;
+    height: 45px;
+    padding: 10px ;
+    border: 1px solid #333;
+    border-radius: 5px;
+    margin-left: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.disabled span {
+    text-align: center;
+}
