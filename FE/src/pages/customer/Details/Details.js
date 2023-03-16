@@ -403,7 +403,7 @@ function Details() {
         </div>
         <div className={cx("col-right")}>
           <div className={cx("side-bar")}>
-            <div className={cx("price-range")}>8$ - 16$</div>
+            <div className={cx("price-range")}>Room rate per day</div>
             <div className={cx("price-container")}>
               <table className={cx("table")}>
                 <tr>

@@ -8,7 +8,7 @@ import data from "../../../json/search.json";
 import Button from "../../../components/Button/Button";
 import LayoutPrimary from "layouts/LayoutPrimary";
 const cx = classNames.bind(styles);
-function Search() {
+function Search({ handleLike }) {
   return (
     <LayoutPrimary>
       <div className={cx("search-wrapper")}>
@@ -22,6 +22,7 @@ function Search() {
                 name={x.name}
                 address={x.address}
                 thumbnail={x.thumbnail}
+                handleLike={handleLike}
               ></Card>
             ))}
           </CardList>

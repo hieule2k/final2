@@ -184,7 +184,7 @@ function App() {
               />
             }
           />
-          <Route path="/Search" element={<Search />} />
+          <Route path="/Search" element={<Search handleLike={handleLike} />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/ButtonTest" element={<ButtonTest />} />
