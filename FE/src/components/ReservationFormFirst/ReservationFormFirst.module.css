@@ -112,3 +112,8 @@
 .datePicker div input {
     background-color: #eff0f2;
 }
+
+.datePicker {
+    height: 20px;
+    line-height: 1;
+}

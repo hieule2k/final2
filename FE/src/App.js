@@ -137,7 +137,7 @@ function App() {
         });
       }
     } else {
-      alert("jehe");
+      alert("please login first");
     }
   };
 

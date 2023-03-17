@@ -96,7 +96,7 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
             value="cash"
             onChange={handleInputChange}
           />
-          <label htmlFor="cash">cash</label>
+          <label htmlFor="cash">Cash</label>
         </div>
       </div>
       {checked && <CreditCard />}

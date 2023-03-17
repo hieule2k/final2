@@ -27,7 +27,7 @@ function AddRooms1() {
   });
   const [rooms, setRooms] = useState([]);
 
-  const [tab, setTab] = useState("addproperty3");
+  const [tab, setTab] = useState("addproperty2");
   const handleChangeTab = (x) => {
     setTab(x);
   };
@@ -300,7 +300,6 @@ function AddRooms1() {
                           onChange={handleChange}
                         ></textarea> */}
                           <TextAreaFormik
-                            label="Introduce yourself"
                             name="description"
                             placeholder="Enter your introduce"
                             id="intro"
