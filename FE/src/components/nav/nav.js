@@ -65,7 +65,7 @@ function NavBar({ host = false }) {
         />
       </HeadlessTippy>
 
-      <Link to="/">
+      <Link to={host ? "/HostPage" : "/"}>
         <div className={cx("menu__relocate")}>
           <span>Relocate</span>
         </div>

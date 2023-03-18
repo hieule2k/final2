@@ -21,6 +21,7 @@ import {
   AiOutlineArrowRight,
   AiFillStar,
 } from "react-icons/ai";
+import DetailTable from "module/table/DetailTable";
 // import data5 from "../../json/hotel3.json";
 // import data4 from "../../json/hotel6.json";
 // import data3 from "../../json/hotelTopRated.json";
@@ -402,53 +403,12 @@ function Details() {
           </div>
         </div>
         <div className={cx("col-right")}>
-          <div className={cx("side-bar")}>
-            <div className={cx("price-range")}>Room rate per day</div>
-            <div className={cx("price-container")}>
-              <table className={cx("table")}>
-                <tr>
-                  <td>Single:</td>
-                  <td>10$</td>
-                </tr>
-                <tr>
-                  <td>Double:</td>
-                  <td>20$</td>
-                </tr>
-                <tr>
-                  <td>Vip:</td>
-                  <td>50$</td>
-                </tr>
-              </table>
-              {/* {prices.map((price) => (
-                <div key={price.id} className={cx("price")}>
-                  {price.name}: {price.price}
-                </div>
-              ))} */}
-            </div>
-            <Button
-              large
-              black
-              rounded
-              onClick={reserveStorage}
-              // to="/ReservationForm"
-            >
-              Reserve Now
-            </Button>
-            <div className={cx("contact")}>
-              <div className={cx("contact-information")}>
-                <div className={cx("contact-name")}>Property Inquiry</div>
-                <i className={cx("contact-icon")}>
-                  <BiBuilding />
-                </i>
-              </div>
-              <div className={cx("contact-information")}>
-                <div className={cx("contact-name")}>Contact Host</div>
-                <i className={cx("contact-icon")}>
-                  <AiOutlinePhone />
-                </i>
-              </div>
-            </div>
-          </div>
+          <DetailTable
+            reserve
+            title="Price Range"
+            detailsHotel={detailsHotel}
+          ></DetailTable>
+          <DetailTable title="List Amenity"></DetailTable>
         </div>
       </div>
     </LayoutPrimary>

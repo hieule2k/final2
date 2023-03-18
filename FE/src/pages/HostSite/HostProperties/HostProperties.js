@@ -27,7 +27,7 @@ function HostProperties() {
       });
   }, []);
   return (
-    <LayoutPrimary>
+    <LayoutPrimary host>
       <div className={cx("top-properties")}>
         <div className={cx("top-container")}>
           <h2>Listed Properties</h2>

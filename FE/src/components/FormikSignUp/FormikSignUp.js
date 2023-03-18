@@ -79,7 +79,7 @@ function FormikSignUp({ host = false }) {
                 console.log(error);
               });
             console.log(JSON.stringify(values));
-            navigate(host ? "/LoginHost" : "/login1");
+            navigate(host ? "/LoginHost" : "/login");
             resetForm({
               role: role,
               description: "",
@@ -176,7 +176,7 @@ function FormikSignUp({ host = false }) {
             </Button>
             <div style={{ fontSize: "14px", color: "#a3a6aa" }}>
               Already have an account
-              <Link to={!host ? "/Login1" : "/LoginHost"}>
+              <Link to={!host ? "/Login" : "/LoginHost"}>
                 <span
                   style={{
                     color: "#00b0f4",
