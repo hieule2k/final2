@@ -51,17 +51,7 @@ function Details() {
   }, []);
 
   const { name, address, list_image } = detailsHotel;
-  const reserveStorage = () => {
-    setStatus((prev) => {
-      const newData = [detailsHotel];
-      const jsonData = JSON.stringify(newData);
-      localStorage.setItem("rooms", jsonData);
-      return newData;
-    });
-    window.location.href = "/ReservationForm";
-  };
-  // console.log(details);
-  // console.log(list_image);
+
   return (
     <LayoutPrimary>
       <ImageGallery />

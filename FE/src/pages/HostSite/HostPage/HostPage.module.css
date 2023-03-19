@@ -30,6 +30,7 @@
 .banner-button {
     position: absolute;
     bottom: 52px;
+    width: 200px;
 }
 
 .mid-section-container {

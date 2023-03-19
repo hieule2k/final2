@@ -23,7 +23,7 @@ function HostPage() {
           black
           to="/HostProperties"
           rounded
-          medium
+          mediumx
           className={cx("banner-button")}
         >
           Lets Get Started

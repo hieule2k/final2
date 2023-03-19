@@ -31,6 +31,7 @@ const RadioFomik = ({
           className={classes}
           // checked={checked}
         />
+
         <span className={!origin ? cx("name_type") : null}> {children}</span>
       </label>
     </div>
