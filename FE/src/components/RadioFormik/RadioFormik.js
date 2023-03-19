@@ -2,36 +2,30 @@ import { useField } from "formik";
 import classNames from "classnames/bind";
 import React from "react";
 import styles from "../RadioFormik/RadioFormik.module.css";
+import CheckIcon from "module/Icons/CheckIcon";
 const cx = classNames.bind(styles);
 
-const RadioFomik = ({
-  value,
-  checked,
-  children,
-  origin,
-  checkbox = false,
-  ...props
-}) => {
+const RadioFomik = ({ value, checked, children, origin, ...props }) => {
   const [field] = useField(props);
   let classes = cx("radio");
   if (origin) {
     classes = cx("origin");
   }
   let type = "radio";
-  if (checkbox) {
-    type = "checkbox";
-  }
+
   return (
     <div className={cx("radio-formik")}>
       <label className={!origin ? cx("add_type") : null}>
-        <input
-          {...field}
-          type={type}
-          value={value}
-          className={classes}
-          // checked={checked}
-        />
-
+        <div className={cx("input-container")}>
+          <input
+            {...field}
+            type={type}
+            value={value}
+            className={classes}
+            // checked={checked}
+          />
+          <CheckIcon customclass={cx("customclass")}></CheckIcon>
+        </div>
         <span className={!origin ? cx("name_type") : null}> {children}</span>
       </label>
     </div>
