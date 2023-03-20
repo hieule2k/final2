@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Card.module.css";
 import { IconContext } from "react-icons";
@@ -14,6 +14,7 @@ import { BiBed, BiBath } from "react-icons/bi";
 import { MdPets } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
+import axios from "axios";
 const cx = classNames.bind(styles);
 
 function Card({
@@ -33,21 +34,22 @@ function Card({
   thumbnail,
   handleLike,
   id,
+  wishlist,
   x,
   ...props
 }) {
   // const removeListHotel=()=>{
 
   // }
+
   const data = {
     id,
     name,
     address,
     thumbnail,
   };
-  const storageData = JSON.parse(localStorage.getItem("wishlist"));
-  const itemExist = storageData
-    ? storageData.find((exa) => exa.id === data.id)
+  const itemExist = wishlist
+    ? wishlist.find((exa) => exa.id === data.id)
     : false;
 
   let classes =
