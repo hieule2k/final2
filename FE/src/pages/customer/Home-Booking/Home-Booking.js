@@ -19,7 +19,15 @@ import { AiOutlineSend } from "react-icons/ai";
 // import data from "../../json/hotel.json";
 
 const cx = classNames.bind(styles);
-function HomeBooking({ handleLike, hotel1, hotel2, hotel3, hotel4, hotel5 }) {
+function HomeBooking({
+  handleLike,
+  hotel1,
+  hotel2,
+  hotel3,
+  hotel4,
+  hotel5,
+  wishlist,
+}) {
   return (
     <LayoutPrimary>
       <Banner />
@@ -34,6 +42,7 @@ function HomeBooking({ handleLike, hotel1, hotel2, hotel3, hotel4, hotel5 }) {
               address={x.address.province}
               thumbnail={x.list_image[0].url}
               handleLike={handleLike}
+              wishlist={wishlist}
             />
           ))}
         </CardList>
