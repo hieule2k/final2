@@ -6,6 +6,13 @@ import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Search-bar.module.css";
+import { Portal } from "react-overlays";
+
+const CalendarContainer = ({ children }) => {
+  const el = document.getElementById("calendar-portal");
+
+  return <Portal container={el}>{children}</Portal>;
+};
 
 const cx = classNames.bind(styles);
 
@@ -25,7 +32,7 @@ const SearchField = () => {
         <span className={cx("search-title")}>Check In</span>
         <span className={cx("search-action")}>
           <DatePicker
-            wrapperClassName={cx("datePicker")}
+            portalId="root-portal"
             selected={startDate}
             onChange={(date) => setStartDate(date)}
           />
@@ -37,6 +44,7 @@ const SearchField = () => {
           <DatePicker
             selected={endDate}
             onChange={(date) => setEndDate(date)}
+            popperContainer={CalendarContainer}
           />
         </span>
       </div>
