@@ -158,8 +158,21 @@ function App() {
     const newWishList = wishlist.filter((item) => item.id !== id);
 
     setWishList(() => {
-      const jsonData = JSON.stringify(newWishList);
-      localStorage.setItem("wishlist", jsonData);
+      axios
+        .post(
+          "http://103.184.113.181:83/wishlist/delete",
+          JSON.stringify({
+            hotel_id: id,
+            customer_id: currentAccount.id,
+          })
+        )
+        .then(function (response) {
+          console.log(response);
+          console.log("succes");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       return newWishList;
     });
   };
@@ -187,6 +200,7 @@ function App() {
                 hotel3={hotel3}
                 hotel4={hotel4}
                 hotel5={hotel5}
+                wishlist={wishlist}
               />
             }
           />
