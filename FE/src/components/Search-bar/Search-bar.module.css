@@ -1,8 +1,6 @@
 .search-bar {
     display: flex;
-    /* position: fixed;
-    top: 0;
-    z-index: 1; */
+
     height: 125px;
     align-items: center;
     background-color: #d9d9d9;
@@ -54,11 +52,12 @@
 }
 
 .search-field {
-    flex-basis: 60%;
+    min-width: 800px;
     margin-right: 40px;
     padding-left: 20px;
     background-color: var(--white);
     height: 70px;
+    border: 1px solid #333;
     border-radius: 35px;
     display: flex;
     justify-content: space-around;
@@ -113,3 +112,4 @@
     border-radius: 50%;
     margin-right: 10px;
 }
+
