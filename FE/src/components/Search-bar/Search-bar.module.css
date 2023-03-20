@@ -113,3 +113,8 @@
     margin-right: 10px;
 }
 
+.item-container {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
