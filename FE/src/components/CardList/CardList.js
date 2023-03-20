@@ -21,7 +21,7 @@ function CardList({
     : cx("card-list");
   return (
     <div className={cx("card-list__container")} {...props}>
-      {desc && <div className={cx("card-descrition")}>{desc}</div>}
+      {desc && <div className={cx("card-description")}>{desc}</div>}
       <div className={classes}>{children}</div>
       {button && (
         <Button medium black rounded className={cx("custom")}>
