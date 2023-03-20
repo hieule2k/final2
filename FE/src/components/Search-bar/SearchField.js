@@ -21,37 +21,39 @@ const SearchField = () => {
   const [endDate, setEndDate] = useState(new Date());
   return (
     <div className={cx("search-field")}>
-      <div className={cx("search-item")}>
-        <span className={cx("search-title")}>Location</span>
-        <input
-          className={cx("search-action")}
-          placeholder="Which city do you prefer?"
-        />
-      </div>
-      <div className={cx("search-item")}>
-        <span className={cx("search-title")}>Check In</span>
-        <span className={cx("search-action")}>
-          <DatePicker
-            portalId="root-portal"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+      <div className={cx("item-container")}>
+        <div className={cx("search-item")}>
+          <span className={cx("search-title")}>Location</span>
+          <input
+            className={cx("search-action")}
+            placeholder="Which city do you prefer?"
           />
-        </span>
-      </div>
-      <div className={cx("search-item")}>
-        <span className={cx("search-title")}>Check Out</span>
-        <span className={cx("search-action")}>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            popperContainer={CalendarContainer}
-          />
-        </span>
-      </div>
-      <div className={cx("search-item")}>
-        <span className={cx("search-title")}>Guests</span>
+        </div>
+        <div className={cx("search-item")}>
+          <span className={cx("search-title")}>Check In</span>
+          <span className={cx("search-action")}>
+            <DatePicker
+              portalId="root-portal"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
+          </span>
+        </div>
+        <div className={cx("search-item")}>
+          <span className={cx("search-title")}>Check Out</span>
+          <span className={cx("search-action")}>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              popperContainer={CalendarContainer}
+            />
+          </span>
+        </div>
+        <div className={cx("search-item")}>
+          <span className={cx("search-title")}>Guests</span>
 
-        <input className={cx("search-action")} placeholder="Add guest" />
+          <input className={cx("search-action")} placeholder="Add guest" />
+        </div>
       </div>
 
       <Link to="/Search">
