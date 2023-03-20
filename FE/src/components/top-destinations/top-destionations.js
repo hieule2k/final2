@@ -7,19 +7,41 @@ import axios from "axios";
 const cx = classNames.bind(styles);
 
 function TopDestinations() {
-  const [hotel, setHotel] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`http://103.184.113.181:81/customer/2/hotels?page=1&limit=4`)
-      .then(function (response) {
-        console.log(response);
-        console.log("succes");
-        setHotel(response.data.items);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+  const hotel = [
+    {
+      name: "Ha Noi",
+      image:
+        "https://images.unsplash.com/photo-1509030450996-dd1a26dda07a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGFub2l8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
+    },
+    {
+      name: "Ho Chi Minh",
+      image:
+        "https://images.unsplash.com/photo-1571424161765-c4080147f74f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2FpJTIwZ29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
+    },
+    {
+      name: "Da Nang",
+      image:
+        "https://images.unsplash.com/photo-1505018620898-92616e1849cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8RGElMjBuYW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
+    },
+    {
+      name: "Hai Phong",
+      image:
+        "https://images.unsplash.com/photo-1570559120097-e6c3388329e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8SGFpJTIwUGhvbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
+    },
+  ];
+  // const [hotel, setHotel] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://103.184.113.181:81/customer/2/hotels?page=1&limit=4`)
+  //     .then(function (response) {
+  //       console.log(response);
+  //       console.log("succes");
+  //       setHotel(response.data.items);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   return (
     <div className={cx("top-destinations")}>
@@ -39,7 +61,7 @@ function TopDestinations() {
             <div className={cx("front")}>
               <Link to="/HomeBooking" style={{ width: "100%", height: "100%" }}>
                 <img
-                  src={x.list_image[0].url}
+                  src={x.image}
                   className={cx("top-destinations-item__img")}
                   alt=""
                 />

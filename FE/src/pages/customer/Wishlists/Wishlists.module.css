@@ -1,5 +1,5 @@
 .top-wishlists {
-    margin: 30px 100px 0 100px;
+    margin: 30px 68px 0 68px;
 }
 
 .top-container {
@@ -12,7 +12,7 @@
 .wishlists-container {
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    gap: 20px;
+    gap: 30px;
     grid-auto-rows: 300px ;
     
 }

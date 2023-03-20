@@ -29,35 +29,12 @@ import LoginHost from "./pages/HostSite/LoginHost/LoginHost";
 import axios from "axios";
 import Login from "pages/customer/Login/Login";
 function App() {
-  // const [data, getData] = useState();
-  // useEffect(() => {
-  //   axios
-  //     .post("103.184.113.181/customer", data)
-  //     .then(function (response) {
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }, [data]);
-  // const handleApi = async () => {
-  //   const response = await axios.get("/103.184.113.181/customer");
+  const [currentAccount, setCurrentAccount] = useState(() => {
+    const storageData = JSON.parse(localStorage.getItem("userData"));
 
-  //   console.log(response);
-  // };
-  // useEffect(() => {
-  //   handleApi();
-  // }, []);
-  // axios
-  //   .get("http://103.184.113.181:81/hotel/1")
-  //   .then(function (response) {
-  //     console.log(response);
-  //     console.log("succes");
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-
+    return storageData ?? false;
+  });
+  const [wishlist, setWishList] = useState([]);
   const [hotel1, setHotel1] = useState([]);
   const [hotel2, setHotel2] = useState([]);
   const [hotel3, setHotel3] = useState([]);
@@ -104,35 +81,64 @@ function App() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
-
-  const [wishlist, setWishList] = useState(() => {
-    const storageData = JSON.parse(localStorage.getItem("wishlist"));
-
-    return storageData ?? [];
-  });
-
-  const [currentAccount, setCurrentAccount] = useState(() => {
-    const storageData = JSON.parse(localStorage.getItem("userData"));
-
-    return storageData ?? false;
-  });
+    axios
+      .get(
+        `http://103.184.113.181:83/customer/${currentAccount.id}/wishlists?page=1&limit=10`
+      )
+      .then(function (response) {
+        if (response.data.items) {
+          setWishList(response.data.items);
+        }
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [currentAccount.id]);
 
   const handleLike = (item) => {
     const itemExist = wishlist.find((exa) => exa.id === item.id);
+
     if (currentAccount) {
       if (itemExist) {
         const newWishList = wishlist.filter((i) => i.id !== item.id);
         setWishList(() => {
-          const jsonData = JSON.stringify(newWishList);
-          localStorage.setItem("wishlist", jsonData);
+          axios
+            .post(
+              "http://103.184.113.181:83/wishlist/delete",
+              JSON.stringify({
+                hotel_id: item.id,
+                customer_id: currentAccount.id,
+              })
+            )
+            .then(function (response) {
+              console.log(response);
+              console.log("succes");
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
           return newWishList;
         });
       } else {
         setWishList((prev) => {
           const newData = [...prev, item];
-          const jsonData = JSON.stringify(newData);
-          localStorage.setItem("wishlist", jsonData);
+          console.log(newData);
+          axios
+            .post(
+              "http://103.184.113.181:83/wishlist",
+              JSON.stringify({
+                hotel_id: item.id,
+                customer_id: currentAccount.id,
+              })
+            )
+            .then(function (response) {
+              console.log(response);
+              console.log("succes");
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
           return newData;
         });
       }

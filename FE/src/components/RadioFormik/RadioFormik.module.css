@@ -36,10 +36,7 @@
     color: #ADE792;
     opacity: 0;
 }
-/* 
-.radio:checked  .customclass {
-    opacity: 1;
-} */
+
 .radio:checked ~ .customclass {
     opacity: 1;  
 }

@@ -23,9 +23,9 @@ function Wishlists({ wishlist, handleRemove, clearAll }) {
             <Card
               key={list.id}
               wishlists
-              desc={list.address}
+              desc={list.address.province}
               onClick={() => handleRemove(list.id)}
-              thumbnail={list.thumbnail}
+              thumbnail={list.list_image[0].url}
             >
               {list.name}
             </Card>

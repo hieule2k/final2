@@ -31,7 +31,7 @@ function HomeBooking({ handleLike, hotel1, hotel2, hotel3, hotel4, hotel5 }) {
               key={x.id}
               id={x.id}
               name={x.name}
-              address={x.address.street}
+              address={x.address.province}
               thumbnail={x.list_image[0].url}
               handleLike={handleLike}
             />
