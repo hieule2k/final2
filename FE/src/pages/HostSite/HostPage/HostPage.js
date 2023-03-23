@@ -32,7 +32,12 @@ function HostPage() {
       <div className={cx("body")}>
         <div className={cx("mid-section-container")}>
           <div className={cx("mid-section-card-wrapper")}>
-            <Card className={cx("custom-card")} guide featured />
+            <Card
+              className={cx("custom-card")}
+              fragment={cx("second")}
+              guide
+              featured
+            />
           </div>
           <div className={cx("mid-section-information-wrapper")}>
             <div className={cx("mid-section-information")}>

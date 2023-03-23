@@ -67,3 +67,10 @@
 .custom-card {
     height: 100%;
 }
+
+.second {
+    position: relative;
+    margin-bottom: 30px;
+    width: 100%;
+    height:100%;
+}
