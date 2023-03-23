@@ -5,7 +5,6 @@ import ReservationItem from "../ReservationItem/ReservationItem";
 import { AiOutlineCalendar } from "react-icons/ai";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import PaypalCheckoutButton from "../../PaypalCheckoutButton";
 import Button from "../Button/Button";
 import { IconContext } from "react-icons/lib";
 const cx = classNames.bind(styles);
@@ -51,10 +50,7 @@ function ReservationFormFirst({ handleSetCheckBill }) {
       });
     }
   };
-  const paypal = {
-    description: room.name,
-    price: totalFee,
-  };
+
   // const addItem = () => {
   //   setShowRoomStyle(!showRoomStyle);
   // };
@@ -271,10 +267,6 @@ function ReservationFormFirst({ handleSetCheckBill }) {
       >
         Next
       </Button>
-      {/* <PaypalCheckoutButton
-        product={paypal}
-        handleSetCheckBill={handleSetCheckBill}
-      /> */}
     </div>
   );
 }
