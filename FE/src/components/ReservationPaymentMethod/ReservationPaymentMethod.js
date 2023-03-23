@@ -4,12 +4,21 @@ import styles from "./ReservationPaymentMethod.module.css";
 import avatar from "../../assets/img/Vector.png";
 import CreditCard from "../CreditCard/CreditCard";
 import Button from "../Button/Button";
+import PaypalCheckoutButton from "../../PaypalCheckoutButton";
+
 import { BiArrowBack } from "react-icons/bi";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function ReservationPaymentMethod({ handleSetCheckBill }) {
+  const [room, setRooms] = useState(() => {
+    const storageRoomsData = JSON.parse(localStorage.getItem("rooms"));
+
+    return storageRoomsData ?? [];
+  });
+  let totalFee = 2;
+
   const [user, setUser] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("userData"));
 
@@ -25,7 +34,10 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
     localStorage.removeItem("rooms");
     alert("Successfull Reservation");
   };
-
+  const paypal = {
+    description: room.name,
+    price: totalFee,
+  };
   return (
     <div className={cx("reservation-payment-method")}>
       <div className={cx("information")}>
@@ -112,6 +124,10 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
           name="voucher"
         />
       </label>
+      <PaypalCheckoutButton
+        product={paypal}
+        handleSetCheckBill={handleSetCheckBill}
+      />
       <div className={cx("button-container")}>
         <Button
           medium
