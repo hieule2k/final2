@@ -7,10 +7,10 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color:  #EFF0F2;
+    background-color: #eff0f2;
     border-radius: 6px;
     width: 280px;
-    height: 100px;
+    height: 85px;
 }
 
 .input-container {
@@ -25,20 +25,21 @@
     appearance: none;
     background: #6b6c6e;
     aspect-ratio: 1;
+    border-radius: 7px 0px 0px 7px;
 }
-
-
 
 .customclass {
     position: absolute;
     top: 0;
     left: 0;
-    color: #ADE792;
+    color: #5be31b;
     opacity: 0;
 }
 
 .radio:checked ~ .customclass {
-    opacity: 1;  
+    opacity: 1;
+    height: 90px;
+    width: 100px;
 }
 
 .name_type {
@@ -48,3 +49,6 @@
     margin-left: 28px;
 }
 
+.name {
+    font-size: 14px;
+}

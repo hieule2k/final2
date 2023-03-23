@@ -16,7 +16,7 @@ const RadioFomik = ({ value, checked, children, origin, ...props }) => {
   return (
     <div className={cx("radio-formik")}>
       <label className={!origin ? cx("add_type") : null}>
-        <div className={cx("input-container")}>
+        <span className={cx("input-container")}>
           <input
             {...field}
             type={type}
@@ -25,8 +25,10 @@ const RadioFomik = ({ value, checked, children, origin, ...props }) => {
             // checked={checked}
           />
           <CheckIcon customclass={cx("customclass")}></CheckIcon>
-        </div>
-        <span className={!origin ? cx("name_type") : null}> {children}</span>
+        </span>
+        <span className={!origin ? cx("name_type") : cx("name")}>
+          {children}
+        </span>
       </label>
     </div>
   );
