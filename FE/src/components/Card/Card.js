@@ -25,6 +25,7 @@ function Card({
   wishlists = false,
   add = false,
   host = false,
+  fragment = cx("fragment"),
   desc,
   children,
   className,
@@ -79,8 +80,9 @@ function Card({
     src = "/AddRooms1";
   }
   // const props = { onClick };
+
   return (
-    <div className={cx("fragment")}>
+    <div className={fragment}>
       {!guide && !row && !wishlists && (
         <div
           onClick={() => {
