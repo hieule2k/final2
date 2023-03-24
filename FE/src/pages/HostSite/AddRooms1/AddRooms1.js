@@ -26,7 +26,7 @@ function AddRooms1() {
     return storageData ?? [];
   });
   const [rooms, setRooms] = useState([]);
-
+  const [input, showInput] = useState(false);
   const [tab, setTab] = useState("addproperty2");
   const handleChangeTab = (x) => {
     setTab(x);
@@ -47,6 +47,10 @@ function AddRooms1() {
         console.log(error);
       });
   }, [hotelId]);
+
+  const handleClick = () => {
+    showInput(!input);
+  };
   return (
     <LayoutPrimary host>
       <ScrollToTop />
@@ -127,7 +131,7 @@ function AddRooms1() {
                       }}
                       // type="submit"
                       small
-                      black
+                      green
                       rounded
                     >
                       Next
@@ -190,24 +194,19 @@ function AddRooms1() {
                 <div className={cx("add3-properties")}>
                   <div>
                     <div className={cx("content3-container")}>
-                      <div>
-                        <h1 className={cx("title")}>Name</h1>
+                      {!input ? (
+                        <div onClick={handleClick} style={{ height: "200px" }}>
+                          {" "}
+                          Name
+                        </div>
+                      ) : (
                         <MyInput
-                          customContainerClasses={cx("custom-input")}
                           className={cx("name", "name-input")}
+                          customContainerClasses={cx("custom-input")}
                           name="name"
                           type="text"
                         ></MyInput>
-                      </div>
-                      <div>
-                        <h1 className={cx("title")}>Quantity</h1>
-                        <MyInput
-                          customContainerClasses={cx("custom-input")}
-                          className={cx("number", "name-input")}
-                          name="quantity"
-                          type="number"
-                        ></MyInput>
-                      </div>
+                      )}
                       <div className={cx("facilities-container")}>
                         <h1 className={cx("title")}>
                           Add facilities available at your place.
@@ -219,10 +218,9 @@ function AddRooms1() {
                         </div>
                       </div>
                       <div className={cx("prices")}>
-                        <h1 className={cx("title")}>price</h1>
+                        <h1 className={cx("title")}>Price</h1>
                         <MyInput
-                          customContainerClasses={cx("custom-input")}
-                          className={cx("number", "name-input")}
+                          className={cx("input", "name-input")}
                           name="price"
                           type="number"
                         ></MyInput>
