@@ -2,14 +2,15 @@
     margin: 50px 80px 50px 80px;
 }
 
-.custom-container {
-}
-label {
+.sign-up__form label {
     font-size: 18px;
     font-weight: bold;
 }
-h3 {
+
+.sign-up__form h3 {
     margin-bottom: 15px;
+}
+.custom-container {
 }
 /* add 1 */
 .content-container {
@@ -101,6 +102,7 @@ h3 {
 .location-input__wrapper {
     display: flex;
     flex-direction: column;
+    width: 750px;
     gap: 20px;
 }
 
