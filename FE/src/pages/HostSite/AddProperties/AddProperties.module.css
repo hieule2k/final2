@@ -102,6 +102,7 @@
 .location-input__wrapper {
     display: flex;
     flex-direction: column;
+    width: 750px;
     gap: 20px;
 }
 

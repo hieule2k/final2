@@ -203,7 +203,7 @@ function AddRooms1() {
                         <h1 className={cx("title")}>Quantity</h1>
                         <MyInput
                           customContainerClasses={cx("custom-input")}
-                          className={cx("name", "name-input")}
+                          className={cx("number", "name-input")}
                           name="quantity"
                           type="number"
                         ></MyInput>
@@ -221,7 +221,8 @@ function AddRooms1() {
                       <div className={cx("prices")}>
                         <h1 className={cx("title")}>price</h1>
                         <MyInput
-                          className={cx("input", "name-input")}
+                          customContainerClasses={cx("custom-input")}
+                          className={cx("number", "name-input")}
                           name="price"
                           type="number"
                         ></MyInput>
