@@ -48,13 +48,34 @@ a {
     src: url('../src/assets/Fonts/Allison_Script.woff');
 }
 
-input::-webkit-outer-spin-button,
+/* display: none; <- Crashes Chrome on hover */
+/* <-- Apparently some margin are still there even though it's hidden */
+/* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
+    margin: 0; 
+} */
 
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
-}
+/* input[type=number] {
+    -moz-appearance:textfield; 
+} */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
