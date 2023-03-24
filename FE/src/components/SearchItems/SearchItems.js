@@ -9,7 +9,6 @@ function SearchItems({ item, ...props }) {
   return (
     <div className={cx("search-item")} {...props}>
       {item.address && <p>{item.address.province}</p>}
-      <span>{item.name}</span>
     </div>
   );
 }
