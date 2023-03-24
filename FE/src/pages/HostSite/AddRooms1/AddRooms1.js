@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { BiEdit } from "react-icons/bi";
+import CheckboxFormik from "components/CheckboxFormik/CheckboxFormik";
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +21,7 @@ function AddRooms1() {
   const navigate = useNavigate();
   const location = useLocation();
   // let initialTab = location.state.value;
+  const [value, setValue] = useState("");
   const [hotelId, setHotelId] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("hotelData"));
 
@@ -57,12 +59,20 @@ function AddRooms1() {
 
       <Formik
         initialValues={{
-          name: "",
+          name: " ",
           type: "",
-          price: 0,
-          quantity: 0,
+          price: "",
+          quantity: 3,
           description: "",
-          list_amenity: [],
+          class: "VIP",
+          list_amenity: [
+            {
+              name: "tivi",
+            },
+            {
+              name: "tu lanh",
+            },
+          ],
         }}
         initialTouched={{
           field: true,
@@ -76,12 +86,10 @@ function AddRooms1() {
           setTimeout(() => {
             // axios
             //   .post(
-            //     `http://103.184.113.181:82/hotel/16/room`,
+            //     `http://103.184.113.181:82/hotel/${hotelId}/room`,
             //     JSON.stringify(values)
             //   )
             //   .then(function (response) {
-            //     // window.location.href = "/HostProperties";
-            //     navigate("/HostProperties");
             //     console.log(response);
             //     console.log("succes");
             //   })
@@ -89,13 +97,22 @@ function AddRooms1() {
             //     console.log(error);
             //   });
             console.log(values);
-            resetForm({
-              name: "",
-              type: "",
-              price: 0,
-              quantity: 0,
-              description: "",
-            });
+            // resetForm({
+            //   name: " ",
+            //   type: "",
+            //   price: "",
+            //   quantity: 3,
+            //   description: "",
+            //   class: "VIP",
+            //   list_amenity: [
+            //     {
+            //       name: "tivi",
+            //     },
+            //     {
+            //       name: "tu lanh",
+            //     },
+            //   ],
+            // });
 
             setSubmitting(false);
           }, 1000);
@@ -194,19 +211,30 @@ function AddRooms1() {
                 <div className={cx("add3-properties")}>
                   <div>
                     <div className={cx("content3-container")}>
-                      {!input ? (
-                        <div onClick={handleClick} style={{ height: "200px" }}>
-                          {" "}
+                      {/* {!input ? (
+                        <div
+                          onClick={handleClick}
+                          style={{
+                            fontSize: "50px",
+                            fontWeight: 700,
+                            opacity: 0.6,
+                          }}
+                        >
                           Name
                         </div>
                       ) : (
-                        <MyInput
-                          className={cx("name", "name-input")}
-                          customContainerClasses={cx("custom-input")}
-                          name="name"
-                          type="text"
-                        ></MyInput>
-                      )}
+                      )} */}
+                      <MyInput
+                        className={cx("name", "name-input")}
+                        customContainerClasses={cx("custom-input")}
+                        name="name"
+                        type="text"
+                        placeholder="Name"
+                        value={value}
+                        onChange={(e) => {
+                          setValue(e.target.value);
+                        }}
+                      />
                       <div className={cx("facilities-container")}>
                         <h1 className={cx("title")}>
                           Add facilities available at your place.
@@ -230,62 +258,33 @@ function AddRooms1() {
                           Add amenities available at your place.
                         </h1>
                         <div className={cx("amenities-list")}>
-                          <RadioFormik
-                            checkbox
+                          <CheckboxFormik
                             value="television"
                             name="list_amenity"
                           >
                             Television
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value={{ name: "wifi" }}
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="wifi" name="list_amenity">
                             Wifi
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value="washer"
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="washer" name="list_amenity">
                             Washer
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value="balcony"
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="balcony" name="list_amenity">
                             Balcony
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value="cleaner"
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="cleaner" name="list_amenity">
                             Cleaner
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value="radio"
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="radio" name="list_amenity">
                             Radio
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value="lift"
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="lift" name="list_amenity">
                             Lift
-                          </RadioFormik>
-                          <RadioFormik
-                            checkbox
-                            value="other"
-                            name="list_amenity"
-                          >
+                          </CheckboxFormik>
+                          <CheckboxFormik value="other" name="list_amenity">
                             Other
-                          </RadioFormik>
+                          </CheckboxFormik>
                         </div>
                       </div>
                       <div>

@@ -5,6 +5,7 @@
     cursor: pointer;
     background: #C2c6cc;
     min-width: 350px;
+    height: 60px;
     border-radius: 6px;
     overflow: hidden;
     align-items: center;

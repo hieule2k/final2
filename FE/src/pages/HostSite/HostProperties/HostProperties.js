@@ -16,7 +16,9 @@ function HostProperties() {
   const [listHotels, setListHotels] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://103.184.113.181:81/customer/2/hotels?page=2&limit=10`)
+      .get(
+        `http://103.184.113.181:81/customer/${customer.id}/hotels?page=1&limit=10`
+      )
       .then(function (response) {
         setListHotels(response.data.items);
         console.log(response);

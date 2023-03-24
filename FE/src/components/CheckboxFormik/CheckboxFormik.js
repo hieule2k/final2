@@ -1,7 +1,7 @@
 import { useField } from "formik";
 import classNames from "classnames/bind";
 import React from "react";
-import styles from "../checkboxFormik/checkboxFormik.module.css";
+import styles from "../CheckboxFormik/checkboxFormik.module.css";
 const cx = classNames.bind(styles);
 
 const CheckboxFormik = ({ value, checked, children, origin, ...props }) => {
