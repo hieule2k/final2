@@ -4,7 +4,6 @@
     color: #9a9a9a;
 }
 
-
 .side-bar {
     display: flex;
     flex-direction: column;
@@ -16,14 +15,14 @@
 
 .price-range {
     position: relative;
-    font-size: 22;
+    font-size: 22px;
     font-weight: 700;
-    margin: 36px 30px 0 30px;
+    margin: 30px 30px 0 30px;
 }
 
 .price-range::after {
     position: absolute;
-    content: "";
+    content: '';
     height: 1px;
     width: 225px;
     background-color: #e0e2e6;
@@ -45,9 +44,7 @@
 .table td {
     border-bottom: none;
     padding: 10px 0;
-
 }
-
 
 .contact {
     display: flex;
@@ -65,4 +62,3 @@
     font-size: 14px;
     font-weight: 600;
 }
-

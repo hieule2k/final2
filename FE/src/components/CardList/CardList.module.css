@@ -13,19 +13,19 @@
 }
 
 .card-descrition::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     bottom: -24px;
     width: 140px;
     height: 6px;
     background: var(--secondBlack);
-
 }
 
 .card-list {
     display: flex;
     gap: 15px;
+    justify-content: space-between;
     flex-wrap: wrap;
     /* justify-content: space-between; */
 }
@@ -37,7 +37,7 @@
 
 .card-list__grid {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 34px;
     grid-row-gap: 60px;
 }
