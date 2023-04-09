@@ -28,6 +28,7 @@ import HostSelect from "./pages/HostSite/HostSelect/HostSelect";
 import LoginHost from "./pages/HostSite/LoginHost/LoginHost";
 import axios from "axios";
 import Login from "pages/customer/Login/Login";
+import UpdateHotel from "pages/HostSite/UpdateHotel/UpdateHotel";
 function App() {
   const [currentAccount, setCurrentAccount] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("userData"));
@@ -226,6 +227,7 @@ function App() {
           <Route path="/HostProperties" element={<HostProperties />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/AddProperties" element={<AddProperties />} />
+          <Route path="/UpdateHotel" element={<UpdateHotel />} />
           <Route path="/AddRooms1" element={<AddRooms1 />} />
           <Route path="/HostReservation" element={<HostReservation />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
