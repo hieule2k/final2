@@ -24,7 +24,7 @@
 
 .card-list {
     display: flex;
-    gap: 15px;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
