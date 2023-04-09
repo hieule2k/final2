@@ -85,7 +85,17 @@ function Account() {
             </div>
           ) : (
             <Formik
-              initialValues={accountData}
+              initialValues={{
+                role: accountData.role,
+                description: accountData.description,
+                user: {
+                  name: accountData.user.name,
+                  email: accountData.user.email,
+                  phone: accountData.user.phone,
+                  avatar: "link anh",
+                  gender: accountData.user.gender,
+                },
+              }}
               initialTouched={{
                 field: true,
               }}
@@ -112,8 +122,6 @@ function Account() {
                   //   //   const jsonData = JSON.stringify(newData);
                   //   //   localStorage.setItem("signUpAccount", jsonData);
                   //   // });
-                  console.log(JSON.stringify(values));
-                  console.log(accountData.id);
                   axios
                     .put(
                       `http://103.184.113.181/customer/${accountData.id}`,
@@ -128,7 +136,7 @@ function Account() {
                     });
                   // console.log(JSON.stringify(values));
                   // navigate(host ? "/LoginHost" : "/login1");
-
+                  console.log(values);
                   setSubmitting(false);
                 }, 1000);
               }}

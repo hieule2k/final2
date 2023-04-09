@@ -21,13 +21,12 @@ function HostProperties() {
       )
       .then(function (response) {
         setListHotels(response.data.items);
-        console.log(response);
         console.log("succes");
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [customer.id]);
   return (
     <LayoutPrimary host>
       <div className={cx("top-properties")}>
@@ -42,7 +41,7 @@ function HostProperties() {
         <div className={cx("properties-container")}>
           {listHotels
             ? listHotels.map((x) => (
-                <Card x={x} key={x.id} desc={x.address.street} wishlists host>
+                <Card x={x} key={x.id} id={x.id} desc={x.name} wishlists host>
                   {x.name}
                 </Card>
               ))
