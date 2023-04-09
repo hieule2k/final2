@@ -12,9 +12,8 @@ import {
 import { IoAdd } from "react-icons/io5";
 import { BiBed, BiBath } from "react-icons/bi";
 import { MdPets } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
-import axios from "axios";
 const cx = classNames.bind(styles);
 
 function Card({
@@ -39,10 +38,7 @@ function Card({
   x,
   ...props
 }) {
-  // const removeListHotel=()=>{
-
-  // }
-
+  const navigate = useNavigate();
   const data = {
     id,
     name,
@@ -80,6 +76,10 @@ function Card({
     src = "/AddRooms1";
   }
   // const props = { onClick };
+
+  const toUpdateHotel = () => {
+    navigate("/UpdateHotel", { state: { hotel: x } });
+  };
 
   return (
     <div className={fragment}>
@@ -179,7 +179,14 @@ function Card({
       </Link>
       {host && (
         <div className={cx("host-button")}>
-          <Button small rounded className={cx("modify")}>
+          <Button
+            small
+            rounded
+            onClick={() => {
+              toUpdateHotel();
+            }}
+            className={cx("modify")}
+          >
             Modify
           </Button>
           <Button small rounded className={cx("remove")}>
