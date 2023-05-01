@@ -65,3 +65,24 @@
     display: flex;
     gap: 20px;
 }
+
+.button-size {
+    width: 193px;
+}
+
+.review {
+    background-color: #EFF0F2;
+    transition: ease-in 0.2s;
+}
+
+.review:hover {
+    background-color: #11CC2F;
+    
+}
+
+.button-wrapper {
+    display: flex;
+    gap: 50px;
+    flex-direction: row-reverse;
+}
+
