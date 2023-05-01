@@ -3,6 +3,7 @@ import styles from "./ReservationStatus.module.css";
 import HistoryItem from "../../../components/HistoryItem/HistoryItem";
 import classNames from "classnames/bind";
 import LayoutPrimary from "layouts/LayoutPrimary";
+import Modal from "../../../module/modal/Modal";
 
 const cx = classNames.bind(styles);
 
@@ -35,9 +36,11 @@ function ReservationStatus() {
   const handleSetTab = () => {
     setTab(!tab);
   };
+  const [modal, setModal] = useState(false);
   const tabActive = cx("tab-active");
   return (
     <LayoutPrimary>
+      {modal && <Modal></Modal>}
       <div className={cx("reservation-container")}>
         <h2 className={cx("top-title")}>Reservation</h2>
         <div className={cx("history")}>
@@ -46,14 +49,14 @@ function ReservationStatus() {
               className={cx("history-title", tab && tabActive)}
               onClick={handleSetTab}
             >
-              History
+              Upcoming
             </div>
-            {/* <div
+            <div
               className={cx("history-title", !tab && tabActive)}
               onClick={handleSetTab}
             >
-              History
-            </div> */}
+              Past
+            </div>
           </div>
           <div className={cx("search-wrapper")}>
             <i className={cx("search-icon-container")}>
@@ -90,12 +93,15 @@ function ReservationStatus() {
                   removeItem={removeItem}
                 />
               ))}
+            <HistoryItem removeItem={removeItem} />
+            <HistoryItem removeItem={removeItem} />
           </div>
         ) : (
           <div className={cx("status")}>
             {/* {room.map((item) => (
               <HistoryItem key={item.id} item={item} removeItem={removeItem} />
             ))} */}
+            <HistoryItem past removeItem={removeItem} />
           </div>
         )}
       </div>

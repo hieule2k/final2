@@ -9,20 +9,25 @@ const cx = classNames.bind(styles);
 function HistoryItem({
   children,
   host = false,
+  past = false,
   item,
   removeItem,
   handleHistory,
 }) {
-  const { name, address, id, list_image } = item.hotel;
+  // const { name, address, id, list_image } = item.hotel;
   return (
     <div className={cx("history-item")}>
       <div className={cx("item-container")}>
         <div className={cx("col-left")}>
           <div className={cx("img-container")}>
-            <img src={list_image[0].url} alt="No img" className={cx("image")} />
+            <img
+              src="https://media-cdn.tripadvisor.com/media/photo-s/1c/59/4c/d3/hanoi-la-siesta-hotel.jpg"
+              alt="No img"
+              className={cx("image")}
+            />
           </div>
           <div className={cx("item-information")}>
-            <div className={cx("item-title")}>{name}</div>
+            <div className={cx("item-title")}>hotel</div>
             <div className={cx("item-specific")}>
               <div className={cx("specific")}>
                 Check In: <span className={cx("time")}>12 Mar 2021</span>
@@ -54,19 +59,30 @@ function HistoryItem({
                 Rejected
               </Button>
             </div>
-          ) : null}
-          {/* (
-            <Button
-              mediumx
-              black
-              rounded
-              onClick={() => {
-                removeItem(id);
-              }}
-            >
-              Cancel Reservation
-            </Button>
-          )} */}
+          ) : (
+            <div className={cx("button-wrapper")}>
+              <Button
+                mediumx
+                rounded
+                bgGray
+                className={cx("button-size")}
+                // onClick={() => {
+                //   removeItem(id);
+                // }}
+              >
+                Cancel Reservation
+              </Button>
+              {past && (
+                <Button
+                  mediumx
+                  textBlack
+                  className={cx("button-size", "review")}
+                >
+                  Rate & Review
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

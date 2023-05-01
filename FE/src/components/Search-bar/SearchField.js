@@ -39,7 +39,7 @@ const SearchField = () => {
     fetchData();
   }, [query]);
   const handleClick = () => {
-    navigate("/Search");
+    navigate("/Search", { state: { query: query } });
   };
 
   return (

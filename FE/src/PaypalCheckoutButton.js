@@ -67,7 +67,14 @@ const PaypalCheckoutButton = ({ product, handleSetCheckBill }) => {
       onApprove={async (data, actions) => {
         const order = await actions.order.capture();
         console.log("order", order);
+        // const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+        //   JSON.stringify(order)
+        // )}`;
+        // const link = document.createElement("a");
+        // link.href = jsonString;
+        // link.download = "data.json";
 
+        // link.click();
         handleApprove(data.orderID);
       }}
       onError={(err) => {

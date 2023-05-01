@@ -90,7 +90,7 @@ function App() {
         if (response.data.items) {
           setWishList(response.data.items);
         }
-        console.log(response);
+        // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
