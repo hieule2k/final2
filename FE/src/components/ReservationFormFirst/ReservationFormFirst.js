@@ -7,30 +7,42 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "../Button/Button";
 import { IconContext } from "react-icons/lib";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 const cx = classNames.bind(styles);
 
 function ReservationFormFirst({ handleSetCheckBill }) {
-  const [room, setRooms] = useState(() => {
-    const storageRoomsData = JSON.parse(localStorage.getItem("rooms"));
-
-    return storageRoomsData ?? [];
-  });
-
+  const [rooms, setRooms] = useState([]);
+  const [defaultRoom, setDefaultRoom] = useState([]);
   const [status, setStatus] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("status"));
 
     return storageRoomsData ?? [];
   });
   const [total, setTotal] = useState(1);
-  // const [showRoomStyle, setShowRoomStyle] = useState(false);
+  const [showRoomStyle, setShowRoomStyle] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [serviceFee, setServiceFee] = useState(2);
+  const location = useLocation();
+  const data = location.state.hotelData;
+  // console.log(data);
+  useEffect(() => {
+    axios
+      .get(`http://103.184.113.181:82/hotel/${data.id}/rooms?page=1&limit=10`)
+      .then(function (response) {
+        // console.log(response);
+        setRooms(response.data.items);
+        setDefaultRoom([response.data.items[0]]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [data.id]);
+  console.log(defaultRoom);
   let tax = 0.1;
   let totalFee = (total * 19 + serviceFee) * tax + (total * 18 + serviceFee);
-  useEffect(() => {
-    console.log(startDate);
-  }, [startDate]);
+
   const handleIncrease = () => {
     setTotal((prev) => prev + 1);
   };
@@ -39,123 +51,71 @@ function ReservationFormFirst({ handleSetCheckBill }) {
     total > 1 && setTotal((prev) => prev - 1);
   };
 
-  const removeItem = (id) => {
-    if (room.length > 0) {
-      const newItems = room.filter((item) => item.id !== id);
-
-      setRooms(() => {
-        const jsonData = JSON.stringify(newItems);
-        localStorage.setItem("rooms", jsonData);
-        return newItems;
-      });
-    }
+  const removeItem = (type) => {
+    const newItems = defaultRoom.filter((item) => item.type !== type);
+    setDefaultRoom(newItems);
   };
 
-  // const addItem = () => {
-  //   setShowRoomStyle(!showRoomStyle);
-  // };
+  const addItem = () => {
+    setShowRoomStyle(!showRoomStyle);
+  };
 
-  // const addItem1 = () => {
-  //   let id = 200;
-  //   if (status.length > 0) {
-  //     id = status[status.length - 1].id + 1;
-  //   }
-
-  //   setRooms((prev) => {
-  //     const newData = [
-  //       ...prev,
-  //       {
-  //         id: id,
-  //         name: "single",
-  //         address: {
-  //           street: "101",
-  //         },
-  //         list_image: {
-  //           url: "https://cf.bstatic.com/xdata/images/hotel/square600/46129592.webp?k=e23728804b1c260cf7c6e8cbc1ee4f917508f462ad3e3839f91a4138b9b2c686&o=&s=1",
-  //         },
-  //       },
-  //     ];
-  //     const jsonNewData = JSON.stringify(newData);
-  //     localStorage.setItem("rooms", jsonNewData);
-  //     return newData;
-  //   });
-  // };
-
-  // const addItem2 = () => {
-  //   let id = 100;
-  //   if (status.length > 0) {
-  //     id = status[status.length - 1].id + 1;
-  //   }
-
-  //   setRooms((prev) => {
-  //     const newData = [
-  //       ...prev,
-  //       {
-  //         id: id,
-  //         name: "double",
-  //         address: {
-  //           street: "101",
-  //         },
-  //         list_image: {
-  //           url: "https://cf.bstatic.com/xdata/images/hotel/square600/46129592.webp?k=e23728804b1c260cf7c6e8cbc1ee4f917508f462ad3e3839f91a4138b9b2c686&o=&s=1",
-  //         },
-  //       },
-  //     ];
-  //     const jsonNewData = JSON.stringify(newData);
-  //     localStorage.setItem("rooms", jsonNewData);
-  //     return newData;
-  //   });
-  // };
-
-  // const addItem3 = () => {
-  //   let id = 1;
-  //   if (status.length > 0) {
-  //     id = status[status.length - 1].id + 1;
-  //   }
-
-  //   setRooms((prev) => {
-  //     const newData = [
-  //       ...prev,
-  //       {
-  //         id: id,
-  //         name: "triple",
-  //         address: {
-  //           street: "101",
-  //         },
-  //         list_image: {
-  //           url: "https://cf.bstatic.com/xdata/images/hotel/square600/46129592.webp?k=e23728804b1c260cf7c6e8cbc1ee4f917508f462ad3e3839f91a4138b9b2c686&o=&s=1",
-  //         },
-  //       },
-  //     ];
-  //     const jsonNewData = JSON.stringify(newData);
-  //     localStorage.setItem("rooms", jsonNewData);
-  //     return newData;
-  //   });
-  // };
+  const addRoom = (type) => {
+    // console.log(rooms.filter((room) => room.type === type));
+    const newRoom = rooms.filter((room) => room.type === type);
+    setDefaultRoom([...defaultRoom, newRoom[0]]);
+  };
 
   return (
     <div className={cx("reservation-form-first")}>
       <div className={cx("reservation-top")}>
-        {/* {showRoomStyle && (
+        {showRoomStyle && (
           <ul className={cx("rooms-list")}>
-            <li className={cx("room-list-item")} onClick={addItem1}>
-              Single
-            </li>
-            <li className={cx("room-list-item")} onClick={addItem2}>
-              Double
-            </li>
-            <li className={cx("room-list-item")} onClick={addItem3}>
-              Vip
-            </li>
+            {rooms.filter((room) => room.type === "Single").length > 0 &&
+              defaultRoom.filter((room) => room.type === "Single").length ===
+                0 && (
+                <li
+                  className={cx("room-list-item")}
+                  onClick={() => {
+                    addRoom("Single");
+                  }}
+                >
+                  Single
+                </li>
+              )}
+            {rooms.filter((room) => room.type === "Double").length > 0 &&
+              defaultRoom.filter((room) => room.type === "Double").length ===
+                0 && (
+                <li
+                  className={cx("room-list-item")}
+                  onClick={() => {
+                    addRoom("Double");
+                  }}
+                >
+                  Double
+                </li>
+              )}
+            {rooms.filter((room) => room.type === "VIP").length > 0 &&
+              defaultRoom.filter((room) => room.type === "VIP").length ===
+                0 && (
+                <li
+                  className={cx("room-list-item")}
+                  onClick={() => {
+                    addRoom("VIP");
+                  }}
+                >
+                  VIP
+                </li>
+              )}
           </ul>
-        )} */}
-        {/* <Button className={cx("add")} medium onClick={addItem}>
+        )}
+        <Button className={cx("add")} medium onClick={addItem}>
           Add Room
-        </Button> */}
+        </Button>
       </div>
       <div className={cx("reservation-item--container")}>
-        {room.length > 0 &&
-          room.map((item) => (
+        {defaultRoom.length > 0 &&
+          defaultRoom.map((item) => (
             <ReservationItem
               id={item.id}
               key={item.id}
@@ -201,7 +161,7 @@ function ReservationFormFirst({ handleSetCheckBill }) {
           </div>
           <div className={cx("type-container")}>
             Total rooms
-            <div>{room.length}</div>
+            {/* <div>{room.length}</div> */}
           </div>
         </div>
         <div className={cx("col-3")}>
@@ -260,9 +220,9 @@ function ReservationFormFirst({ handleSetCheckBill }) {
       <Button
         medium
         black
-        onClick={() => {
-          handleSetCheckBill(room[0]);
-        }}
+        // onClick={() => {
+        //   handleSetCheckBill(room[0]);
+        // }}
         className={cx("custom-button")}
       >
         Next

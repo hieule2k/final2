@@ -54,7 +54,7 @@ function Account() {
             </div>
           </div>
           <div className={cx("account-status__container")}>
-            <h2 className={cx("account-status")}>Hieu Le</h2>
+            <h2 className={cx("account-status")}>{name}</h2>
             <div className={cx("email-status")}>
               <AiOutlineCheck />
               Email Confirmed

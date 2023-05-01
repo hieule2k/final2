@@ -1,9 +1,11 @@
 .reservation-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin: 30px 80px;
     gap: 40px;
 }
+
 
 .top-title {
     font-size: 38px;
