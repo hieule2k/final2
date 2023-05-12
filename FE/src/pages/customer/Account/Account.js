@@ -11,6 +11,7 @@ import { AiOutlineCheck, AiFillStar, AiOutlineClose } from "react-icons/ai";
 
 import classNames from "classnames/bind";
 import Button from "../../../components/Button/Button";
+import UploadAndDisplayImage from "components/UploadImage";
 
 const cx = classNames.bind(styles);
 function Account() {
@@ -86,14 +87,19 @@ function Account() {
           ) : (
             <Formik
               initialValues={{
-                role: accountData.role,
-                description: accountData.description,
+                role: "bello",
+                description: "abcxyz",
                 user: {
-                  name: accountData.user.name,
-                  email: accountData.user.email,
-                  phone: accountData.user.phone,
+                  name: "nam",
+                  email: "minh@gmail.com",
+                  phone: "0123",
+                  note: "nhu cut",
                   avatar: "link anh",
-                  gender: accountData.user.gender,
+                  gender: "male",
+                  account: {
+                    username: "minmin2k",
+                    password: "123456",
+                  },
                 },
               }}
               initialTouched={{
@@ -124,7 +130,7 @@ function Account() {
                   //   // });
                   axios
                     .put(
-                      `http://103.184.113.181/customer/${accountData.id}`,
+                      `http://103.184.113.181/customer/4`,
                       JSON.stringify(values)
                     )
                     .then(function (response) {
@@ -204,6 +210,7 @@ function Account() {
                         type="submit"
                         // onClick={handleEdit}
                         fourth
+                        black
                         className={cx("button")}
                         // disabled={!formik.isValid || formik.isSubmitting}
                       >
@@ -219,6 +226,7 @@ function Account() {
                   >
                     Sign Up
                   </Button> */}
+                  <UploadAndDisplayImage />
                 </form>
               )}
             </Formik>

@@ -177,7 +177,6 @@ function App() {
       return newWishList;
     });
   };
-
   return (
     <PayPalScriptProvider
       options={{
@@ -190,7 +189,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/Details/:id" element={<Details />} />
+          <Route
+            path="/Details/:id"
+            element={<Details handleLike={handleLike} wishlist={wishlist} />}
+          />
           <Route
             path="/HomeBooking"
             element={

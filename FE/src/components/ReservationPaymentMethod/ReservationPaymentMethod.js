@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./ReservationPaymentMethod.module.css";
 import avatar from "../../assets/img/Vector.png";
@@ -6,19 +6,48 @@ import CreditCard from "../CreditCard/CreditCard";
 import Button from "../Button/Button";
 import PaypalCheckoutButton from "../../PaypalCheckoutButton";
 
+import Modal from "../../module/modal/Modal";
+
 import { BiArrowBack } from "react-icons/bi";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+
 const cx = classNames.bind(styles);
 
-function ReservationPaymentMethod({ handleSetCheckBill }) {
+function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
+  const location = useLocation();
+  const [bookingData, setBookingData] = useState(() => {
+    const storageData = JSON.parse(localStorage.getItem("bookingData"));
+
+    return storageData ?? false;
+  });
+
+  const confirmBooking = {
+    id: bookingData.id,
+    customer_id: userData.id,
+    bookedroom: [
+      {
+        check_in: bookingData.check_in,
+        check_out: bookingData.check_out,
+        price: bookingData.price,
+        discount: bookingData.discount,
+        room_id: bookingData.room_id,
+      },
+    ],
+    payment: {
+      paypal_payment_id: "HEHE",
+      status: "complete",
+    },
+  };
+  const [visible, setVisible] = useState(false);
   const [room, setRooms] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("rooms"));
 
     return storageRoomsData ?? [];
   });
   let totalFee = 2;
-
+  const data = location.state.hotelData;
   const [user, setUser] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("userData"));
 
@@ -30,16 +59,35 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
     setChecked(!checked);
   };
 
-  const alertT = () => {
-    localStorage.removeItem("rooms");
-    alert("Successfull Reservation");
-  };
+  async function alertT(order) {
+    const x = {
+      ...confirmBooking,
+      payment: {
+        ...confirmBooking.payment,
+        paypal_payment_id: order.id,
+      },
+    };
+    await alert("success");
+    try {
+      const res = await axios.post(
+        "http://103.184.113.181:88/confirm_booking",
+        JSON.stringify(x)
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return setVisible(!visible);
+  }
+
   const paypal = {
     description: room.name,
     price: totalFee,
   };
   return (
     <div className={cx("reservation-payment-method")}>
+      {visible && <Modal userId={user.id} hotel={data}></Modal>}
       <div className={cx("information")}>
         <div className={cx("col-2")}>
           <div className={cx("title")}>
@@ -127,6 +175,7 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
       <PaypalCheckoutButton
         product={paypal}
         handleSetCheckBill={handleSetCheckBill}
+        alertT={alertT}
       />
       <div className={cx("button-container")}>
         <Button
@@ -144,9 +193,7 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
           outline
           blue
           className={cx("continue")}
-          to="/ReservationStatus"
           rightIcon={<AiOutlineArrowRight />}
-          onClick={alertT}
         >
           Continue Booking
         </Button>

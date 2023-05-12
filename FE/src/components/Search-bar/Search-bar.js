@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./Search-bar.module.css";
-// import search from "../../assets/img/search-icon.png";
 import classNames from "classnames/bind";
 import "react-datepicker/dist/react-datepicker.css";
 import SearchField from "./SearchField";

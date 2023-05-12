@@ -28,24 +28,38 @@ function AddProperties() {
 
       <Formik
         initialValues={{
-          name: "",
-          star_level: "3",
-          rate: "2",
+          name: "Sunset",
+          star_level: "4",
           rule: "",
           description: "",
-          comment: "",
           address: {
-            detail_address: "",
-            district: "",
-            province: "",
+            detail_address: "1 Phùng Chí Kiên, Hà Nội",
+            district: "Quận Cầu Giấy",
+            province: "Hà Nội ",
           },
           list_image: [
             {
-              url: "ngon.com",
+              url: "https://cf.bstatic.com/xdata/images/hotel/square600/46129592.webp?k=e23728804b1c260cf7c6e8cbc1ee4f917508f462ad3e3839f91a4138b9b2c686&o=&s=1",
               type: "hotel",
             },
             {
-              url: "kongon.com",
+              url: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/310596687.jpg?k=4aadd27e94206405b1cac5056006dd7ea63e075e29077d3c8f199d333b2f6727&o=&hp=1",
+              type: "user",
+            },
+            {
+              url: "https://images.pexels.com/photos/4099354/pexels-photo-4099354.jpeg?auto=compress&cs=tinysrgb&w=600",
+              type: "user",
+            },
+            {
+              url: "https://images.pexels.com/photos/13740128/pexels-photo-13740128.jpeg?auto=compress&cs=tinysrgb&w=600",
+              type: "user",
+            },
+            {
+              url: "https://images.pexels.com/photos/14011091/pexels-photo-14011091.jpeg?auto=compress&cs=tinysrgb&w=600",
+              type: "user",
+            },
+            {
+              url: "https://images.pexels.com/photos/14011091/pexels-photo-14011091.jpeg?auto=compress&cs=tinysrgb&w=600",
               type: "user",
             },
           ],

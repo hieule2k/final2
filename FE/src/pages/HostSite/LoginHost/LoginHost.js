@@ -119,6 +119,7 @@ function Login1() {
                   className={cx("disabled")}
                   type="submit"
                   fourth
+                  green
                   onClick={handleContinue}
                   rounded
                   disabled={formik.isSubmitting || !formik.isValid}
