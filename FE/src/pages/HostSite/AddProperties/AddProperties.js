@@ -1,3 +1,4 @@
+
 import styles from "./AddProperties.module.css";
 import ScrollToTop from "../../../components/ScrollToTop";
 import React, { useState } from "react";
@@ -9,12 +10,14 @@ import LayoutPrimary from "layouts/LayoutPrimary";
 import { useNavigate } from "react-router-dom";
 import Form from "../../../module/hotel/Form";
 
+
 const cx = classNames.bind(styles);
 
 function AddProperties() {
-  const navigate = useNavigate();
-  const [customer, setCustomer] = useState(() => {
-    const storageData = JSON.parse(localStorage.getItem("userData"));
+    const navigate = useNavigate();
+    const [customer, setCustomer] = useState(() => {
+        const storageData = JSON.parse(localStorage.getItem('userData'));
+
 
     return storageData ?? [];
   });
@@ -22,9 +25,11 @@ function AddProperties() {
   // const product = data[0];
   // const { images } = product;
 
-  return (
-    <LayoutPrimary host>
-      <ScrollToTop />
+
+    return (
+        <LayoutPrimary host>
+            <ScrollToTop />
+
 
       <Formik
         initialValues={{
@@ -125,6 +130,7 @@ function AddProperties() {
       </Formik>
     </LayoutPrimary>
   );
+
 }
 
 export default AddProperties;

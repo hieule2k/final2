@@ -5,10 +5,11 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 function SearchItems({ item, ...props }) {
-  console.log(item.name);
+  console.log(item);
   return (
     <div className={cx("search-item")} {...props}>
-      <p>{item.name}</p>
+      {item.address && <p>{item.address.province}</p>}
+      <span>{item.name}</span>
     </div>
   );
 }

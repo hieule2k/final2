@@ -3,6 +3,7 @@ import styles from "./Search-bar.module.css";
 import classNames from "classnames/bind";
 import "react-datepicker/dist/react-datepicker.css";
 import SearchField from "./SearchField";
+
 const cx = classNames.bind(styles);
 
 function SearchBar() {
