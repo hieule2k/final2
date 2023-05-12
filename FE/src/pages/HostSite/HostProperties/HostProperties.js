@@ -41,7 +41,15 @@ function HostProperties() {
         <div className={cx("properties-container")}>
           {listHotels
             ? listHotels.map((x) => (
-                <Card x={x} key={x.id} id={x.id} desc={x.name} wishlists host>
+                <Card
+                  x={x}
+                  key={x.id}
+                  id={x.id}
+                  desc={x.name}
+                  thumbnail={x.list_image[0].url}
+                  wishlists
+                  host
+                >
                   {x.name}
                 </Card>
               ))

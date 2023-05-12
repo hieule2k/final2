@@ -158,78 +158,84 @@ function App() {
     const handleRemove = (id) => {
         const newWishList = wishlist.filter((item) => item.id !== id);
 
-        setWishList(() => {
-            axios
-                .post(
-                    'http://103.184.113.181:83/wishlist/delete',
-                    JSON.stringify({
-                        hotel_id: id,
-                        customer_id: currentAccount.id,
-                    })
-                )
-                .then(function (response) {
-                    console.log(response);
-                    console.log('succes');
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            return newWishList;
+    setWishList(() => {
+      axios
+        .post(
+          "http://103.184.113.181:83/wishlist/delete",
+          JSON.stringify({
+            hotel_id: id,
+            customer_id: currentAccount.id,
+          })
+        )
+        .then(function (response) {
+          console.log(response);
+          console.log("succes");
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-    };
+      return newWishList;
+    });
+  };
 
-    return (
-        <PayPalScriptProvider
-            options={{
-                'client-id': 'AX9EaV-372UA-NlE3diV0T5LSqztptRkCyxk5rz0J3x9WSrZc0BSINHOqcqOhdjAB3evTGHGz8XUKqAc',
-            }}
-        >
-            <div className="App">
-                <ScrollToTop />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/Details/:id" element={<Details />} />
-                    <Route
-                        path="/HomeBooking"
-                        element={
-                            <HomeBooking
-                                handleLike={handleLike}
-                                hotel1={hotel1}
-                                hotel2={hotel2}
-                                hotel3={hotel3}
-                                hotel4={hotel4}
-                                hotel5={hotel5}
-                                wishlist={wishlist}
-                            />
-                        }
-                    />
-                    <Route path="/Search" element={<Search handleLike={handleLike} />} />
-                    <Route path="/SignUp" element={<SignUp />} />
-                    <Route path="/Login" element={<Login />} />
-                    <Route path="/ButtonTest" element={<ButtonTest />} />
-                    <Route path="/Account" element={<Account />} />
-                    <Route path="/Wishlists" element={<Wishlists wishlist={wishlist} clearAll={clearAll} handleRemove={handleRemove} />} />
-                    <Route path="/ReservationForm" element={<ReservationForm />} />
-                    <Route path="/ReservationStatus" element={<ReservationStatus />} />
-                    <Route path="/HostPage" element={<HostPage />} />
-                    <Route path="/SignUpHost" element={<SignUpHost />} />
-                    <Route path="/HostProperties" element={<HostProperties />} />
-                    <Route path="/Admin" element={<Admin />} />
-                    <Route path="/AddProperties" element={<AddProperties />} />
-                    <Route path="/UpdateHotel" element={<UpdateHotel />} />
-                    <Route path="/AddRooms1" element={<AddRooms1 />} />
-                    <Route path="/HostReservation" element={<HostReservation />} />
-                    <Route path="/Dashboard" element={<Dashboard />} />
-                    <Route path="/TransactionHistory" element={<TransactionHistory />} />
-                    <Route path="/HostSelect" element={<HostSelect />} />
-                    <Route path="/Auth" element={<Auth />} />
-                    <Route path="/Admin" element={<Admin />} />
-                    <Route path="/rtl" element={<UserReports />} />
-                    <Route path="/LoginHost" element={<LoginHost />} />
-                </Routes>
-            </div>
-        </PayPalScriptProvider>
-    );
+  return (
+    <PayPalScriptProvider
+      options={{
+        "client-id":
+          "AX9EaV-372UA-NlE3diV0T5LSqztptRkCyxk5rz0J3x9WSrZc0BSINHOqcqOhdjAB3evTGHGz8XUKqAc",
+      }}
+    >
+      <div className="App">
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/Details/:id" element={<Details />} />
+          <Route
+            path="/HomeBooking"
+            element={
+              <HomeBooking
+                handleLike={handleLike}
+                hotel1={hotel1}
+                hotel2={hotel2}
+                hotel3={hotel3}
+                hotel4={hotel4}
+                hotel5={hotel5}
+                wishlist={wishlist}
+              />
+            }
+          />
+          <Route path="/Search" element={<Search handleLike={handleLike} />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/ButtonTest" element={<ButtonTest />} />
+          <Route path="/Account" element={<Account />} />
+          <Route
+            path="/Wishlists"
+            element={
+              <Wishlists
+                wishlist={wishlist}
+                clearAll={clearAll}
+                handleRemove={handleRemove}
+              />
+            }
+          />
+          <Route path="/ReservationForm" element={<ReservationForm />} />
+          <Route path="/ReservationStatus" element={<ReservationStatus />} />
+          <Route path="/HostPage" element={<HostPage />} />
+          <Route path="/SignUpHost" element={<SignUpHost />} />
+          <Route path="/HostProperties" element={<HostProperties />} />
+          <Route path="/Admin" element={<Admin />} />
+          <Route path="/AddProperties" element={<AddProperties />} />
+          <Route path="/UpdateHotel" element={<UpdateHotel />} />
+          <Route path="/AddRooms1" element={<AddRooms1 />} />
+          <Route path="/HostReservation" element={<HostReservation />} />
+          <Route path="/TransactionHistory" element={<TransactionHistory />} />
+          <Route path="/HostSelect" element={<HostSelect />} />
+          <Route path="/LoginHost" element={<LoginHost />} />
+        </Routes>
+      </div>
+    </PayPalScriptProvider>
+  );
 }
 export default App;

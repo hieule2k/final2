@@ -1,15 +1,16 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { BsSearch } from "react-icons/bs";
 import classNames from "classnames/bind";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Search-bar.module.css";
 import { Portal } from "react-overlays";
 import axios from "axios";
 import SearchItems from "components/SearchItems/SearchItems";
-
+import provinceData from "../../json/province.json";
+import useComponentVisible from "Hooks/useClickOutside";
 const CalendarContainer = ({ children }) => {
   const el = document.getElementById("calendar-portal");
 
@@ -19,6 +20,8 @@ const CalendarContainer = ({ children }) => {
 const cx = classNames.bind(styles);
 
 const SearchField = () => {
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(false);
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -46,7 +49,12 @@ const SearchField = () => {
     <div className={cx("fragment")}>
       <div className={cx("search-field")}>
         <div className={cx("item-container")}>
-          <div className={cx("search-item")}>
+          <div
+            className={cx("search-item")}
+            onClick={() => {
+              setIsComponentVisible(!isComponentVisible);
+            }}
+          >
             <span className={cx("search-title")}>Location</span>
             <input
               className={cx("search-action")}
@@ -92,10 +100,11 @@ const SearchField = () => {
           </div>
         </Link>
       </div>
-      {location.length > 0 && query.length > 0 && (
-        <div className={cx("search-results")}>
-          {location.length > 0 &&
-            location.map((item, index) => (
+      {isComponentVisible && query.length > 0 && (
+        <div className={cx("search-results")} ref={ref}>
+          {provinceData.data.length > 0 &&
+            query.length > 0 &&
+            provinceData.data.map((item, index) => (
               <div className={cx("search-item-wrapper")}>
                 <SearchItems
                   item={item}
