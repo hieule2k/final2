@@ -118,13 +118,7 @@ const DetailTable = ({
         </table>
       </div>
       {reserve && (
-        <Button
-          large
-          black
-          rounded
-          // onClick={reserveStorage}
-          onClick={putData}
-        >
+        <Button large black rounded onClick={reserveStorage}>
           Reserve Now
         </Button>
       )}
