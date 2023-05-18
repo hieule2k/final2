@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./ReservationFormFirst.module.css";
 import ReservationItem from "../ReservationItem/ReservationItem";
@@ -9,51 +9,80 @@ import Button from "../Button/Button";
 import { IconContext } from "react-icons/lib";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { differenceInDays } from "date-fns";
 const cx = classNames.bind(styles);
 
-function ReservationFormFirst({ handleSetCheckBill }) {
-  const [rooms, setRooms] = useState([]);
-  const [defaultRoom, setDefaultRoom] = useState([]);
-  const [status, setStatus] = useState(() => {
-    const storageRoomsData = JSON.parse(localStorage.getItem("status"));
-
-    return storageRoomsData ?? [];
+function ReservationFormFirst({ handleSetCheckBill, userData }) {
+  const [bookedData, setBookedData] = useState({
+    note: "bellofen",
+    customer_id: userData.id,
+    bookedroom: [
+      {
+        check_in: "2023-05-10 13:18:41.017Z",
+        check_out: "2023-05-10 10:07:26.486Z",
+        price: 1000,
+        discount: 100,
+        room_id: 784,
+      },
+    ],
   });
-  const [total, setTotal] = useState(1);
+  const [totalPrices, setTotalPrices] = useState();
+  const [rooms, setRooms] = useState([]);
+  const [cart, setCart] = useState([]);
   const [showRoomStyle, setShowRoomStyle] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [serviceFee, setServiceFee] = useState(2);
   const location = useLocation();
   const data = location.state.hotelData;
-  // console.log(data);
+  const result = differenceInDays(endDate, startDate);
+  // let k = new Date();
+  // let c = k.toISOString().split("T");
+  // console.log(c.join(" "));
   useEffect(() => {
     axios
       .get(`http://103.184.113.181:82/hotel/${data.id}/rooms?page=1&limit=10`)
       .then(function (response) {
         // console.log(response);
         setRooms(response.data.items);
-        setDefaultRoom([response.data.items[0]]);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, [data.id]);
-  console.log(defaultRoom);
-  let tax = 0.1;
-  let totalFee = (total * 19 + serviceFee) * tax + (total * 18 + serviceFee);
 
-  const handleIncrease = () => {
-    setTotal((prev) => prev + 1);
-  };
+    setTotalPrices(
+      cart
+        .map((cartItem) => {
+          return cartItem.totalPrice;
+        })
+        .reduce((acc, cur) => acc + cur, 0)
+    );
+  }, [data.id, cart]);
 
-  const handleDecrease = () => {
-    total > 1 && setTotal((prev) => prev - 1);
-  };
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, "0");
+  }
+
+  function formatDate(date) {
+    return (
+      [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth() + 1),
+        padTo2Digits(date.getDate()),
+      ].join("-") +
+      " " +
+      [
+        padTo2Digits(date.getHours()),
+        padTo2Digits(date.getMinutes()),
+        padTo2Digits(date.getSeconds()),
+      ].join(":") +
+      "." +
+      ["000", "00"].join(" +")
+    );
+  }
 
   const removeItem = (type) => {
-    const newItems = defaultRoom.filter((item) => item.type !== type);
-    setDefaultRoom(newItems);
+    const newItems = cart.filter((item) => item.type !== type);
+    setCart(newItems);
   };
 
   const addItem = () => {
@@ -63,17 +92,89 @@ function ReservationFormFirst({ handleSetCheckBill }) {
   const addRoom = (type) => {
     // console.log(rooms.filter((room) => room.type === type));
     const newRoom = rooms.filter((room) => room.type === type);
-    setDefaultRoom([...defaultRoom, newRoom[0]]);
+    const { price, id } = newRoom[0];
+    const roomData = [
+      {
+        check_in: formatDate(startDate),
+        check_out: formatDate(endDate),
+        price: price,
+        discount: 100,
+        room_id: id,
+      },
+    ];
+    setCart([
+      ...cart,
+      { ...newRoom[0], quantity: 1, totalPrice: newRoom[0].price },
+    ]);
+
+    setBookedData({
+      ...bookedData,
+      bookedroom: roomData,
+    });
   };
 
+  console.log(formatDate(startDate));
+  // console.log(cart);
+
+  const handleIncrease = (item) => {
+    setCart(
+      cart.map((cartItem) =>
+        cartItem.type === item.type
+          ? {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+              totalPrice: cartItem.price * (cartItem.quantity + 1),
+            }
+          : cartItem
+      )
+    );
+  };
+
+  const handleDecrease = (item) => {
+    setCart(
+      cart.map((cartItem) =>
+        cartItem.type === item.type
+          ? { ...cartItem, quantity: cartItem.quantity - 1 }
+          : cartItem
+      )
+    );
+  };
+
+  const calculatePrice = (val) => {
+    // SetTotalPrices(val);
+    console.log(val);
+  };
+
+  const handleFetchData = async () => {
+    try {
+      const res = await axios.post(
+        "http://103.184.113.181:88/create_booking",
+        JSON.stringify(bookedData)
+      );
+      cart.length > 0
+        ? handleSetCheckBill()
+        : alert("Vui long chon phong truoc");
+      const fakeBookingData = {
+        id: res.data.id,
+        check_in: bookedData.bookedroom[0].check_in,
+        check_out: bookedData.bookedroom[0].check_out,
+        price: bookedData.bookedroom[0].price,
+        discount: bookedData.bookedroom[0].discount,
+        room_id: bookedData.bookedroom[0].room_id,
+      };
+      localStorage.setItem("bookingData", JSON.stringify(fakeBookingData));
+      console.log(res.data.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className={cx("reservation-form-first")}>
       <div className={cx("reservation-top")}>
         {showRoomStyle && (
           <ul className={cx("rooms-list")}>
             {rooms.filter((room) => room.type === "Single").length > 0 &&
-              defaultRoom.filter((room) => room.type === "Single").length ===
-                0 && (
+              cart.filter((room) => room.type === "Single").length === 0 && (
                 <li
                   className={cx("room-list-item")}
                   onClick={() => {
@@ -84,8 +185,7 @@ function ReservationFormFirst({ handleSetCheckBill }) {
                 </li>
               )}
             {rooms.filter((room) => room.type === "Double").length > 0 &&
-              defaultRoom.filter((room) => room.type === "Double").length ===
-                0 && (
+              cart.filter((room) => room.type === "Double").length === 0 && (
                 <li
                   className={cx("room-list-item")}
                   onClick={() => {
@@ -96,8 +196,7 @@ function ReservationFormFirst({ handleSetCheckBill }) {
                 </li>
               )}
             {rooms.filter((room) => room.type === "VIP").length > 0 &&
-              defaultRoom.filter((room) => room.type === "VIP").length ===
-                0 && (
+              cart.filter((room) => room.type === "VIP").length === 0 && (
                 <li
                   className={cx("room-list-item")}
                   onClick={() => {
@@ -114,13 +213,16 @@ function ReservationFormFirst({ handleSetCheckBill }) {
         </Button>
       </div>
       <div className={cx("reservation-item--container")}>
-        {defaultRoom.length > 0 &&
-          defaultRoom.map((item) => (
+        {cart.length > 0 &&
+          cart.map((item) => (
             <ReservationItem
               id={item.id}
               key={item.id}
               item={item}
               removeItem={removeItem}
+              calculatePrice={calculatePrice}
+              handleIncrease={handleIncrease}
+              handleDecrease={handleDecrease}
             />
           ))}
       </div>
@@ -128,40 +230,7 @@ function ReservationFormFirst({ handleSetCheckBill }) {
         <div className={cx("col-3")}>
           <h2 className={cx("top-heading")}>Details</h2>
           <div className={cx("total-days")}>
-            <p className={cx("total")}>Total Days</p>
-            <div className={cx("minus")} onClick={handleDecrease}>
-              <svg
-                width="23"
-                height="23"
-                viewBox="0 0 23 23"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.834 3.99756C7.41463 3.99756 3.83398 7.5782 3.83398 11.9976C3.83398 16.4169 7.41463 19.9976 11.834 19.9976C16.2533 19.9976 19.834 16.4169 19.834 11.9976C19.834 7.5782 16.2533 3.99756 11.834 3.99756ZM7.57592 13.2879C7.36302 13.2879 7.18882 13.1137 7.18882 12.9008V11.0943C7.18882 10.8814 7.36302 10.7072 7.57592 10.7072H16.092C16.305 10.7072 16.4791 10.8814 16.4791 11.0943V12.9008C16.4791 13.1137 16.305 13.2879 16.092 13.2879H7.57592Z"
-                  fill="black"
-                />
-              </svg>
-            </div>
-            <div className={cx("number")}>{total}</div>
-            <div className={cx("plus")} onClick={handleIncrease}>
-              <svg
-                width="23"
-                height="23"
-                viewBox="0 0 23 23"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.834 3.99756C7.41463 3.99756 3.83398 7.5782 3.83398 11.9976C3.83398 16.4169 7.41463 19.9976 11.834 19.9976C16.2533 19.9976 19.834 16.4169 19.834 11.9976C19.834 7.5782 16.2533 3.99756 11.834 3.99756ZM16.4791 12.9008C16.4791 13.1137 16.305 13.2879 16.092 13.2879H13.1243V16.2556C13.1243 16.4685 12.9501 16.6427 12.7372 16.6427H10.9308C10.7179 16.6427 10.5437 16.4685 10.5437 16.2556V13.2879H7.57592C7.36302 13.2879 7.18882 13.1137 7.18882 12.9008V11.0943C7.18882 10.8814 7.36302 10.7072 7.57592 10.7072H10.5437V7.73949C10.5437 7.52659 10.7179 7.3524 10.9308 7.3524H12.7372C12.9501 7.3524 13.1243 7.52659 13.1243 7.73949V10.7072H16.092C16.305 10.7072 16.4791 10.8814 16.4791 11.0943V12.9008Z"
-                  fill="black"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className={cx("type-container")}>
-            Total rooms
-            {/* <div>{room.length}</div> */}
+            <p className={cx("total")}>Total Days: {result}</p>
           </div>
         </div>
         <div className={cx("col-3")}>
@@ -199,30 +268,25 @@ function ReservationFormFirst({ handleSetCheckBill }) {
         </div>
         <div className={cx("col-3", "cost")}>
           <h2 className={cx("top-heading", "price")}>Price</h2>
+
           <div className={cx("fee")}>
-            <p>{total} nights:</p>
-            <p>{total * 8}</p>
-          </div>
-          <div className={cx("fee")}>
-            <p>Service Fee:</p>
-            <p>{serviceFee}</p>
+            <p>Fee: </p>
+            <p>{totalPrices}</p>
           </div>
           <div className={cx("fee")}>
             <p>Tax: </p>
-            <p>{tax * 100} %</p>
+            <p>a</p>
           </div>
           <div className={cx("fee", "total-price")}>
             <p>Totals fee:</p>
-            <p>{totalFee}</p>
+            <p></p>
           </div>
         </div>
       </div>
       <Button
         medium
         black
-        // onClick={() => {
-        //   handleSetCheckBill(room[0]);
-        // }}
+        onClick={handleFetchData}
         className={cx("custom-button")}
       >
         Next

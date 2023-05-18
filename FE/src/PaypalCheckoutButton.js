@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 
-const PaypalCheckoutButton = ({ product, handleSetCheckBill }) => {
+const PaypalCheckoutButton = ({ product, alertT }) => {
   const navigate = useNavigate();
   const [room, setRooms] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("rooms"));
@@ -27,9 +27,7 @@ const PaypalCheckoutButton = ({ product, handleSetCheckBill }) => {
 
   if (paidFor) {
     // Display success message, modal or redirect user to success page
-    handleSetCheckBill(room[0]);
     alert("Thank you for your purchase!");
-    navigate("/ReservationStatus");
   }
   if (error) {
     // Display error message, modal or redirect user to error page
@@ -67,6 +65,8 @@ const PaypalCheckoutButton = ({ product, handleSetCheckBill }) => {
       onApprove={async (data, actions) => {
         const order = await actions.order.capture();
         console.log("order", order);
+        alertT(order);
+
         // const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
         //   JSON.stringify(order)
         // )}`;
@@ -75,7 +75,7 @@ const PaypalCheckoutButton = ({ product, handleSetCheckBill }) => {
         // link.download = "data.json";
 
         // link.click();
-        handleApprove(data.orderID);
+        // handleApprove(data.orderID);
       }}
       onError={(err) => {
         setError(err);

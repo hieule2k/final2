@@ -9,6 +9,7 @@ function MyInput({
   className,
   customContainerClasses,
   label,
+  value,
   account = false,
   ...props
 }) {
@@ -30,7 +31,13 @@ function MyInput({
       <label className={!account ? cx("label") : cx("account-edit")}>
         {label}
       </label>
-      <input className={classes} type={type} {...field} {...props} />
+      <input
+        className={classes}
+        value={value}
+        type={type}
+        {...field}
+        {...props}
+      />
       {meta.touched && meta.error ? (
         <div className={cx("error")}>{meta.error}</div>
       ) : null}

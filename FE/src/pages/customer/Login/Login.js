@@ -120,6 +120,7 @@ function Login1() {
                 <Button
                   className={cx("disabled")}
                   type="submit"
+                  green
                   fourth
                   onClick={handleContinue}
                   rounded
@@ -169,16 +170,6 @@ function Login1() {
           </form>
         )}
       </Formik>
-      {/* <div className={cx("login1-alt")}>Or Continue With</div> */}
-      {/* <div className={cx("alt-button__container")}>
-        <Button leftIcon={<BsFacebook />} fourth rounded medium>
-          Facebook
-        </Button>
-
-        <Button leftIcon={<BsGoogle />} fourth rounded medium>
-          Google
-        </Button>
-      </div> */}
     </div>
   );
 }

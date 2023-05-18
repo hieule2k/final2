@@ -20,8 +20,10 @@ import {
   AiOutlineHeart,
   AiOutlineArrowRight,
   AiFillStar,
+  AiFillHeart,
 } from "react-icons/ai";
 import DetailTable from "module/table/DetailTable";
+import { IconContext } from "react-icons";
 // import data5 from "../../json/hotel3.json";
 // import data4 from "../../json/hotel6.json";
 // import data3 from "../../json/hotelTopRated.json";
@@ -30,7 +32,7 @@ import DetailTable from "module/table/DetailTable";
 
 const cx = classNames.bind(styles);
 
-function Details() {
+function Details({ wishlist, handleLike }) {
   const [status, setStatus] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("rooms"));
 
@@ -47,9 +49,13 @@ function Details() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   const { name, address, list_image } = detailsHotel;
+  const itemExist = wishlist
+    ? wishlist.find((exa) => exa.id === detailsHotel.id)
+    : false;
+
   console.log(new Date());
   return (
     <LayoutPrimary>
@@ -62,8 +68,19 @@ function Details() {
               {/* <p className={cx("top-desc")}>{address.street}</p> */}
             </div>
             <div className={cx("top-icon")}>
-              <i className={cx("top-heart__icon")}>
-                <AiOutlineHeart />
+              <i
+                className={cx("top-heart__icon")}
+                onClick={() => {
+                  handleLike(detailsHotel);
+                }}
+              >
+                {itemExist ? (
+                  <IconContext.Provider value={{ color: "red" }}>
+                    <AiFillHeart />
+                  </IconContext.Provider>
+                ) : (
+                  <AiOutlineHeart />
+                )}
               </i>
               <i className={cx("top-share__icon")}>
                 <AiOutlineShareAlt />
@@ -397,8 +414,9 @@ function Details() {
             reserve
             title="Price Range"
             detailsHotel={detailsHotel}
+            id={id}
           ></DetailTable>
-          <DetailTable title="List Amenity"></DetailTable>
+          <DetailTable id={id} title="List Amenity"></DetailTable>
         </div>
       </div>
     </LayoutPrimary>
