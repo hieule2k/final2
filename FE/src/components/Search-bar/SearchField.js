@@ -27,24 +27,25 @@ const SearchField = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [query, setQuery] = useState("");
 
-  const [location, setLocation] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(
-        `http://103.184.113.181:81/hotels?page=1&limit=1&search_field=location&search_value=${query}`
-      );
-      if (response.data.items) {
-        setLocation(response.data.items);
-      } else {
-        setLocation([]);
-      }
-    }
-    fetchData();
-  }, [query]);
-  const handleClick = () => {
-    navigate("/Search", { state: { query: query } });
+  useEffect(() => {}, []);
+  const handleClick = (item) => {
+    navigate("/Search", { state: { item: item } });
   };
+  let arr = provinceData.data;
+  const filteredArray = [];
+  arr.map((x) => {
+    if (x.name) {
+      filteredArray.push(x.name);
+    }
+    return filteredArray;
+  });
 
+  let hieule = filteredArray.filter((x) => {
+    return (
+      x.toUpperCase().indexOf(query.toUpperCase()) !== -1 ||
+      x.toUpperCase().indexOf(query.split("").join(" ").toUpperCase()) !== -1
+    );
+  });
   return (
     <div className={cx("fragment")}>
       <div className={cx("search-field")}>
@@ -102,14 +103,15 @@ const SearchField = () => {
       </div>
       {isComponentVisible && query.length > 0 && (
         <div className={cx("search-results")} ref={ref}>
-          {provinceData.data.length > 0 &&
+          {hieule.length > 0 &&
             query.length > 0 &&
-            provinceData.data.map((item, index) => (
-              <div className={cx("search-item-wrapper")}>
+            hieule.map((item, index) => (
+              <div key={index} className={cx("search-item-wrapper")}>
                 <SearchItems
                   item={item}
-                  key={index}
-                  onClick={handleClick}
+                  onClick={() => {
+                    handleClick(item);
+                  }}
                 ></SearchItems>
               </div>
             ))}

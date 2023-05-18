@@ -74,7 +74,9 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         padTo2Digits(date.getHours()),
         padTo2Digits(date.getMinutes()),
         padTo2Digits(date.getSeconds()),
-      ].join(":")
+      ].join(":") +
+      "." +
+      ["000", "00"].join(" +")
     );
   }
 
@@ -111,7 +113,7 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
     });
   };
 
-  console.log(bookedData);
+  console.log(formatDate(startDate));
   // console.log(cart);
 
   const handleIncrease = (item) => {

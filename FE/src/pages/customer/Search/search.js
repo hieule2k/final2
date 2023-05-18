@@ -8,26 +8,34 @@ import LayoutPrimary from "layouts/LayoutPrimary";
 import SearchField from "components/Search-bar/SearchField";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import Button from "components/Button/Button";
 const cx = classNames.bind(styles);
 function Search({ handleLike }) {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
   const location = useLocation();
-  // const a = location.state.query;
+  const a = location.state.item;
+  async function fetchData(page) {
+    const response = await axios.get(
+      `http://103.184.113.181:81/hotels?page=${page}&limit=4&search_field=location&search_value=${a}`
+    );
+    console.log(response.data.items);
+    setTotal(response.data.total_count);
+    return response.data.items;
+  }
+  const handleLoadMore = () => {
+    fetchData(pageNumber).then((hotel) => {
+      console.log(hotel);
 
+      const newHotel = [...data, ...hotel];
+      setData(newHotel);
+      setPageNumber(pageNumber + 1);
+    });
+  };
   useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(
-        `http://103.184.113.181:81/hotels?page=1&limit=1&search_field=location&search_value=Ha`
-      );
-      if (response.data.items) {
-        setData(response.data.items);
-        setTotal(response.data.total_count);
-      }
-    }
-    fetchData();
+    handleLoadMore();
   }, []);
-  console.log(data);
   return (
     <LayoutPrimary>
       <div className={cx("search-wrapper")}>
@@ -52,6 +60,15 @@ function Search({ handleLike }) {
               <div></div>
             )}
           </CardList>
+          <Button
+            green
+            medium
+            onClick={() => {
+              handleLoadMore();
+            }}
+          >
+            Load More
+          </Button>
         </div>
       </div>
     </LayoutPrimary>
