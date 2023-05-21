@@ -8,7 +8,7 @@ import Details from './pages/customer/Details/Details';
 import HomeBooking from './pages/customer/Home-Booking/Home-Booking';
 import Search from './pages/customer/Search/search';
 import SignUp from './pages/customer/SignUp/SignUp';
-import Auth from './layouts_dashboard/auth';
+// import Auth from './layouts_dashboard/auth';
 import ButtonTest from './pages/ButtonTest/ButtonTest';
 import Account from './pages/customer/Account/Account';
 import Wishlists from './pages/customer/Wishlists/Wishlists';
@@ -24,13 +24,13 @@ import HostReservation from '../src/pages/HostSite/HostReservation/HostReservati
 import TransactionHistory from './pages/HostSite/TransactionHistory/TransactionHistory';
 import ScrollToTop from './components/ScrollToTop';
 import '@fontsource/mulish'; // Import font
-import HostSelect from './pages/HostSite/HostSelect/HostSelect';
+// import HostSelect from './pages/HostSite/HostSelect/HostSelect';
 import LoginHost from './pages/HostSite/LoginHost/LoginHost';
 import axios from 'axios';
 import Login from 'pages/customer/Login/Login';
 import UpdateHotel from 'pages/HostSite/UpdateHotel/UpdateHotel';
-import { Dashboard } from 'pages/HostSite/Dashboard/Dashboard';
-import UserReports from 'views/admin/default';
+import Dashboard from 'pages/HostSite/Dashboard/Dashboard';
+// import UserReports from 'views/admin/default';
 function App() {
     const [currentAccount, setCurrentAccount] = useState(() => {
         const storageData = JSON.parse(localStorage.getItem('userData'));
@@ -222,10 +222,6 @@ function App() {
                     <Route path="/HostReservation" element={<HostReservation />} />
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/TransactionHistory" element={<TransactionHistory />} />
-                    <Route path="/HostSelect" element={<HostSelect />} />
-                    <Route path="/Auth" element={<Auth />} />
-                    <Route path="/Admin" element={<Admin />} />
-                    <Route path="/rtl" element={<UserReports />} />
                     <Route path="/LoginHost" element={<LoginHost />} />
                 </Routes>
             </div>

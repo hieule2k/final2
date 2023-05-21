@@ -133,21 +133,6 @@ function NavBar({ host = false }) {
                         </Link>
                     </li>
                     <li className={cx('menu-nav__item')}>
-                        <Link to="/Auth" className={cx('menu-nav__link')}>
-                            Auth
-                        </Link>
-                    </li>
-                    <li className={cx('menu-nav__item')}>
-                        <Link to="/Adnin" className={cx('menu-nav__link')}>
-                            Admin
-                        </Link>
-                    </li>
-                    <li className={cx('menu-nav__item')}>
-                        <Link to="/rtl" className={cx('menu-nav__link')}>
-                            rtl
-                        </Link>
-                    </li>
-                    <li className={cx('menu-nav__item')}>
                         <Link to="/" className={cx('menu-nav__link')}>
                             <i>
                                 <svg width="15" height="15" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
