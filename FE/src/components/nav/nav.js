@@ -1,71 +1,75 @@
-import React, { useState } from 'react';
-import styles from './nav.module.css';
-import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
-import HeadlessTippy from '@tippyjs/react/headless';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/scale.css';
-import avatar from '../../assets/img/image1.png';
-import user from '../../assets/img/Vector.png';
+import React, { useState } from "react";
+import styles from "./nav.module.css";
+import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
+import HeadlessTippy from "@tippyjs/react/headless";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/scale.css";
+import avatar from "../../assets/img/image1.png";
+import user from "../../assets/img/Vector.png";
 const cx = classNames.bind(styles);
 
 function NavBar({ host = false }) {
-    const [account, setAccount] = useState(() => {
-        const storageData = JSON.parse(localStorage.getItem('userData'));
+  const [account, setAccount] = useState(() => {
+    const storageData = JSON.parse(localStorage.getItem("userData"));
 
-        return storageData ?? false;
-    });
+    return storageData ?? false;
+  });
 
-    const handleLogOut = () => {
-        localStorage.removeItem('wishlist');
-        localStorage.removeItem('userData');
-        setAccount([]);
-        window.location.href = '/';
-    };
+  const handleLogOut = () => {
+    localStorage.removeItem("wishlist");
+    localStorage.removeItem("userData");
+    setAccount([]);
+    window.location.href = "/";
+  };
 
-    return (
-        <header className={cx('header')}>
-            <HeadlessTippy
-                trigger="click"
-                hideOnClick
-                interactive
-                placement="bottom-end"
-                render={(attrs) => (
-                    <div className={cx('wrapper')}>
-                        <div className={cx('content')} tabIndex="-1" {...attrs}>
-                            <ul className={cx('sign-in-option')}>
-                                {!account ? (
-                                    <li className={cx('sign-in-list')}>
-                                        <Link to="/SignUp">Sign Up</Link>
-                                    </li>
-                                ) : (
-                                    <li className={cx('sign-in-list')}>
-                                        <Link to="/Account">Account</Link>
-                                    </li>
-                                )}
-                                {!account ? (
-                                    <li className={cx('sign-in-list')}>
-                                        <Link to="/Login">Login</Link>
-                                    </li>
-                                ) : (
-                                    <li className={cx('sign-in-list')} onClick={handleLogOut}>
-                                        Log Out
-                                    </li>
-                                )}
-                                <li className={cx('sign-in-list')}>Help center</li>
-                            </ul>
-                        </div>
-                    </div>
+  return (
+    <header className={cx("header")}>
+      <HeadlessTippy
+        trigger="click"
+        hideOnClick
+        interactive
+        placement="bottom-end"
+        render={(attrs) => (
+          <div className={cx("wrapper")}>
+            <div className={cx("content")} tabIndex="-1" {...attrs}>
+              <ul className={cx("sign-in-option")}>
+                {!account ? (
+                  <li className={cx("sign-in-list")}>
+                    <Link to="/SignUp">Sign Up</Link>
+                  </li>
+                ) : (
+                  <li className={cx("sign-in-list")}>
+                    <Link to="/Account">Account</Link>
+                  </li>
                 )}
-            >
-                <img className={cx('user-avatar')} src={account ? avatar : user} alt="no img" />
-            </HeadlessTippy>
+                {!account ? (
+                  <li className={cx("sign-in-list")}>
+                    <Link to="/Login">Login</Link>
+                  </li>
+                ) : (
+                  <li className={cx("sign-in-list")} onClick={handleLogOut}>
+                    Log Out
+                  </li>
+                )}
+                <li className={cx("sign-in-list")}>Help center</li>
+              </ul>
+            </div>
+          </div>
+        )}
+      >
+        <img
+          className={cx("user-avatar")}
+          src={account ? avatar : user}
+          alt="no img"
+        />
+      </HeadlessTippy>
 
-            <Link to={host ? '/HostPage' : '/'}>
-                <div className={cx('menu__relocate')}>
-                    <span>Relocate</span>
-                </div>
-            </Link>
+      <Link to={host ? "/HostPage" : "/"}>
+        <div className={cx("menu__relocate")}>
+          <span>Relocate</span>
+        </div>
+      </Link>
 
             {!host && (
                 <ul className={cx('menu-nav')}>

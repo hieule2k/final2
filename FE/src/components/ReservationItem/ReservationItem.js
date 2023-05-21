@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./ReservationItem.module.css";
 import img from "../../assets/img/image1.png";
@@ -8,20 +8,24 @@ import PlusIcon from "module/Icons/PlusIcon";
 import { useLocation } from "react-router-dom";
 const cx = classNames.bind(styles);
 
-function ReservationItem({ removeItem, id, item }) {
-  const [total, setTotal] = useState(1);
+function ReservationItem({
+  removeItem,
+  id,
+  item,
+  calculatePrice,
+  handleIncrease,
+  handleDecrease,
+}) {
   const { name, type, price } = item;
-  const handleIncrease = () => {
-    total < 4 && setTotal((prev) => prev + 1);
-  };
+  // const handleIncrease = () => {
+  //   total < 4 && setTotal((prev) => prev + 1);
+  // };
 
-  const handleDecrease = () => {
-    total > 1 && setTotal((prev) => prev - 1);
-  };
+  // const handleDecrease = () => {
+  //   total > 1 && setTotal((prev) => prev - 1);
+  // };
   const location = useLocation();
-
   const data = location.state.hotelData;
-  console.log(data);
   return (
     <div className={cx("reservation-item")}>
       <div className={cx("img-container")}>
@@ -45,15 +49,19 @@ function ReservationItem({ removeItem, id, item }) {
             Total Rooms:
             <MinusIcon
               customclass={cx("icon")}
-              onClick={handleDecrease}
+              onClick={() => {
+                handleDecrease(item);
+              }}
             ></MinusIcon>
-            <span style={{ width: "10px" }}>{total}</span>
+            <span style={{ width: "10px" }}>{item.quantity}</span>
             <PlusIcon
               customclass={cx("icon")}
-              onClick={handleIncrease}
+              onClick={() => {
+                handleIncrease(item);
+              }}
             ></PlusIcon>
           </div>
-          <div>Price per room: {price * total}$</div>
+          <div> Total : {price * item.quantity}$</div>
         </div>
       </div>
     </div>

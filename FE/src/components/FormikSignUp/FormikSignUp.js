@@ -13,13 +13,6 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 function FormikSignUp({ host = false }) {
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-  // }, [data]);
   const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
   const navigate = useNavigate();
   let role = "customer";
