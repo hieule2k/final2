@@ -15,7 +15,7 @@ import axios from "axios";
 
 const cx = classNames.bind(styles);
 
-const Modal = ({ userId, hotel }) => {
+const Modal = ({ userId, hotel, handleModalVisible }) => {
   const naviage = useNavigate();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -53,7 +53,7 @@ const Modal = ({ userId, hotel }) => {
           //   .catch(function (error) {
           //     console.log(error);
           //   });
-          naviage("/ReservationStatus");
+          // naviage("/ReservationStatus");
           resetForm({
             text: "",
             type: "",
@@ -72,7 +72,10 @@ const Modal = ({ userId, hotel }) => {
             <div className={cx("modal-content")}>
               <div className={cx("top-wrapper")}>
                 <h2>Review</h2>
-                <CloseIcon customclass={cx("close-icon")}></CloseIcon>
+                <CloseIcon
+                  customclass={cx("close-icon")}
+                  onClick={handleModalVisible}
+                ></CloseIcon>
               </div>
               <div className={cx("hotel-information__container")}>
                 <img
@@ -121,7 +124,13 @@ const Modal = ({ userId, hotel }) => {
                 ></TextAreaFormik>
               </div>
               <div className={cx("button-wrapper")}>
-                <Button bgGray small black>
+                <Button
+                  type="button"
+                  bgGray
+                  small
+                  black
+                  onClick={handleModalVisible}
+                >
                   Cancel
                 </Button>
                 <Button small green type="submit">

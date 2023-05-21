@@ -30,6 +30,7 @@ function Card({
   className,
   mb300,
   name,
+  deleteHotel,
   address,
   thumbnail,
   handleLike,
@@ -189,7 +190,14 @@ function Card({
           >
             Modify
           </Button>
-          <Button small rounded className={cx("remove")}>
+          <Button
+            small
+            rounded
+            className={cx("remove")}
+            onClick={() => {
+              deleteHotel(id);
+            }}
+          >
             Remove
           </Button>
         </div>

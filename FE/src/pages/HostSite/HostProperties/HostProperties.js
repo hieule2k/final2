@@ -14,6 +14,25 @@ function HostProperties() {
     return storageData ?? [];
   });
   const [listHotels, setListHotels] = useState([]);
+  const deleteHotel = (id) => {
+    axios
+      .delete(`http://103.184.113.181:81/hotel/${id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      });
+  };
   useEffect(() => {
     axios
       .get(
@@ -49,6 +68,7 @@ function HostProperties() {
                   thumbnail={x.list_image[0].url}
                   wishlists
                   host
+                  deleteHotel={deleteHotel}
                 >
                   {x.name}
                 </Card>

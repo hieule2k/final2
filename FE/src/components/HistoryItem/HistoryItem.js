@@ -1,22 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./HistoryItem.module.css";
 import avatar from "../../assets/img/avatar.jpg";
 import Button from "../Button/Button";
+import axios from "axios";
+import Modal from "../../module/modal/Modal";
 
 const cx = classNames.bind(styles);
 
 function HistoryItem({
-  children,
   host = false,
   past = false,
+  userId,
   item,
   removeItem,
   handleHistory,
 }) {
-  // const { name, address, id, list_image } = item.hotel;
+  const { id, book_date, total_price } = item;
+  const [visible, setVisible] = useState(false);
+
+  const [hotelData, setHotelData] = useState([]);
+  const handleModalVisible = () => {
+    setVisible(!visible);
+  };
+  useEffect(() => {
+    const handleFetchHotelData = async () => {
+      try {
+        const res = await axios.get(`http://103.184.113.181:81/hotel/${id}`);
+        console.log(res);
+        setHotelData(res.data);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      }
+    };
+    handleFetchHotelData();
+  }, [id]);
   return (
     <div className={cx("history-item")}>
+      {visible && (
+        <Modal
+          handleModalVisible={handleModalVisible}
+          userId={userId}
+          hotel={hotelData}
+        ></Modal>
+      )}
+
       <div className={cx("item-container")}>
         <div className={cx("col-left")}>
           <div className={cx("img-container")}>
@@ -30,16 +67,15 @@ function HistoryItem({
             <div className={cx("item-title")}>hotel</div>
             <div className={cx("item-specific")}>
               <div className={cx("specific")}>
-                Check In: <span className={cx("time")}>12 Mar 2021</span>
+                Check In:{" "}
+                <span className={cx("time")}>{book_date.split(" ")[0]}</span>
               </div>
-              <div className={cx("specific")}>
-                Duration: <span className={cx("time")}>Long (2-5 Years)</span>
-              </div>
-              <div className={cx("specific")}>
+
+              {/* <div className={cx("specific")}>
                 Guest: <span className={cx("time")}>12 Mar 2021</span>
-              </div>
+              </div> */}
             </div>
-            <div className={cx("item-price")}>$1000</div>
+            <div className={cx("item-price")}>{total_price}$</div>
           </div>
         </div>
         <div className={cx("col-right")}>
@@ -71,6 +107,9 @@ function HistoryItem({
                 // }}
               >
                 Cancel Reservation
+              </Button>
+              <Button medium green orange onClick={handleModalVisible}>
+                Review
               </Button>
               {past && (
                 <Button

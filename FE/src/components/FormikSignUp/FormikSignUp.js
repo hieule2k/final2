@@ -3,10 +3,11 @@ import { Formik } from "formik";
 import styles from "./FormikSignUp.module.css";
 import axios from "axios";
 import * as Yup from "yup";
-import MyInput from "../../components/MyInput/MyInput";
-import InputRadio from "../InputRadio/InputRadio";
-import RadioFormik from "../RadioFormik/RadioFormik";
+
 import Button from "../../components/Button/Button";
+
+import MyInput from "../../components/MyInput/MyInput";
+import RadioFormik from "../RadioFormik/RadioFormik";
 import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 
@@ -118,7 +119,9 @@ function FormikSignUp({ host = false }) {
                   name="user.email"
                   placeholder="Enter your email"
                 ></MyInput>
-
+                <Button type="text" green medium>
+                  Send verfication
+                </Button>
                 <MyInput
                   type="password"
                   label="Password"

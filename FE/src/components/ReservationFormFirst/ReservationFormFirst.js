@@ -274,11 +274,11 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
             <p>{totalPrices}</p>
           </div>
           <div className={cx("fee")}>
-            <p>Tax: </p>
+            <p>Tax: 10%</p>
             <p>a</p>
           </div>
           <div className={cx("fee", "total-price")}>
-            <p>Totals fee:</p>
+            <p>Totals fee: {totalPrices * 0.1 + totalPrices}</p>
             <p></p>
           </div>
         </div>
