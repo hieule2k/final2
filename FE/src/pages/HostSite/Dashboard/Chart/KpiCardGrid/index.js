@@ -19,9 +19,7 @@ export default function KpiCardGrid() {
 
             {selectedView === '1' ? (
                 <>
-                    <Grid numColsLg={3} className="mt-6 gap-6">
-                        <KpiCard />
-                        <KpiCard />
+                    <Grid>
                         <KpiCard />
                     </Grid>
 
