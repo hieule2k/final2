@@ -1,9 +1,13 @@
+.table_admin {
+    background-color: #e7e9eb;
+    min-height: 100vh;
+    flex: 1;
+}
+
 @media (min-width: 800px) {
     .wrapper {
         font-family: Mulish; /*install --- npm install @fontsource/mulish */
-        /* display: grid;
-        grid-template-columns: 200px 1fr; */
-
+        display: flex;
     }
     nav {
         padding: 15px 10px;
@@ -34,7 +38,8 @@
         margin-right: 20px;
         position: relative;
     }
-    .h1, .h2 {
+    .h1,
+    .h2 {
         font-size: 24px;
         font-weight: bold;
         padding: 25px 16px;
@@ -44,11 +49,8 @@
         color: #1b1b1b;
     }
     .aside {
-        position: fixed;
-        align-self: start;
         background-color: #1b1b1b;
         color: #9fa2b4;
-        height: 100%;
         width: 200px;
     }
     .tab_bar {
@@ -57,11 +59,7 @@
     .tab_bar:hover {
         background-color: #2e3c8f;
     }
-    main {
-        background-color: #e7e9eb;
-        min-height: 100vh;
-        margin-left: 200px;
-    }
+
     .header {
         text-transform: capitalize;
         text-align: left;
@@ -129,15 +127,14 @@
     }
 
     .red {
-        background-color: #F12b2c;
+        background-color: #f12b2c;
     }
-    
+
     .yeallow {
-        background-color: #FEC400;
+        background-color: #fec400;
     }
-    
+
     .green {
-        background-color: #22C71F;
-        
+        background-color: #22c71f;
     }
 }

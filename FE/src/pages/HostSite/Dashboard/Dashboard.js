@@ -1,3 +1,21 @@
+<<<<<<< HEAD
+import React from 'react';
+import { Card, Metric, Text } from '@tremor/react';
+import KpiCardGrid from './Chart/KpiCardGrid';
+import './Dashboard.css';
+import NavBar from 'components/nav/nav';
+
+const Dashboard = () => {
+    return (
+        <div>
+            <NavBar host />
+            <KpiCardGrid />
+        </div>
+    );
+};
+
+export default Dashboard;
+=======
 // Chakra imports
 import { Portal, Box, useDisclosure } from "@chakra-ui/react";
 import Footer from "components/DashBoard/footer/FooterAdmin";
@@ -170,3 +188,4 @@ export default function Dashboard(props) {
     </Box>
   );
 }
+>>>>>>> 92882f1561f369970bf90b2204bb3e32f53cd727
