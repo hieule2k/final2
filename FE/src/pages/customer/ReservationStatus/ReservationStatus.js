@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ReservationStatus.module.css";
 import HistoryItem from "../../../components/HistoryItem/HistoryItem";
 import classNames from "classnames/bind";
 import LayoutPrimary from "layouts/LayoutPrimary";
 import Modal from "../../../module/modal/Modal";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function ReservationStatus() {
+  const [customerHistoryBooking, setCustomerHistoryBooking] = useState([]);
   const [room, setRooms] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("status"));
 
@@ -18,7 +20,6 @@ function ReservationStatus() {
 
     return storageRoomsData ?? [];
   });
-  // console.log(room);
   const removeItem = (id) => {
     if (room.length > 0) {
       const newItems = room.filter((itemx) => itemx.id !== id);
@@ -31,13 +32,36 @@ function ReservationStatus() {
     }
   };
   const userhistory = room.filter((item) => item.id === user.id);
-  console.log(userhistory);
   const [tab, setTab] = useState(true);
   const handleSetTab = () => {
     setTab(!tab);
   };
   const [modal, setModal] = useState(false);
   const tabActive = cx("tab-active");
+
+  useEffect(() => {
+    const getCustomerBookingHistory = async () => {
+      try {
+        const res = await axios.get(
+          `http://103.184.113.181:88/customer_bookings?limit=10&page=1&customer_id=${user.id}`
+        );
+        console.log(res.data.items);
+        setCustomerHistoryBooking(res.data.items);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      }
+    };
+    getCustomerBookingHistory();
+  }, [user.id]);
   return (
     <LayoutPrimary>
       {modal && <Modal></Modal>}
@@ -85,16 +109,14 @@ function ReservationStatus() {
         </div>
         {tab ? (
           <div className={cx("status")}>
-            {userhistory.length > 0 &&
-              userhistory.map((item) => (
+            {customerHistoryBooking.length > 0 &&
+              customerHistoryBooking.map((item) => (
                 <HistoryItem
-                  key={item.hotel.id}
                   item={item}
+                  userId={user.id}
                   removeItem={removeItem}
                 />
               ))}
-            <HistoryItem removeItem={removeItem} />
-            <HistoryItem removeItem={removeItem} />
           </div>
         ) : (
           <div className={cx("status")}>

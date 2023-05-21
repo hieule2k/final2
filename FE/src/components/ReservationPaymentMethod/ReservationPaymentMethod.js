@@ -10,13 +10,14 @@ import Modal from "../../module/modal/Modal";
 
 import { BiArrowBack } from "react-icons/bi";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [bookingData, setBookingData] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("bookingData"));
 
@@ -40,7 +41,6 @@ function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
       status: "complete",
     },
   };
-  const [visible, setVisible] = useState(false);
   const [room, setRooms] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("rooms"));
 
@@ -74,11 +74,10 @@ function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
         JSON.stringify(x)
       );
       console.log(res);
+      navigate("/ReservationStatus");
     } catch (error) {
       console.log(error);
     }
-
-    return setVisible(!visible);
   }
 
   const paypal = {
@@ -87,7 +86,6 @@ function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
   };
   return (
     <div className={cx("reservation-payment-method")}>
-      {visible && <Modal userId={user.id} hotel={data}></Modal>}
       <div className={cx("information")}>
         <div className={cx("col-2")}>
           <div className={cx("title")}>
