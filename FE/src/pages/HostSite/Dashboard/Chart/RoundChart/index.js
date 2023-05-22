@@ -1,25 +1,25 @@
 import { Card, Title, DonutChart, Button, Flex } from '@tremor/react';
 
-const cities = [
+const rate = [
     {
-        name: 'New York',
-        vote: 9800,
+        name: '5 stars',
+        votes: 9800,
     },
     {
-        name: 'London',
-        vote: 4567,
+        name: '4 stars',
+        votes: 4567,
     },
     {
-        name: 'Hong Kong',
-        vote: 3908,
+        name: '3 stars',
+        votes: 3908,
     },
     {
-        name: 'San Francisco',
-        vote: 2400,
+        name: '2 stars',
+        votes: 2400,
     },
     {
-        name: 'Singapore',
-        vote: 1908,
+        name: '1 star',
+        votes: 1908,
     },
 ];
 
@@ -30,8 +30,8 @@ export const RoundChart = () => (
         <Title>Vote</Title>
         <DonutChart
             className="mt-6 h-96"
-            data={cities}
-            category="vote"
+            data={rate}
+            category="votes"
             index="name"
             variant="pie"
             showLabel="true"
