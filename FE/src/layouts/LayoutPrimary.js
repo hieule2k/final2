@@ -3,10 +3,10 @@ import NavBar from 'components/nav/nav';
 import React from 'react';
 
 const LayoutPrimary = (props) => {
-    const { host = false, children } = props;
+    const { host = 'false', children } = props;
     return (
         <div style={{ position: 'relative' }}>
-            <NavBar host></NavBar>
+            <NavBar></NavBar>
             {children}
             <Footer></Footer>
         </div>
