@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import styles from "./FormikSignUp.module.css";
 import axios from "axios";
@@ -14,15 +14,46 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 function FormikSignUp({ host = false }) {
+  const ref = useRef(null);
+  const [userEmail, setUserEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [status, setStatus] = useState(false);
+  const [checkOtp, setCheckOtp] = useState(false);
   const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
   const navigate = useNavigate();
   let role = "customer";
   if (host) {
     role = "host";
   }
+  const handleEmailVerification = async () => {
+    try {
+      const res = await axios.post(
+        `http://103.184.113.181/account/verification_email?username=${userEmail}`,
+        JSON.stringify(userEmail)
+      );
+      console.log(res);
+      setStatus(res.data.status);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleChange = (e) => {
+    setCode(e.target.value);
+  };
+
+  const handleOtp = async () => {
+    const res = await axios.post(
+      `http://103.184.113.181/account/check_expiration_time?otp_code=${code}`,
+      JSON.stringify(code)
+    );
+    console.log(res);
+    setCheckOtp(res.data.message);
+  };
   return (
     <div className={cx("sign-up")}>
       <Formik
+        innerRef={ref}
+        enableReinitialize={true}
         initialValues={{
           role: role,
           description: "abcxyz",
@@ -103,6 +134,7 @@ function FormikSignUp({ host = false }) {
         {(formik) => (
           <form onSubmit={formik.handleSubmit} className={cx("sign-up__form")}>
             <div className={cx("wrapper")}>
+              {setUserEmail(formik.values.user.email)}
               <div className={cx("col-left")}>
                 <MyInput
                   type="text"
@@ -111,17 +143,49 @@ function FormikSignUp({ host = false }) {
                   name="user.name"
                   placeholder="Enter your Full Name"
                 ></MyInput>
+                {checkOtp !== "Checking OTP successfully" ? (
+                  <MyInput
+                    type="email"
+                    label="Email Address"
+                    className={cx("input")}
+                    customContainerClasses={cx("position")}
+                    name="user.email"
+                    placeholder="Enter your email"
+                  >
+                    <Button
+                      type="button"
+                      className={cx("verification")}
+                      onClick={handleEmailVerification}
+                    >
+                      {status !== "OK" ? "Send verfication" : "Resend Code"}
+                    </Button>
+                    <input
+                      placeholder="code"
+                      name="otp"
+                      className={cx("otp")}
+                      onChange={handleChange}
+                    />
+                    <Button
+                      type="button"
+                      className={cx("confirmOtp")}
+                      onClick={handleOtp}
+                    >
+                      Confirm
+                    </Button>
+                  </MyInput>
+                ) : (
+                  <MyInput
+                    type="email"
+                    label="Email Address"
+                    className={cx("input")}
+                    customContainerClasses={cx("position")}
+                    name="user.email"
+                    placeholder="Enter your email"
+                  >
+                    <div className={cx("success-email")}>Email verificated</div>
+                  </MyInput>
+                )}
 
-                <MyInput
-                  type="email"
-                  label="Email Address"
-                  className={cx("input")}
-                  name="user.email"
-                  placeholder="Enter your email"
-                ></MyInput>
-                <Button type="text" green medium>
-                  Send verfication
-                </Button>
                 <MyInput
                   type="password"
                   label="Password"
@@ -164,7 +228,7 @@ function FormikSignUp({ host = false }) {
             <Button
               className={cx("sign-up__button", "disabled")}
               type="submit"
-              fourth
+              green
               rounded
               disabled={formik.isSubmitting || !formik.isValid}
             >

@@ -110,3 +110,48 @@
 .disabled span {
     text-align: center;
 }
+
+
+.position {
+    position: relative;
+}
+
+.verification {
+    position: absolute;
+    right: 20px;
+    height: 20px;
+    width: 20px;
+    padding: 5px 10px;
+    font-size: 8px;
+    color: black;
+}
+
+.otp {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    height: 20px;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 8px;
+    color: black;
+}
+
+.confirmOtp {
+    position: absolute;
+    right: 20px;
+    bottom: -30px;
+    height: 20px;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 8px;
+    color: black;
+}
+
+.success-email {
+    font-size: 14px;
+    color: greenyellow;
+    font-weight: 700;
+}
