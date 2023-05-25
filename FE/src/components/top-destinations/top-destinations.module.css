@@ -19,7 +19,7 @@
 .top-destinations__top {
     position: absolute;
     left: 45%;
-    top: 10px;
+    top:-20px;
     color: rgba(251, 231, 126, 1);
     font-family: var(--font-allision);
     font-weight: 400;

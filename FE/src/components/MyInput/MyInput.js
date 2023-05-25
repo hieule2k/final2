@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 function MyInput({
+  children,
   type,
   className,
   customContainerClasses,
@@ -41,6 +42,7 @@ function MyInput({
       {meta.touched && meta.error ? (
         <div className={cx("error")}>{meta.error}</div>
       ) : null}
+      {children}
     </div>
   );
 }
