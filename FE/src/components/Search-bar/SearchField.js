@@ -19,17 +19,53 @@ const CalendarContainer = ({ children }) => {
 
 const cx = classNames.bind(styles);
 
-const SearchField = () => {
+const SearchField = ({ data, setData }) => {
+  // console.log(handleSearch);
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [query, setQuery] = useState("");
+  const [param, setParam] = useState({
+    startDate: formatDate(startDate),
+    endDate: formatDate(endDate),
+  });
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, "0");
+  }
 
-  useEffect(() => {}, []);
+  function formatDate(date) {
+    return (
+      [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth() + 1),
+        padTo2Digits(date.getDate()),
+      ].join("-") +
+      " " +
+      [
+        padTo2Digits(date.getHours()),
+        padTo2Digits(date.getMinutes()),
+        padTo2Digits(date.getSeconds()),
+      ].join(":") +
+      "." +
+      ["000", "00"].join(" +")
+    );
+  }
+
   const handleClick = (item) => {
-    navigate("/Search", { state: { item: item } });
+    setParam({ ...param, name: item });
+    setIsComponentVisible(false);
+    setQuery(item);
+  };
+  const handleClickStartDate = (date) => {
+    setStartDate(date);
+    setParam({ ...param, startDate: formatDate(date) });
+  };
+
+  const handleClickEndDate = (date) => {
+    setEndDate(date);
+    setParam({ ...param, endDate: formatDate(date) });
   };
   let arr = provinceData.data;
   const filteredArray = [];
@@ -46,19 +82,34 @@ const SearchField = () => {
       x.toUpperCase().indexOf(query.split("").join(" ").toUpperCase()) !== -1
     );
   });
+
+  const fetchData = async () => {
+    const response = await axios.get(
+      `http://103.184.113.181:81/hotels?page=1&limit=4&location=${param.name}&check_in=${param.startDate}&check_out=${param.endDate}`
+    );
+    setData(response.data.items);
+  };
+
+  const handleSearch = () => {
+    if (data) {
+      fetchData();
+    } else if (!data) {
+      navigate("/Search", { state: { item: param } });
+    }
+  };
+
   return (
     <div className={cx("fragment")}>
       <div className={cx("search-field")}>
         <div className={cx("item-container")}>
-          <div
-            className={cx("search-item")}
-            onClick={() => {
-              setIsComponentVisible(!isComponentVisible);
-            }}
-          >
+          <div className={cx("search-item")}>
             <span className={cx("search-title")}>Location</span>
             <input
               className={cx("search-action")}
+              onClick={() => {
+                setIsComponentVisible(true);
+              }}
+              value={query}
               placeholder="Which city do you prefer?"
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -70,7 +121,7 @@ const SearchField = () => {
               <DatePicker
                 portalId="root-portal"
                 selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                onChange={(date) => handleClickStartDate(date)}
               />
             </span>
           </div>
@@ -79,7 +130,7 @@ const SearchField = () => {
             <span className={cx("search-action")}>
               <DatePicker
                 selected={endDate}
-                onChange={(date) => setEndDate(date)}
+                onChange={(date) => handleClickEndDate(date)}
                 popperContainer={CalendarContainer}
               />
             </span>
@@ -91,15 +142,18 @@ const SearchField = () => {
           </div>
         </div>
 
-        <Link to="/Search">
-          <div className={cx("search-icon__container")}>
-            <IconContext.Provider value={{ color: "#fff", size: "20px" }}>
-              <i className={cx(".search-icon")}>
-                <BsSearch />
-              </i>
-            </IconContext.Provider>
-          </div>
-        </Link>
+        <div
+          className={cx("search-icon__container")}
+          onClick={() => {
+            handleSearch(param);
+          }}
+        >
+          <IconContext.Provider value={{ color: "#fff", size: "20px" }}>
+            <i className={cx(".search-icon")}>
+              <BsSearch />
+            </i>
+          </IconContext.Provider>
+        </div>
       </div>
       {isComponentVisible && query.length > 0 && (
         <div className={cx("search-results")} ref={ref}>

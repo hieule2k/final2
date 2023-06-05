@@ -27,6 +27,11 @@
     font-size: 28px;
 }
 
+.top-icon {
+    display: flex ;
+    
+}
+
 .top-desc {
     font-size: 16px;
     color: #9a9a9a;

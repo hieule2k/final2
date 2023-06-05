@@ -25,7 +25,7 @@ function UpdateHotel() {
     try {
       const res = await axios.put(
         `http://103.184.113.181:81/hotel/${data.id}`,
-        JSON.stringify({ values })
+        JSON.stringify(values)
       );
       console.log(res);
     } catch (error) {
@@ -91,24 +91,14 @@ function UpdateHotel() {
         validateOnMount
         onSubmit={(values, { resetForm, setSubmitting }) => {
           putData(values);
-          console.log(JSON.stringify(values));
+          console.log(values);
           // axios
-          //   .put(`103.184.113.181:81/hotel/${data.id}`, JSON.stringify(values))
+          //   .put(
+          //     `http://103.184.113.181:81/hotel/${data.id}`,
+          //     JSON.stringify(values)
+          //   )
           //   .then(function (response) {
-          //     // const hotelDataJson = JSON.stringify(response.data.id);
-          //     // localStorage.setItem("hotelData", hotelDataJson);
-          //     // navigate("/AddRooms1", {
-          //     //   state: {
-          //     //     value: "addproperty1",
-          //     //   },
-          //     // });
-          //     console.log(values);
-          //     console.log("success");
           //     console.log(response);
-          //   })
-          //   .catch(function (error) {
-          //     console.log(error);
-          //     console.log(values);
           //   });
         }}
       >

@@ -74,14 +74,13 @@ function Card({
   } else if (wishlists && !host) {
     src = "/Wishlists";
   } else if (wishlists && host) {
-    src = "/AddRooms1";
+    src = "/AddRoom";
   }
   // const props = { onClick };
 
   const toUpdateHotel = () => {
     navigate("/UpdateHotel", { state: { hotel: x } });
   };
-
   return (
     <div className={fragment}>
       {!guide && !row && !wishlists && (
@@ -105,7 +104,8 @@ function Card({
           <AiOutlineClose />
         </i>
       )}
-      <Link to={src} state={host ? { value: "addproperty2" } : null}>
+
+      <Link to={src} state={host ? { id: x.id } : null}>
         <div
           className={cardClasses}
           style={{ backgroundImage: `url(${thumbnail})` }}

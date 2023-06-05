@@ -230,7 +230,7 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         <div className={cx("col-3")}>
           <h2 className={cx("top-heading")}>Details</h2>
           <div className={cx("total-days")}>
-            <p className={cx("total")}>Total Days: {result}</p>
+            <p className={cx("total")}>Total Days: {result + 1}</p>
           </div>
         </div>
         <div className={cx("col-3")}>
@@ -275,7 +275,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
           </div>
           <div className={cx("fee")}>
             <p>Tax: 10%</p>
-            <p>a</p>
           </div>
           <div className={cx("fee", "total-price")}>
             <p>Totals fee: {totalPrices * 0.1 + totalPrices}</p>

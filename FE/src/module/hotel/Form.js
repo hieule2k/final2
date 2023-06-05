@@ -78,13 +78,13 @@ const Form = () => {
             type="number"
           ></MyInput>
         </div> */}
-          <div className={cx("input-container")}>
+          {/* <div className={cx("input-container")}>
             <h3>Add facilities available at your place.</h3>
             <div className={cx("counter-container")}>
               <Counter>Pool</Counter>
               <Counter>Parking lot</Counter>
             </div>
-          </div>
+          </div> */}
           <div className={cx("input-container")}>
             <div>
               <h3 style={{ marginBottom: "25px" }}>

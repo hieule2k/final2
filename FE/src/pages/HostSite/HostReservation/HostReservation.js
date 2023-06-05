@@ -1,36 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./HostReservation.module.css";
 import HistoryItem from "../../../components/HistoryItem/HistoryItem";
 import classNames from "classnames/bind";
 import LayoutPrimary from "layouts/LayoutPrimary";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function ReservationStatus() {
+  const [hostBookingHistory, setHostBookingHistory] = useState([]);
+
   const [room, setRooms] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("status"));
 
     return storageRoomsData ?? [];
   });
-  const [history, setHistory] = useState(() => {
-    const storageRoomsData = JSON.parse(localStorage.getItem("history"));
 
-    return storageRoomsData ?? [];
-  });
   const [tab, setTab] = useState("upcoming");
   const handleSetTab = (x) => {
     setTab(x);
   };
   const tabActive = cx("tab-active");
 
-  const handleHistory = (item) => {
-    setHistory((prev) => {
-      const newData = [...prev, item];
-      const jsonData = JSON.stringify(newData);
-      localStorage.setItem("history", jsonData);
-      return newData;
-    });
-  };
+  useEffect(() => {
+    const getCustomerBookingHistory = async () => {
+      try {
+        const res = await axios.get(
+          `http://103.184.113.181:88/host_bookings?limit=10&page=1&host_id=2`
+        );
+        console.log(res.data.items);
+        setHostBookingHistory(res.data.items);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      }
+    };
+    getCustomerBookingHistory();
+  }, []);
   return (
     <LayoutPrimary>
       <div className={cx("reservation-container")}>
@@ -89,29 +103,24 @@ function ReservationStatus() {
         </div>
         {tab === "upcoming" && (
           <div className={cx("status")}>
-            {room.length > 0 &&
-              room.map((item) => (
-                <HistoryItem
-                  key={item.id}
-                  item={item}
-                  host
-                  handleHistory={handleHistory}
-                />
+            {hostBookingHistory.length > 0 &&
+              hostBookingHistory.map((item) => (
+                <HistoryItem key={item.id} item={item} host />
               ))}
           </div>
         )}
         {tab === "past" && (
           <div className={cx("status")}>
-            {room.length > 0 &&
-              room.map((item) => (
+            {hostBookingHistory.length > 0 &&
+              hostBookingHistory.map((item) => (
                 <HistoryItem key={item.id} item={item} host />
               ))}
           </div>
         )}
         {tab === "rejected" && (
           <div className={cx("status")}>
-            {room.length > 0 &&
-              room.map((item) => (
+            {hostBookingHistory.length > 0 &&
+              hostBookingHistory.map((item) => (
                 <HistoryItem key={item.id} item={item} host />
               ))}
           </div>

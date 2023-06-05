@@ -32,6 +32,8 @@ import AdminLayout from "../src/layouts_dashboard/admin/index";
 import Dashboard from "pages/HostSite/Dashboard/Dashboard";
 
 import {} from "stylis-plugin-rtl";
+import AddRoom from "pages/HostSite/AddRoom/AddRoom";
+import AddRoomForm from "pages/HostSite/AddRoom/AddRoomForm";
 function App() {
   const [currentAccount, setCurrentAccount] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("userData"));
@@ -193,7 +195,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/Details/:id" element={<Details />} />
+          <Route
+            path="/Details/:id"
+            element={<Details handleLike={handleLike} wishlist={wishlist} />}
+          />
           <Route
             path="/HomeBooking"
             element={
@@ -231,7 +236,9 @@ function App() {
           <Route path="/Admin" element={<Admin />} />
           <Route path="/AddProperties" element={<AddProperties />} />
           <Route path="/UpdateHotel" element={<UpdateHotel />} />
-          <Route path="/AddRooms1" element={<AddRooms1 />} />
+          <Route path="/AddRoom" element={<AddRoom />} />
+          <Route path="/AddRoomForm" element={<AddRoomForm />} />
+          <Route path="/AddRoom1" element={<AddRooms1 />} />
           <Route path="/HostReservation" element={<HostReservation />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />

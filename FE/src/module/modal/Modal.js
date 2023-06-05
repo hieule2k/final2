@@ -12,10 +12,9 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import axios from "axios";
-
 const cx = classNames.bind(styles);
 
-const Modal = ({ userId, hotel, handleModalVisible }) => {
+const Modal = ({ userId, hotel, handleModalVisible, userName }) => {
   const naviage = useNavigate();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -24,12 +23,32 @@ const Modal = ({ userId, hotel, handleModalVisible }) => {
     setRating(i);
     setFieldValue("rate", i);
   };
+  const handleFetchComment = async (values) => {
+    try {
+      const res = await axios.post(
+        `http://103.184.113.181:81/hotel/add_comment`,
+        JSON.stringify(values)
+      );
+      console.log(res);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    }
+  };
   return (
     <Formik
       initialValues={{
         text: "",
         type: "txt",
-        rate: 0,
+        rate: 2.5,
         hotel_id: hotel.id,
         customer_id: userId,
       }}
@@ -40,30 +59,14 @@ const Modal = ({ userId, hotel, handleModalVisible }) => {
       validationSchema={Yup.object({})}
       onSubmit={(values, { resetForm, setSubmitting }) => {
         console.log(values);
-        setTimeout(() => {
-          // axios
-          //   .post(
-          //     "http://103.184.113.181:82/customer/add_comment",
-          //     JSON.stringify(values)
-          //   )
-          //   .then(function (response) {
-          //     console.log(response);
-          //     console.log("succes");
-          //   })
-          //   .catch(function (error) {
-          //     console.log(error);
-          //   });
-          // naviage("/ReservationStatus");
-          resetForm({
-            text: "",
-            type: "",
-            rate: 0,
-            hotel_id: hotel.id,
-            customer_id: userId,
-          });
-
-          setSubmitting(false);
-        }, 1000);
+        handleFetchComment(values);
+        // resetForm({
+        //   text: "",
+        //   type: "",
+        //   rate: 0,
+        //   hotel_id: hotel.id,
+        //   customer_id: userId,
+        // });
       }}
     >
       {(formik) => (
@@ -85,7 +88,9 @@ const Modal = ({ userId, hotel, handleModalVisible }) => {
                 />
                 <div>
                   <h3 className={cx("hotel-name")}>{hotel.name}</h3>
-                  <p>by me</p>
+                  <p>
+                    by <span className="font-bold">{userName}</span>
+                  </p>
                 </div>
               </div>
               <div className={cx("rating-wrapper")}>
