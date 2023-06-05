@@ -14,24 +14,24 @@ function HostProperties() {
     return storageData ?? [];
   });
   const [listHotels, setListHotels] = useState([]);
-  const deleteHotel = (id) => {
-    axios
-      .delete(`http://103.184.113.181:81/hotel/${id}`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
-        console.log(error.config);
-      });
+  const deleteHotel = async (id) => {
+    try {
+      const res = await axios.delete(`http://103.184.113.181:81/hotel/${id}`);
+      const newListHotel = listHotels.filter((hotel) => hotel.id !== id);
+      setListHotels(newListHotel);
+      console.log(res.status);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    }
   };
   useEffect(() => {
     axios

@@ -6,8 +6,8 @@ import axios from "axios";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import LayoutPrimary from "layouts/LayoutPrimary";
-import { useNavigate } from "react-router-dom";
 import Form from "../../../module/hotel/Form";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -22,20 +22,41 @@ function AddProperties() {
   // const product = data[0];
   // const { images } = product;
 
+  const handleAddHotel = async (values) => {
+    try {
+      const res = await axios.post(
+        `http://103.184.113.181:81/customer/${customer.id}/hotel`,
+        JSON.stringify(values)
+      );
+      navigate("/AddRoomForm", { state: { id: res.data.id } });
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    }
+  };
+
   return (
     <LayoutPrimary host>
       <ScrollToTop />
 
       <Formik
         initialValues={{
-          name: "Sunset",
+          name: "Enter Your Hotel Name",
           star_level: "4",
           rule: "",
           description: "",
           address: {
-            detail_address: "1 Phùng Chí Kiên, Hà Nội",
-            district: "Quận Cầu Giấy",
-            province: "Hà Nội ",
+            detail_address: "",
+            district: "",
+            province: "",
           },
           list_image: [
             {
@@ -70,51 +91,8 @@ function AddProperties() {
         validateOnMount
         validationSchema={Yup.object({})}
         onSubmit={(values, { resetForm, setSubmitting }) => {
-          axios
-            .post(
-              `http://103.184.113.181:81/customer/${customer.id}/hotel`,
-              JSON.stringify(values)
-            )
-            .then(function (response) {
-              const hotelDataJson = JSON.stringify(response.data.id);
-              localStorage.setItem("hotelData", hotelDataJson);
-              navigate("/AddRooms1", {
-                state: {
-                  value: "addproperty1",
-                },
-              });
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
-          setTimeout(() => {
-            resetForm({
-              name: "",
-              star_level: "3",
-              rate: "2",
-              rule: "",
-              description: "",
-              comment: "",
-              address: {
-                detail_address: "",
-                district: "",
-                province: "",
-              },
-              list_image: [
-                {
-                  url: "ngon.com",
-                  type: "hotel",
-                },
-                {
-                  url: "kongon.com",
-                  type: "user",
-                },
-              ],
-            });
-
-            setSubmitting(false);
-          }, 1000);
+          console.log(values);
+          handleAddHotel(values);
         }}
       >
         {(formik) => (

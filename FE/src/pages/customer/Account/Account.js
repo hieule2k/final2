@@ -87,18 +87,23 @@ function Account() {
           ) : (
             <Formik
               initialValues={{
-                role: "bello",
-                description: "abcxyz",
+                id: account.id,
+                role: "host",
                 user: {
-                  name: "nam",
+                  id: 22,
+                  name: "Nguyen Quang Minh",
                   email: "minh@gmail.com",
                   phone: "0123",
-                  note: "nhu cut",
+                  note: "hok co ji",
                   avatar: "link anh",
                   gender: "male",
-                  account: {
-                    username: "minmin2k",
-                    password: "123456",
+                  account_id: 4,
+                  address: {
+                    id: 157,
+                    district: "Quận Cầu d",
+                    province: "Hà Nội",
+                    detail_address: "98 Quận Từ Liêm, Hà Nội",
+                    type: "customer",
                   },
                 },
               }}
@@ -106,20 +111,6 @@ function Account() {
                 field: true,
               }}
               validateOnMount
-              // validationSchema={Yup.object().shape({
-              //   user: Yup.object().shape({
-              //     name: Yup.string().required("Required"),
-              //     email: Yup.string().email().required("Required"),
-              //     phone: Yup.string()
-              //       .matches(phoneRegExp, "Must be A Phone Number")
-              //       .required("Required"),
-              //     account: Yup.object().shape({
-              //       username: Yup.string().required("Required"),
-              //       password: Yup.string().required("Required"),
-              //     }),
-              //   }),
-              // })}
-
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 // console.log(values);
                 setTimeout(() => {

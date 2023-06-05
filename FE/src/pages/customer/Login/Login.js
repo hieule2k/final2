@@ -7,8 +7,9 @@ import axios from "axios";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-import { BsFacebook, BsGoogle } from "react-icons/bs";
-import { AiOutlineClose, AiFillFacebook, AiFillMail } from "react-icons/ai";
+import { AiFillFacebook, AiFillMail } from "react-icons/ai";
+
+import jwt_decode from "jwt-decode";
 
 const cx = classNames.bind(styles);
 function Login1() {
@@ -51,33 +52,23 @@ function Login1() {
 
             axios
               .post(
-                "http://103.184.113.181/customer/login",
+                "http://103.184.113.181:90/authentication/login",
                 JSON.stringify(values)
               )
               .then(function (response) {
-                console.log(response);
-                if (
-                  response.data.user.account.username === values.username &&
-                  response.data.role === "customer"
-                ) {
-                  // console.log(response.data);
-                  axios
-                    .get(`http://103.184.113.181/customer/${response.data.id}`)
-                    .then(function (response) {
-                      const userDataJson = JSON.stringify(response.data);
-                      localStorage.setItem("userData", userDataJson);
-                      window.location.href = "/";
-                    })
-                    .catch(function (error) {
-                      console.log(error);
-                    });
-
-                  // navigate("/");
-                } else {
-                  alert(
-                    "Please check your password and User Name and try again."
-                  );
-                }
+                console.log(response.data.jwt_token);
+                const decoded = jwt_decode(response.data.jwt_token);
+                console.log(decoded);
+                axios
+                  .get(`http://103.184.113.181/customer/${decoded.customer_id}`)
+                  .then(function (response) {
+                    const userDataJson = JSON.stringify(response.data);
+                    localStorage.setItem("userData", userDataJson);
+                    window.location.href = "/";
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
               })
               .catch(function (error) {
                 alert(

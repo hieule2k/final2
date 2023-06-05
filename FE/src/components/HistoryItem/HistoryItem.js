@@ -13,8 +13,8 @@ function HistoryItem({
   past = false,
   userId,
   item,
+  userName,
   removeItem,
-  handleHistory,
 }) {
   const { id, book_date, total_price } = item;
   const [visible, setVisible] = useState(false);
@@ -27,7 +27,7 @@ function HistoryItem({
     const handleFetchHotelData = async () => {
       try {
         const res = await axios.get(`http://103.184.113.181:81/hotel/${id}`);
-        console.log(res);
+        console.log(res.data);
         setHotelData(res.data);
       } catch (error) {
         if (error.response) {
@@ -51,6 +51,7 @@ function HistoryItem({
           handleModalVisible={handleModalVisible}
           userId={userId}
           hotel={hotelData}
+          userName={userName}
         ></Modal>
       )}
 
@@ -64,7 +65,7 @@ function HistoryItem({
             />
           </div>
           <div className={cx("item-information")}>
-            <div className={cx("item-title")}>hotel</div>
+            <div className={cx("item-title")}>{hotelData.name}</div>
             <div className={cx("item-specific")}>
               <div className={cx("specific")}>
                 Check In:{" "}
@@ -72,7 +73,7 @@ function HistoryItem({
               </div>
 
               {/* <div className={cx("specific")}>
-                Guest: <span className={cx("time")}>12 Mar 2021</span>
+                Check out: <span className={cx("time")}>12 Mar 2021</span>
               </div> */}
             </div>
             <div className={cx("item-price")}>{total_price}$</div>
@@ -81,14 +82,7 @@ function HistoryItem({
         <div className={cx("col-right")}>
           {host ? (
             <div className={cx("button-container")}>
-              <Button
-                small
-                green
-                rounded
-                onClick={() => {
-                  handleHistory(item);
-                }}
-              >
+              <Button small green rounded>
                 Approve
               </Button>
               <Button small black rounded>

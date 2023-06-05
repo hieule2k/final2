@@ -15,10 +15,15 @@ const DetailTable = ({
   detailsHotel = [],
   id,
 }) => {
+  const isLogin = JSON.parse(localStorage.getItem("userData"));
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
   const reserveStorage = () => {
-    navigate("/ReservationForm", { state: { hotelData: detailsHotel } });
+    if (isLogin) {
+      navigate("/ReservationForm", { state: { hotelData: detailsHotel } });
+    } else if (!isLogin) {
+      alert("Please login first");
+    }
   };
 
   useEffect(() => {

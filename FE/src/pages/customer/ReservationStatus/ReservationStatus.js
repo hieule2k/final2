@@ -64,7 +64,6 @@ function ReservationStatus() {
   }, [user.id]);
   return (
     <LayoutPrimary>
-      {modal && <Modal></Modal>}
       <div className={cx("reservation-container")}>
         <h2 className={cx("top-title")}>Reservation</h2>
         <div className={cx("history")}>
@@ -112,8 +111,10 @@ function ReservationStatus() {
             {customerHistoryBooking.length > 0 &&
               customerHistoryBooking.map((item) => (
                 <HistoryItem
+                  key={item.id}
                   item={item}
                   userId={user.id}
+                  userName={user.user.name}
                   removeItem={removeItem}
                 />
               ))}

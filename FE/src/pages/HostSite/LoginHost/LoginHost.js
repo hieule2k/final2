@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import MyInput from "../../../components/MyInput/MyInput";
+
+import jwt_decode from "jwt-decode";
+
 const cx = classNames.bind(styles);
 function Login1() {
   const [currentAccount, setCurrentAccount] = useState(false);
@@ -44,38 +47,30 @@ function Login1() {
         )}
         onSubmit={(values, { resetForm, setSubmitting }) => {
           setTimeout(() => {
-            // const jsonData = JSON.stringify(currentAccount);
-            // localStorage.setItem("currentAccount", jsonData);
             axios
               .post(
-                "http://103.184.113.181/customer/login",
+                "http://103.184.113.181:90/authentication/login",
                 JSON.stringify(values)
               )
               .then(function (response) {
-                console.log(response);
-                if (
-                  response.data.user.account.username === values.username &&
-                  response.data.role === "host"
-                ) {
-                  console.log(response.data);
-                  axios
-                    .get(`http://103.184.113.181/customer/${response.data.id}`)
-                    .then(function (response) {
+                console.log(response.data.jwt_token);
+                const decoded = jwt_decode(response.data.jwt_token);
+                console.log(decoded);
+
+                axios
+                  .get(`http://103.184.113.181/customer/${decoded.customer_id}`)
+                  .then(function (response) {
+                    if (response.data.role === "host") {
                       const userDataJson = JSON.stringify(response.data);
                       localStorage.setItem("userData", userDataJson);
-                      console.log(response);
                       window.location.href = "/HostPage";
-                    })
-                    .catch(function (error) {
-                      console.log(error);
-                    });
-
-                  // navigate("/");
-                } else {
-                  alert(
-                    "Please check your password and User Name and try again."
-                  );
-                }
+                    } else {
+                      console.log("this is not a host Account");
+                    }
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
               })
               .catch(function (error) {
                 alert(
