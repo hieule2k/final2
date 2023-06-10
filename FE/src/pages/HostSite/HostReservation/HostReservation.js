@@ -46,7 +46,7 @@ function ReservationStatus() {
     getCustomerBookingHistory();
   }, []);
   return (
-    <LayoutPrimary>
+    <LayoutPrimary host>
       <div className={cx("reservation-container")}>
         <h2 className={cx("top-title")}>Reservation</h2>
         <div className={cx("history")}>

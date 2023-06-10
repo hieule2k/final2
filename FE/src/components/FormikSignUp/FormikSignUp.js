@@ -18,7 +18,8 @@ function FormikSignUp({ host = false }) {
   const ref = useRef(null);
   const [otp, setOtp] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const [checkOtp, setCheckOtp] = useState("");
+  const [code, setCode] = useState("");
+
   const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
   const navigate = useNavigate();
   let role = "customer";
@@ -28,7 +29,7 @@ function FormikSignUp({ host = false }) {
   const handleEmailVerification = async () => {
     try {
       const res = await axios.post(
-        `http://103.184.113.181/account/verification_email?username=${userEmail}`,
+        `http://103.184.113.181:90/authentication/verification_email?username=${userEmail}`,
         JSON.stringify(userEmail)
       );
       console.log(res);
@@ -41,88 +42,116 @@ function FormikSignUp({ host = false }) {
   //   setCode(e.target.value);
   // };
 
-  const handleOtp = async (code) => {
-    const res = await axios.post(
-      `http://103.184.113.181/account/check_expiration_time?otp=${code}&username=hieulequang455@gmail.com`,
-      JSON.stringify(code)
-    );
-    console.log(res);
-    setCheckOtp(res.data.message);
-    alert("dmm ok r");
-  };
+  // const handleOtp = async (code) => {
+  //   const res = await axios.post(
+  //     `http://103.184.113.181:90/authentication/check_expiration_time?otp=${code}&username=hieulequang455@gmail.com`,
+  //     JSON.stringify(code)
+  //   );
+  //   console.log(res);
+  //   setCheckOtp(res.data.message);
+  //   alert("dmm ok r");
+  // };
   return (
     <div className={!otp ? cx("sign-up") : cx("sign-up2")}>
       <Formik
         innerRef={ref}
         enableReinitialize={true}
         initialValues={{
-          username: "customer2000",
-          password: "hieupro2k",
+          create: {
+            username: "customer2000",
+            password: "hieupro2k",
+          },
+          signup: {
+            role: role,
+            description: "",
+            user: {
+              name: "",
+              email: "",
+              phone: "",
+              note: "hok co ji",
+              avatar: "link anh",
+              gender: "male",
+              account_id: 4,
+              address: {
+                district: "Quận Từ Liêm",
+                province: "Hà Nội",
+                detail_address: "98 Quận Từ Liêm, Hà Nội",
+              },
+            },
+          },
         }}
         initialTouched={{
           field: true,
         }}
         validateOnMount
-        validationSchema={Yup.object().shape({
-          username: Yup.string().required("Required"),
-          password: Yup.string().required("Required"),
-        })}
         onSubmit={(values, { resetForm, setSubmitting }) => {
           console.log(values);
+          axios
+            .post(
+              `http://103.184.113.181:90/authentication/check_expiration_time?otp=${code}&username=hieulequang455@gmail.com`,
+              JSON.stringify(code)
+            )
+            .then(function (response) {
+              if (response.data.message === "Checking OTP successfully") {
+                setTimeout(() => {
+                  axios
+                    .post(
+                      "http://103.184.113.181:90/authentication/sign_up",
+                      JSON.stringify(values.create)
+                    )
+                    .then(function (response) {
+                      values.signup.user.account_id = response.data.id;
+                      axios
+                        .post(
+                          "http://103.184.113.181/customer",
+                          JSON.stringify(values.signup)
+                        )
+                        .then(function (res) {
+                          console.log(res);
+                        });
+                      console.log(values);
+                      console.log("succes");
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
 
-          setTimeout(() => {
-            // setSignUpAccount(() => {
-            //   const newData = [...signUpAccount, values];
-            //   const jsonData = JSON.stringify(newData);
-            //   localStorage.setItem("signUpAccount", jsonData);
-            // });
-            axios
-              .post(
-                "http://103.184.113.181:90/authentication/sign_up",
-                JSON.stringify(values)
-              )
-              .then(function (response) {
-                console.log(response);
-                console.log("succes");
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-            console.log(JSON.stringify(values));
-            // navigate(host ? "/LoginHost" : "/login");
+                  navigate(host ? "/LoginHost" : "/login");
 
-            setSubmitting(false);
-          }, 1000);
+                  setSubmitting(false);
+                }, 1000);
+              }
+            });
         }}
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit} className={cx("sign-up__form")}>
             {!otp && (
               <div className={cx("wrapper")}>
-                {setUserEmail(formik.values.username)}
+                {setUserEmail(formik.values.signup.user.email)}
                 <div className={cx("col-left")}>
-                  {/* <MyInput
+                  <MyInput
                     type="text"
                     label="Full Name"
                     className={cx("input")}
-                    // name="user.name"
+                    name="signup.user.name"
                     placeholder="Enter your Full Name"
-                  ></MyInput> */}
+                  ></MyInput>
 
-                  {/* <MyInput
+                  <MyInput
                     type="email"
                     label="Email Address"
                     className={cx("input")}
                     customContainerClasses={cx("position")}
-                    name="email"
+                    name="signup.user.email"
                     placeholder="Enter your email"
-                  ></MyInput> */}
+                  ></MyInput>
 
                   <MyInput
                     type="password"
                     label="Password"
                     className={cx("input")}
-                    name="password"
+                    name="create.password"
                     placeholder="Enter your password"
                   ></MyInput>
                 </div>
@@ -131,24 +160,32 @@ function FormikSignUp({ host = false }) {
                     type="text"
                     label="User Name"
                     className={cx("input")}
-                    name="username"
-                    placeholder="Enter your name"
+                    name="create.username"
+                    placeholder="Enter your username"
                   ></MyInput>
-                  {/* <MyInput
+                  <MyInput
                     type="text"
                     label="Phone Number"
                     className={cx("input")}
-                    // name="user.phone"
+                    name="signup.user.phone"
                     placeholder="Enter your number"
-                  ></MyInput> */}
+                  ></MyInput>
                   <div className={cx("container-parent")}>
                     <div className={cx("container")}>
                       <div className={cx("gender")}>Gender</div>
                       <div className={cx("radio-container")}>
-                        <RadioFormik origin value="Male">
+                        <RadioFormik
+                          name="signup.user.gender"
+                          origin
+                          value="Male"
+                        >
                           Male
                         </RadioFormik>
-                        <RadioFormik origin value="Female">
+                        <RadioFormik
+                          origin
+                          name="signup.user.gender"
+                          value="Female"
+                        >
                           Female
                         </RadioFormik>
                       </div>
@@ -157,19 +194,14 @@ function FormikSignUp({ host = false }) {
                 </div>
               </div>
             )}
-            {otp && (
-              <SignupVerification
-                checkOtp={checkOtp}
-                handleOtp={handleOtp}
-              ></SignupVerification>
-            )}
+            {otp && <SignupVerification setCode={setCode}></SignupVerification>}
             {!otp && (
               <Button
                 className={cx("sign-up__button", "disabled")}
-                type="submit"
+                type="button"
                 green
                 rounded
-                // onClick={handleEmailVerification}
+                onClick={handleEmailVerification}
                 disabled={formik.isSubmitting || !formik.isValid}
               >
                 {formik.isSubmitting ? (

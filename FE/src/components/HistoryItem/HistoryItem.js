@@ -83,11 +83,11 @@ function HistoryItem({
           {host ? (
             <div className={cx("button-container")}>
               <Button small green rounded>
+                Approved
+              </Button>
+              {/* <Button small black rounded>
                 Approve
-              </Button>
-              <Button small black rounded>
-                Rejected
-              </Button>
+              </Button> */}
             </div>
           ) : (
             <div className={cx("button-wrapper")}>
