@@ -58,8 +58,8 @@ function FormikSignUp({ host = false }) {
         enableReinitialize={true}
         initialValues={{
           create: {
-            username: "customer2000",
-            password: "hieupro2k",
+            username: "",
+            password: "",
           },
           signup: {
             role: role,

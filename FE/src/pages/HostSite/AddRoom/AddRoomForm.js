@@ -62,8 +62,8 @@ const AddRoomForm = () => {
         initialValues={{
           name: "",
           type: "",
-          price: 0,
-          quantity: 0,
+          price: "",
+          quantity: "",
           description: "",
           list_amenity: [],
         }}
@@ -78,7 +78,7 @@ const AddRoomForm = () => {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <div className="flex flex-col gap-24 p-24">
+            <div className="flex flex-col gap-8 p-24">
               <input
                 className="w-1/2 h-24 px-5 py-10 text-2xl font-bold"
                 placeholder="Name"
@@ -107,6 +107,7 @@ const AddRoomForm = () => {
                   type="quantity"
                   className="px-5 py-2 border-gray-400 border-solid focus:border-slate-700"
                   name="price"
+                  placeholder="price"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.price}

@@ -32,9 +32,9 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
   const [showRoomStyle, setShowRoomStyle] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [totalDay, setTotalDay] = useState(0);
   const location = useLocation();
   const data = location.state.hotelData;
-  const result = differenceInDays(endDate, startDate);
   // let k = new Date();
   // let c = k.toISOString().split("T");
   // console.log(c.join(" "));
@@ -56,7 +56,8 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         })
         .reduce((acc, cur) => acc + cur, 0)
     );
-  }, [data.id, cart]);
+    setTotalDay(differenceInDays(endDate, startDate) + 1);
+  }, [data.id, cart, endDate, startDate]);
 
   function padTo2Digits(num) {
     return num.toString().padStart(2, "0");
@@ -162,8 +163,9 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         discount: bookedData.bookedroom[0].discount,
         room_id: bookedData.bookedroom[0].room_id,
       };
+
       localStorage.setItem("bookingData", JSON.stringify(fakeBookingData));
-      console.log(res.data.id);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -230,7 +232,7 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         <div className={cx("col-3")}>
           <h2 className={cx("top-heading")}>Details</h2>
           <div className={cx("total-days")}>
-            <p className={cx("total")}>Total Days: {result + 1}</p>
+            <p className={cx("total")}>Total Days: {totalDay}</p>
           </div>
         </div>
         <div className={cx("col-3")}>
@@ -271,7 +273,7 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
 
           <div className={cx("fee")}>
             <p>Fee: </p>
-            <p>{totalPrices}</p>
+            <p>{totalPrices * totalDay}</p>
           </div>
           <div className={cx("fee")}>
             <p>Tax: 10%</p>

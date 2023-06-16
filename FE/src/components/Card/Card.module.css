@@ -147,6 +147,7 @@
 }
 
 .star-rated {
+    display: flex ;
     position: absolute;
     top: 22px;
     font-size: 14px;

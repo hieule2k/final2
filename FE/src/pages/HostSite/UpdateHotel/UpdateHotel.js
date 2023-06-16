@@ -49,13 +49,13 @@ function UpdateHotel() {
       <Formik
         initialValues={{
           id: data.id,
-          name: "a Hotel",
+          name: "",
           star_level: 4,
           address: {
             id: 126,
             district: "Quận Từ Liêm",
             province: "Hà Nội",
-            detail_address: "98 Quận Từ Liêm, Hà Nội",
+            detail_address: "",
           },
           list_image: [
             {

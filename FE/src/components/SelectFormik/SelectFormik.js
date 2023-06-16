@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 const SelectFormik = ({ className, label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <div>
+    <div className="text-[25px] min-w-[250px]">
       <label className={cx("select_type")} htmlFor={props.id || props.name}>
         <span className={cx("select_name")}>{label}</span>
         <select className={cx("select")} {...field} {...props} />

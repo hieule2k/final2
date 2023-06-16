@@ -87,13 +87,13 @@ function Account() {
           ) : (
             <Formik
               initialValues={{
-                id: account.id,
-                role: "host",
+                id: 20,
+                role: account.role,
                 user: {
                   id: 22,
-                  name: "Nguyen Quang Minh",
-                  email: "minh@gmail.com",
-                  phone: "0123",
+                  name: account.user.name,
+                  email: account.user.email,
+                  phone: account.user.phone,
                   note: "hok co ji",
                   avatar: "link anh",
                   gender: "male",
@@ -121,7 +121,7 @@ function Account() {
                   //   // });
                   axios
                     .put(
-                      `http://103.184.113.181/customer/4`,
+                      `http://103.184.113.181/customer/20`,
                       JSON.stringify(values)
                     )
                     .then(function (response) {

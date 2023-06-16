@@ -4,9 +4,9 @@ import styles from "./form.module.css";
 import MyInput from "components/MyInput/MyInput";
 import SelectFormik from "components/SelectFormik/SelectFormik";
 import TextAreaFormik from "components/TextAreaFormik/TextAreaFormik";
-import { Button } from "@mui/material";
 import Counter from "components/Counter/Counter";
 import city from "../../json/province.json";
+import Button from "components/Button/Button";
 
 const cx = classNames.bind(styles);
 const province = city.data;
@@ -19,7 +19,11 @@ const Form = () => {
           <div className={cx("input-container")}>
             <h1
               className={cx("title")}
-              style={{ fontSize: "2em", marginBottom: "25px" }}
+              style={{
+                fontSize: "2em",
+                marginBottom: "25px",
+                fontWeight: "700",
+              }}
             >
               Add New Property
             </h1>
@@ -33,7 +37,7 @@ const Form = () => {
             ></MyInput>
           </div>
           <div className={cx("input-container")}>
-            <h3>Add Your location.</h3>
+            <h3 className="text-3xl font-bold">Add Your location.</h3>
             <div className={cx("location-input__wrapper")}>
               <div className={cx("location-input")}>
                 <SelectFormik name="address.province" label="Province">
@@ -87,7 +91,10 @@ const Form = () => {
           </div> */}
           <div className={cx("input-container")}>
             <div>
-              <h3 style={{ marginBottom: "25px" }}>
+              <h3
+                className="text-3xl font-bold"
+                style={{ marginBottom: "25px" }}
+              >
                 Add description at your place.
               </h3>
             </div>
@@ -101,12 +108,7 @@ const Form = () => {
               ></TextAreaFormik>
             </div>
           </div>
-          <Button
-            type="submit"
-            className={cx("save")}
-            small="true"
-            green="true"
-          >
+          <Button className={cx("save")} green rounded>
             Next
           </Button>
         </div>

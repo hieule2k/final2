@@ -23,7 +23,7 @@ function ReservationStatus() {
   const tabActive = cx("tab-active");
 
   useEffect(() => {
-    const getCustomerBookingHistory = async () => {
+    const getHostBookingHistory = async () => {
       try {
         const res = await axios.get(
           `http://103.184.113.181:88/host_bookings?limit=10&page=1&host_id=2`
@@ -43,7 +43,7 @@ function ReservationStatus() {
         console.log(error.config);
       }
     };
-    getCustomerBookingHistory();
+    getHostBookingHistory();
   }, []);
   return (
     <LayoutPrimary host>

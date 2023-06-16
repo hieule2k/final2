@@ -43,7 +43,7 @@ function ReservationStatus() {
     const getCustomerBookingHistory = async () => {
       try {
         const res = await axios.get(
-          `http://103.184.113.181:88/customer_bookings?limit=10&page=1&customer_id=${user.id}`
+          `http://103.184.113.181:88/customer_bookings?limit=20&page=1&customer_id=${user.id}`
         );
         console.log(res.data.items);
         setCustomerHistoryBooking(res.data.items);
