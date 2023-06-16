@@ -1,19 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./TransactionHistory.module.css";
 import NavBar from "../../../components/nav/nav";
 import Footer from "../../../components/footer/footer";
 import HistoryItem from "../../../components/HistoryItem/HistoryItem";
 import TransactionItem from "../../../components/TransactionItem/TransactionItem";
 import classNames from "classnames/bind";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function Transaction() {
+  const [hostBookingHistory, setHostBookingHistory] = useState([]);
+
   const [tab, setTab] = useState("Completed");
   const handleSetTab = (x) => {
     setTab(x);
   };
   const tabActive = cx("tab-active");
+
+  useEffect(() => {
+    const getHostBookingHistory = async () => {
+      try {
+        const res = await axios.get(
+          `http://103.184.113.181:88/host_bookings?limit=10&page=1&host_id=2`
+        );
+        console.log(res.data.items);
+        setHostBookingHistory(res.data.items);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      }
+    };
+    getHostBookingHistory();
+  }, []);
   return (
     <div className={cx("transaction-history")}>
       <NavBar host />
@@ -76,9 +103,8 @@ function Transaction() {
         </div>
         {tab === "Completed" && (
           <div className={cx("status")}>
-            <TransactionItem />
-            <TransactionItem />
-            <TransactionItem />
+            {hostBookingHistory.length > 0 &&
+              hostBookingHistory.map((item) => <TransactionItem item={item} />)}
           </div>
         )}
         {tab === "Upcoming" && (

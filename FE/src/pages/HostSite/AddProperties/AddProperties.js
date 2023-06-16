@@ -49,7 +49,7 @@ function AddProperties() {
 
       <Formik
         initialValues={{
-          name: "Enter Your Hotel Name",
+          name: "",
           star_level: "4",
           rule: "",
           description: "",
