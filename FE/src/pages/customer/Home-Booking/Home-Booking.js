@@ -1,7 +1,7 @@
 import styles from "./Home-booking.module.css";
 import SideSection from "../../../components/side-section/side-section";
 import SearchBar from "../../../components/Search-bar/Search-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LayoutPrimary from "layouts/LayoutPrimary";
 import classNames from "classnames/bind";
 import CardList from "../../../components/CardList/CardList";
@@ -12,6 +12,8 @@ import { IoLogoAndroid, IoLogoApple } from "react-icons/io";
 import { IconContext } from "react-icons";
 import { DiAndroid } from "react-icons/di";
 import { AiOutlineSend } from "react-icons/ai";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 // import data5 from "../../json/hotelTopRated.json";
 // import data4 from "../../json/hotelNearby.json";
 // import data3 from "../../json/hotel3.json";
@@ -19,15 +21,22 @@ import { AiOutlineSend } from "react-icons/ai";
 // import data from "../../json/hotel.json";
 
 const cx = classNames.bind(styles);
-function HomeBooking({
-  handleLike,
-  hotel1,
-  hotel2,
-  hotel3,
-  hotel4,
-  hotel5,
-  wishlist,
-}) {
+function HomeBooking({ handleLike, hotel2, hotel3, hotel4, hotel5, wishlist }) {
+  const location = useLocation();
+  console.log(location);
+  const [hotel1, setHotel1] = useState([]);
+  useEffect(() => {
+    const fetchHotelBySearch = async () => {
+      const res = await axios.get(
+        `http://103.184.113.181:81/hotels?page=1&limit=4&location=${location.state.searchValue}`
+      );
+      // console.log(res);
+      setHotel1(res.data.items);
+    };
+    fetchHotelBySearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <LayoutPrimary>
       <Banner />
