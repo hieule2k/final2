@@ -36,7 +36,6 @@ function ReservationStatus() {
   const handleSetTab = () => {
     setTab(!tab);
   };
-  const [modal, setModal] = useState(false);
   const tabActive = cx("tab-active");
 
   useEffect(() => {

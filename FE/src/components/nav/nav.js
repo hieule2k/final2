@@ -74,7 +74,11 @@ function NavBar({ host = false }) {
       {!host && (
         <ul className={cx("menu-nav")}>
           <li className={cx("menu-nav__item")}>
-            <Link to="/HomeBooking" className={cx("menu-nav__link")}>
+            <Link
+              to="/HomeBooking"
+              state={{ searchValue: "Ha Noi" }}
+              className={cx("menu-nav__link")}
+            >
               Find a Property
             </Link>
           </li>
