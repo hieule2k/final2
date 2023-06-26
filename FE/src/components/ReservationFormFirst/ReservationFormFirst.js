@@ -33,6 +33,8 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [totalDay, setTotalDay] = useState(0);
+  const [fee, setFee] = useState(0);
+  const [totalFee, setTotalFee] = useState(0);
   const location = useLocation();
   const data = location.state.hotelData;
   // let k = new Date();
@@ -48,7 +50,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
       .catch(function (error) {
         console.log(error);
       });
-
     setTotalPrices(
       cart
         .map((cartItem) => {
@@ -57,7 +58,9 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         .reduce((acc, cur) => acc + cur, 0)
     );
     setTotalDay(differenceInDays(endDate, startDate) + 1);
-  }, [data.id, cart, endDate, startDate]);
+    setFee(totalDay * totalPrices);
+    setTotalFee(fee * 0.1 + fee);
+  }, [data.id, cart, endDate, startDate, totalDay, totalPrices, totalFee, fee]);
 
   function padTo2Digits(num) {
     return num.toString().padStart(2, "0");
@@ -114,9 +117,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
     });
   };
 
-  console.log(formatDate(startDate));
-  // console.log(cart);
-
   const handleIncrease = (item) => {
     setCart(
       cart.map((cartItem) =>
@@ -141,10 +141,10 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
     );
   };
 
-  const calculatePrice = (val) => {
-    // SetTotalPrices(val);
-    console.log(val);
-  };
+  // const calculatePrice = (val) => {
+  //   // SetTotalPrices(val);
+  //   // console.log(val);
+  // };
 
   const handleFetchData = async () => {
     try {
@@ -222,7 +222,7 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
               key={item.id}
               item={item}
               removeItem={removeItem}
-              calculatePrice={calculatePrice}
+              // calculatePrice={calculatePrice}
               handleIncrease={handleIncrease}
               handleDecrease={handleDecrease}
             />
@@ -273,13 +273,13 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
 
           <div className={cx("fee")}>
             <p>Fee: </p>
-            <p>{totalPrices * totalDay}</p>
+            <p>{fee}</p>
           </div>
           <div className={cx("fee")}>
             <p>Tax: 10%</p>
           </div>
           <div className={cx("fee", "total-price")}>
-            <p>Totals fee: {totalPrices * 0.1 + totalPrices}</p>
+            <p>Totals fee: {totalFee}</p>
             <p></p>
           </div>
         </div>

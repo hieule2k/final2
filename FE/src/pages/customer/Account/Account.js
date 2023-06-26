@@ -121,7 +121,7 @@ function Account() {
                   //   // });
                   axios
                     .put(
-                      `http://103.184.113.181/customer/20`,
+                      `http://103.184.113.181/customer/${accountData.id}`,
                       JSON.stringify(values)
                     )
                     .then(function (response) {

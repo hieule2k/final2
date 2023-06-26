@@ -23,12 +23,15 @@ const Modal = ({ userId, hotel, handleModalVisible, userName }) => {
     setRating(i);
     setFieldValue("rate", i);
   };
+  console.log(hotel.id, userId);
   const handleFetchComment = async (values) => {
     try {
       const res = await axios.post(
         `http://103.184.113.181:81/hotel/add_comment`,
         JSON.stringify(values)
       );
+      alert("Comment Succesfull");
+      naviage(`Details/${hotel.id}`);
       console.log(res);
     } catch (error) {
       if (error.response) {
@@ -60,13 +63,6 @@ const Modal = ({ userId, hotel, handleModalVisible, userName }) => {
       onSubmit={(values, { resetForm, setSubmitting }) => {
         console.log(values);
         handleFetchComment(values);
-        // resetForm({
-        //   text: "",
-        //   type: "",
-        //   rate: 0,
-        //   hotel_id: hotel.id,
-        //   customer_id: userId,
-        // });
       }}
     >
       {(formik) => (

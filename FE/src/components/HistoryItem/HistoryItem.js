@@ -15,6 +15,7 @@ function HistoryItem({
   item,
   userName,
   removeItem,
+  handleCancelReservation,
 }) {
   const { id, book_date, total_price } = item;
   const [visible, setVisible] = useState(false);
@@ -23,6 +24,7 @@ function HistoryItem({
   const handleModalVisible = () => {
     setVisible(!visible);
   };
+
   useEffect(() => {
     const handleFetchHotelData = async () => {
       try {
@@ -76,7 +78,7 @@ function HistoryItem({
                 Check out: <span className={cx("time")}>12 Mar 2021</span>
               </div> */}
             </div>
-            <div className={cx("item-price")}>{total_price}$</div>
+            <div className={cx("item-price")}>{total_price} VND</div>
           </div>
         </div>
         <div className={cx("col-right")}>
@@ -91,17 +93,19 @@ function HistoryItem({
             </div>
           ) : (
             <div className={cx("button-wrapper")}>
-              <Button
-                mediumx
-                rounded
-                bgGray
-                className={cx("button-size")}
-                // onClick={() => {
-                //   removeItem(id);
-                // }}
-              >
-                Cancel Reservation
-              </Button>
+              {item.status === "completed" && (
+                <Button
+                  mediumx
+                  rounded
+                  bgGray
+                  className={cx("button-size")}
+                  onClick={() => {
+                    handleCancelReservation(item.id);
+                  }}
+                >
+                  Cancel Reservation
+                </Button>
+              )}
               <Button medium green orange onClick={handleModalVisible}>
                 Review
               </Button>

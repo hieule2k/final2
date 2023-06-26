@@ -20,6 +20,21 @@ function ReservationStatus() {
 
     return storageRoomsData ?? [];
   });
+
+  const [tab, setTab] = useState(true);
+  const [query, setQuery] = useState("");
+
+  const handleSearchHistory = () => {
+    const completedArray = customerHistoryBooking.filter(
+      (i) => i.status === "completed"
+    );
+
+    completedArray.map((item) => console.log(item));
+  };
+  handleSearchHistory();
+
+  const handleChangeSearchInput = (e) => setQuery(e.target.value);
+
   const removeItem = (id) => {
     if (room.length > 0) {
       const newItems = room.filter((itemx) => itemx.id !== id);
@@ -31,12 +46,22 @@ function ReservationStatus() {
       });
     }
   };
-  const userhistory = room.filter((item) => item.id === user.id);
-  const [tab, setTab] = useState(true);
   const handleSetTab = () => {
     setTab(!tab);
   };
   const tabActive = cx("tab-active");
+
+  const handleCancelReservation = async (itemId) => {
+    await axios.post(`http://103.184.113.181:88/cancel_booking/${itemId}`);
+    setCustomerHistoryBooking(() => {
+      const item = customerHistoryBooking.filter((i) => i.id === itemId);
+      const index = customerHistoryBooking.indexOf(item[0]);
+      const newItem = { ...customerHistoryBooking[index], status: "canceled" };
+      const newArray = customerHistoryBooking.filter((i) => i.id !== itemId);
+
+      return newArray.concat(newItem);
+    });
+  };
 
   useEffect(() => {
     const getCustomerBookingHistory = async () => {
@@ -102,28 +127,44 @@ function ReservationStatus() {
                 </defs>
               </svg>
             </i>
-            <p className={cx("search")}>Search</p>
+            <input
+              className={cx("search")}
+              placeholder="Search"
+              value={query}
+              onChange={handleChangeSearchInput}
+            />
           </div>
         </div>
         {tab ? (
           <div className={cx("status")}>
-            {customerHistoryBooking.length > 0 &&
-              customerHistoryBooking.map((item) => (
-                <HistoryItem
-                  key={item.id}
-                  item={item}
-                  userId={user.id}
-                  userName={user.user.name}
-                  removeItem={removeItem}
-                />
-              ))}
+            {customerHistoryBooking?.length > 0 &&
+              customerHistoryBooking
+                .filter((item) => item.status === "completed")
+                .map((item) => (
+                  <HistoryItem
+                    key={item.id}
+                    item={item}
+                    userId={user.id}
+                    userName={user.user.name}
+                    removeItem={removeItem}
+                    handleCancelReservation={handleCancelReservation}
+                  />
+                ))}
           </div>
         ) : (
           <div className={cx("status")}>
-            {/* {room.map((item) => (
-              <HistoryItem key={item.id} item={item} removeItem={removeItem} />
-            ))} */}
-            <HistoryItem past removeItem={removeItem} />
+            {customerHistoryBooking?.length > 0 &&
+              customerHistoryBooking
+                .filter((item) => item.status === "canceled")
+                .map((item) => (
+                  <HistoryItem
+                    key={item.id}
+                    item={item}
+                    userId={user.id}
+                    userName={user.user.name}
+                    removeItem={removeItem}
+                  />
+                ))}
           </div>
         )}
       </div>
