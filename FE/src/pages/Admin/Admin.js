@@ -76,19 +76,17 @@ function Admin() {
         <div className={cx('wrapper')}>
             <aside className={cx('aside')}>
                 <h2 className={cx('h2')}>Sidebar</h2>
-                <div className={cx('tab_bar')}>Overview</div>
-                <div className={cx('tab_bar')}>Booking Request</div>
-                <div className={cx('tab_bar')}>Users</div>
-                <div className={cx('tab_bar')}>Hosts</div>
+                <div className={cx('tab_bar')}>All Comments</div>
+                <div className={cx('tab_bar')}>Classify Comments</div>
             </aside>
             <main className={cx('table_admin')}>
                 <nav>
-                    <h1 className={cx('h1')}> Management Booking Request </h1>
+                    <h1 className={cx('h1')}> Management Booking Comments </h1>
                     <div className={cx('nav_right')}>
                         <div className={cx('noti_icon')}>
                             <AiOutlineBell></AiOutlineBell>
                         </div>
-                        <div> Hieudandon</div>
+                        <div> LinhHuyenLe</div>
                         <img className={cx('user-avatar')} src={user} alt="no img" />
                     </div>
                 </nav>
@@ -98,7 +96,7 @@ function Admin() {
                             <div className={cx('sub_nav')}>
                                 <h3 className={cx('h3')}> Details </h3>
                                 <div className={cx('nav_icon')}>
-                                    <input className={cx('input')} type="text" autoFocus placeholder="a"></input>
+                                    <input className={cx('input')} type="text" placeholder=" Input text"></input>
                                     <AiOutlineSearch className={cx('icon')}></AiOutlineSearch>
                                     <AiOutlineFilter className={cx('icon')}></AiOutlineFilter>
                                     <BsSortUp className={cx('icon')}></BsSortUp>
@@ -108,11 +106,11 @@ function Admin() {
                         </caption>
                         <thead>
                             <tr>
-                                <th> Id </th>
-                                <th> Hotel</th>
+                                <th> No </th>
+                                <th> Content </th>
                                 <th> Customer Name </th>
                                 <th> Date </th>
-                                <th> Status </th>
+                                <th> Rate </th>
                                 <th></th>
                             </tr>
                         </thead>

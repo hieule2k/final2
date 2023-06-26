@@ -8,7 +8,7 @@ import { RoundChart } from '../RoundChart';
 export default function KpiCardGrid() {
     const [selectedView, setSelectedView] = useState('1');
     return (
-        <main className="bg-slate-50 p-2 sm:p-10 ml-0">
+        <main className="bg-slate-50 p-2 sm:p-10 ml-0 grid-rows-2">
             <Title className="text-4xl font-bold">Dashboard</Title>
             <Text className="text-l">Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</Text>
 
@@ -24,13 +24,14 @@ export default function KpiCardGrid() {
                         <KpiCard />
                         <KpiCard />
                     </Grid>
-
-                    <div className="mt-6">
-                        <PerformanceChart />
-                    </div>
-                    <div className="mt-6">
-                        <RoundChart />
-                    </div>
+                    <Grid className="flex gap-6">
+                        <div className="mt-6 w-2/3">
+                            <PerformanceChart />
+                        </div>
+                        <div className="mt-6 w-1/3">
+                            <RoundChart />
+                        </div>
+                    </Grid>
                 </>
             ) : (
                 <Card className="mt-6 p-0">

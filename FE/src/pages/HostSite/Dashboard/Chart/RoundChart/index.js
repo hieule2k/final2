@@ -29,13 +29,13 @@ export const RoundChart = () => (
     <Card>
         <Title>Vote</Title>
         <DonutChart
-            className="mt-6 h-96"
+            className="mt-6 h-96 "
             data={cities}
             category="vote"
             index="name"
             variant="pie"
             showLabel="true"
-            // valueFormatter={valueFormatter}
+            showTooltip="tre"
             colors={['red', 'amber', 'indigo', 'lime', 'slate']}
         />
         <Flex justifyContent="end" className="space-x-2">
