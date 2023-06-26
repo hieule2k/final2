@@ -54,11 +54,11 @@ const AddRoom = () => {
             </i>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-20 mt-20 bg-[#EFF0F2]">
+        <div className="grid grid-cols-2 gap-16 mt-20 bg-[#EFF0F2]">
           {rooms
             ? rooms.length > 0 &&
               rooms.map((room) => (
-                <div key={room.id} className="flex items-center">
+                <div key={room.id} className="flex items-center px-3 py-3">
                   <div className="flex flex-col flex-1">
                     <h2 className="text-xl font-bold">{room.name}</h2>
                     <p className="font-medium opacity-75 text-medium">
