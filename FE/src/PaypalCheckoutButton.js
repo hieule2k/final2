@@ -4,13 +4,6 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 
 const PaypalCheckoutButton = ({ product, alertT }) => {
-  const navigate = useNavigate();
-  const [room, setRooms] = useState(() => {
-    const storageRoomsData = JSON.parse(localStorage.getItem("rooms"));
-
-    return storageRoomsData ?? [];
-  });
-
   // const { product, handleSetCheckBill } = props;
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
@@ -64,7 +57,6 @@ const PaypalCheckoutButton = ({ product, alertT }) => {
       }}
       onApprove={async (data, actions) => {
         const order = await actions.order.capture();
-        console.log("order", order);
         alertT(order);
 
         // const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(

@@ -16,15 +16,7 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
   const [bookedData, setBookedData] = useState({
     note: "bellofen",
     customer_id: userData.id,
-    bookedroom: [
-      {
-        check_in: "2023-05-10 13:18:41.017Z",
-        check_out: "2023-05-10 10:07:26.486Z",
-        price: 1000,
-        discount: 100,
-        room_id: 784,
-      },
-    ],
+    bookedroom: [],
   });
   const [totalPrices, setTotalPrices] = useState();
   const [rooms, setRooms] = useState([]);
@@ -35,11 +27,10 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
   const [totalDay, setTotalDay] = useState(0);
   const [fee, setFee] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
+
   const location = useLocation();
   const data = location.state.hotelData;
-  // let k = new Date();
-  // let c = k.toISOString().split("T");
-  // console.log(c.join(" "));
+
   useEffect(() => {
     axios
       .get(`http://103.184.113.181:82/hotel/${data.id}/rooms?page=1&limit=10`)
@@ -94,18 +85,15 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
   };
 
   const addRoom = (type) => {
-    // console.log(rooms.filter((room) => room.type === type));
     const newRoom = rooms.filter((room) => room.type === type);
     const { price, id } = newRoom[0];
-    const roomData = [
-      {
-        check_in: formatDate(startDate),
-        check_out: formatDate(endDate),
-        price: price,
-        discount: 100,
-        room_id: id,
-      },
-    ];
+    const roomData = {
+      check_in: formatDate(startDate),
+      check_out: formatDate(endDate),
+      price: price,
+      discount: 100,
+      room_id: id,
+    };
     setCart([
       ...cart,
       { ...newRoom[0], quantity: 1, totalPrice: newRoom[0].price },
@@ -113,11 +101,19 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
 
     setBookedData({
       ...bookedData,
-      bookedroom: roomData,
+      bookedroom: [...bookedData.bookedroom, roomData],
     });
   };
 
   const handleIncrease = (item) => {
+    const roomData = {
+      check_in: formatDate(startDate),
+      check_out: formatDate(endDate),
+      price: item.price,
+      discount: 100,
+      room_id: item.id,
+    };
+
     setCart(
       cart.map((cartItem) =>
         cartItem.type === item.type
@@ -129,6 +125,11 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
           : cartItem
       )
     );
+
+    setBookedData({
+      ...bookedData,
+      bookedroom: [...bookedData.bookedroom, roomData],
+    });
   };
 
   const handleDecrease = (item) => {
@@ -141,11 +142,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
     );
   };
 
-  // const calculatePrice = (val) => {
-  //   // SetTotalPrices(val);
-  //   // console.log(val);
-  // };
-
   const handleFetchData = async () => {
     try {
       const res = await axios.post(
@@ -157,15 +153,10 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         : alert("Vui long chon phong truoc");
       const fakeBookingData = {
         id: res.data.id,
-        check_in: bookedData.bookedroom[0].check_in,
-        check_out: bookedData.bookedroom[0].check_out,
-        price: bookedData.bookedroom[0].price,
-        discount: bookedData.bookedroom[0].discount,
-        room_id: bookedData.bookedroom[0].room_id,
+        bookedData,
       };
 
       localStorage.setItem("bookingData", JSON.stringify(fakeBookingData));
-      console.log(res);
     } catch (error) {
       console.log(error);
     }

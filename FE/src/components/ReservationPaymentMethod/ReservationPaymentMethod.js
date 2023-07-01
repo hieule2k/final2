@@ -15,7 +15,7 @@ import axios from "axios";
 
 const cx = classNames.bind(styles);
 
-function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
+function ReservationPaymentMethod({ handleSetCheckBill }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [bookingData, setBookingData] = useState(() => {
@@ -26,16 +26,8 @@ function ReservationPaymentMethod({ handleSetCheckBill, userData }) {
 
   const confirmBooking = {
     id: bookingData.id,
-    customer_id: userData.id,
-    bookedroom: [
-      {
-        check_in: bookingData.check_in,
-        check_out: bookingData.check_out,
-        price: bookingData.price,
-        discount: bookingData.discount,
-        room_id: bookingData.room_id,
-      },
-    ],
+    customer_id: bookingData.bookedData.customer_id,
+    bookedroom: bookingData.bookedData.bookedroom,
     payment: {
       paypal_payment_id: "HEHE",
       status: "complete",
