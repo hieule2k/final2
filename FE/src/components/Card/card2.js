@@ -72,7 +72,7 @@ const Card2 = ({
         )}
       </div>
       <Link to={`/Details/${id}`} className="">
-        <img src={thumbnail} alt="" className="" />
+        <img src={thumbnail} alt="" className="h-[279px]" />
       </Link>
       <div className="px-4 py-2">
         <h2 className="text-xl font-bold">{name}</h2>
@@ -82,7 +82,7 @@ const Card2 = ({
             <StarIcons customclass="text-[#FFFF8F]"></StarIcons>
             <span>{rate}</span>
           </div>
-          <button onClick={handleCompare}>
+          <button onClick={handleCompare} className="">
             {isInCompare ? "Added" : "Add to Compare"}
           </button>
         </div>

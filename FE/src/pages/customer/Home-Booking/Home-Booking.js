@@ -17,17 +17,30 @@ import { useLocation } from "react-router-dom";
 import Card2 from "components/Card/card2";
 
 const cx = classNames.bind(styles);
-function HomeBooking({ handleLike, hotel2, hotel3, hotel4, hotel5, wishlist }) {
+function HomeBooking({ handleLike, wishlist }) {
   const location = useLocation();
 
   const [hotel1, setHotel1] = useState([]);
+  const [hotel2, setHotel2] = useState([]);
+  const [hotel3, setHotel3] = useState([]);
 
   useEffect(() => {
     const fetchHotelBySearch = async () => {
-      const res = await axios.get(
-        `http://103.184.113.181:81/hotels?page=1&limit=4&location=${location.state.searchValue}`
-      );
-      setHotel1(res.data.items);
+      const [res1, res2, res3] = await Promise.all([
+        await axios.get(
+          `http://103.184.113.181:81/hotels?page=1&limit=4&location=${location.state.searchValue}`
+        ),
+        await axios.get(
+          `http://103.184.113.181:81/hotels?page=2&limit=4&location=${location.state.searchValue}`
+        ),
+        await axios.get(
+          `http://103.184.113.181:81/hotels?page=3&limit=4&location=${location.state.searchValue}`
+        ),
+      ]);
+
+      setHotel1(res1.data.items);
+      setHotel2(res2.data.items);
+      setHotel3(res3.data.items);
     };
     fetchHotelBySearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,30 +68,35 @@ function HomeBooking({ handleLike, hotel2, hotel3, hotel4, hotel5, wishlist }) {
         </CardList>
         <CardList desc="Nearby Listed Properties">
           {hotel2.map((x) => (
-            <Card
-              key={x.id}
-              name={x.name}
-              id={x.id}
-              address={x.address.street}
-              thumbnail={x.list_image[0].url}
+            <Card2
               handleLike={handleLike}
+              key={x.id}
+              id={x.id}
+              name={x.name}
+              star={x.star_level}
+              rate={x.rate}
+              address={x.address.detail_address}
+              thumbnail={x.list_image[0].url}
+              wishlist={wishlist}
             />
           ))}
         </CardList>
         <CardList desc="Top Rated Properties">
           {hotel3.map((x) => (
-            <Card
+            <Card2
+              handleLike={handleLike}
               key={x.id}
               id={x.id}
-              star
               name={x.name}
-              address={x.address.street}
+              star={x.star_level}
+              rate={x.rate}
+              address={x.address.detail_address}
               thumbnail={x.list_image[0].url}
-              handleLike={handleLike}
+              wishlist={wishlist}
             />
           ))}
         </CardList>
-        <SideSection
+        {/* <SideSection
           h3="Try Hosting With Us"
           span="Earn extra just by renting your property..."
         >
@@ -112,7 +130,7 @@ function HomeBooking({ handleLike, hotel2, hotel3, hotel4, hotel5, wishlist }) {
               />
             ))}
           </CardList>
-        </div>
+        </div> */}
       </div>
       <div className={cx("doawnload-section")}>
         <div className={cx("doawnload-container")}>
