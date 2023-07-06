@@ -14,7 +14,6 @@ const cx = classNames.bind(styles);
 
 function ReservationFormFirst({ handleSetCheckBill, userData }) {
   const [bookedData, setBookedData] = useState({
-    note: "bellofen",
     customer_id: userData.id,
     bookedroom: [],
   });
@@ -91,7 +90,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
       check_in: formatDate(startDate),
       check_out: formatDate(endDate),
       price: price,
-      discount: 100,
       room_id: id,
     };
     setCart([
@@ -110,7 +108,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
       check_in: formatDate(startDate),
       check_out: formatDate(endDate),
       price: item.price,
-      discount: 100,
       room_id: item.id,
     };
 
@@ -125,7 +122,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
           : cartItem
       )
     );
-
     setBookedData({
       ...bookedData,
       bookedroom: [...bookedData.bookedroom, roomData],
@@ -146,8 +142,9 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
     try {
       const res = await axios.post(
         "http://103.184.113.181:88/create_booking",
-        JSON.stringify(bookedData)
+        JSON.stringify({ ...bookedData, total: totalFee })
       );
+      console.log({ ...bookedData, total: totalFee });
       cart.length > 0
         ? handleSetCheckBill()
         : alert("Vui long chon phong truoc");

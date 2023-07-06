@@ -34,6 +34,7 @@ import Dashboard from "pages/HostSite/Dashboard/Dashboard";
 import {} from "stylis-plugin-rtl";
 import AddRoom from "pages/HostSite/AddRoom/AddRoom";
 import AddRoomForm from "pages/HostSite/AddRoom/AddRoomForm";
+import Compare from "pages/customer/Compare/compare";
 function App() {
   const [currentAccount, setCurrentAccount] = useState(() => {
     const storageData = JSON.parse(localStorage.getItem("userData"));
@@ -243,6 +244,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
           <Route path="/LoginHost" element={<LoginHost />} />
+          <Route path="/Compare" element={<Compare />} />
         </Routes>
       </div>
     </PayPalScriptProvider>

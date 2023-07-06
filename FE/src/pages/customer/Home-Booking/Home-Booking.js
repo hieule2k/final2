@@ -14,23 +14,19 @@ import { DiAndroid } from "react-icons/di";
 import { AiOutlineSend } from "react-icons/ai";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-// import data5 from "../../json/hotelTopRated.json";
-// import data4 from "../../json/hotelNearby.json";
-// import data3 from "../../json/hotel3.json";
-// import data2 from "../../json/hotel6.json";
-// import data from "../../json/hotel.json";
+import Card2 from "components/Card/card2";
 
 const cx = classNames.bind(styles);
 function HomeBooking({ handleLike, hotel2, hotel3, hotel4, hotel5, wishlist }) {
   const location = useLocation();
-  console.log(location);
+
   const [hotel1, setHotel1] = useState([]);
+
   useEffect(() => {
     const fetchHotelBySearch = async () => {
       const res = await axios.get(
         `http://103.184.113.181:81/hotels?page=1&limit=4&location=${location.state.searchValue}`
       );
-      // console.log(res);
       setHotel1(res.data.items);
     };
     fetchHotelBySearch();
@@ -44,13 +40,15 @@ function HomeBooking({ handleLike, hotel2, hotel3, hotel4, hotel5, wishlist }) {
       <div className={cx("home-booking__body")}>
         <CardList desc="Latest on the property listing">
           {hotel1.map((x) => (
-            <Card
+            <Card2
+              handleLike={handleLike}
               key={x.id}
               id={x.id}
               name={x.name}
-              address={x.address.province}
+              star={x.star_level}
+              rate={x.rate}
+              address={x.address.detail_address}
               thumbnail={x.list_image[0].url}
-              handleLike={handleLike}
               wishlist={wishlist}
             />
           ))}

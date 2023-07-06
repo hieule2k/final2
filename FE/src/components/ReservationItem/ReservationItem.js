@@ -61,7 +61,7 @@ function ReservationItem({
               }}
             ></PlusIcon>
           </div>
-          <div> Total : {price * item.quantity}$</div>
+          <div> Total : {price * item.quantity}</div>
         </div>
       </div>
     </div>

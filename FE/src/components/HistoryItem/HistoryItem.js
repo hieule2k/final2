@@ -7,6 +7,7 @@ import axios from "axios";
 import Modal from "../../module/modal/Modal";
 import { useDispatch } from "react-redux";
 import { deleteHistoryBooking } from "features/booked/historyBookingSlice";
+import BookingModal from "module/modal/bookingModal";
 
 const cx = classNames.bind(styles);
 
@@ -21,9 +22,20 @@ function HistoryItem({
   const dispatch = useDispatch();
   const { id, book_date, total_price } = item;
   const [visible, setVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log(isOpen);
 
   const handleModalVisible = () => {
     setVisible(!visible);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -37,8 +49,10 @@ function HistoryItem({
         ></Modal>
       )}
 
+      {isOpen && <BookingModal closeModal={closeModal} />}
+
       <div className={cx("item-container")}>
-        <div className={cx("col-left")}>
+        <div className={cx("col-left")} onClick={openModal}>
           <div className={cx("img-container")}>
             <img
               src="https://media-cdn.tripadvisor.com/media/photo-s/1c/59/4c/d3/hanoi-la-siesta-hotel.jpg"
