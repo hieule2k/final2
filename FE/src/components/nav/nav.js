@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styles from "./nav.module.css";
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HeadlessTippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import avatar from "../../assets/img/image1.png";
 import user from "../../assets/img/Vector.png";
+import { useSelector } from "react-redux";
+import { getAllCompareData } from "features/compare/compareSlice";
 const cx = classNames.bind(styles);
 
 function NavBar({ host = false }) {
@@ -15,6 +17,18 @@ function NavBar({ host = false }) {
 
     return storageData ?? false;
   });
+
+  const navigate = useNavigate();
+
+  const compareData = useSelector(getAllCompareData);
+
+  const handleToCompare = () => {
+    if (compareData.length > 0) {
+      navigate("/compare");
+    } else {
+      alert("Please add at least 2 hotel to compare");
+    }
+  };
 
   const handleLogOut = () => {
     localStorage.removeItem("wishlist");
@@ -82,8 +96,8 @@ function NavBar({ host = false }) {
               Find a Property
             </Link>
           </li>
-          <li className={cx("menu-nav__item")}>
-            <Link to="/compare">Compare</Link>
+          <li className={cx("menu-nav__item")} onClick={handleToCompare}>
+            Compare
           </li>
           <li className={cx("menu-nav__item")}>
             <Link to="/Wishlists" className={cx("menu-nav__link")}>

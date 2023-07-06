@@ -11,8 +11,9 @@ export const compareSlice = createSlice({
     addToCompare: (state, action) => {
       if (state.data.length < 3) {
         state.data.push(action.payload);
+        alert("Added");
       } else {
-        alert("Enough");
+        alert("You can add anymore");
       }
     },
     removeFromCompare: (state, action) => {
