@@ -134,7 +134,7 @@ function HomeBooking({ handleLike, wishlist }) {
       </div>
       <div className={cx("doawnload-section")}>
         <div className={cx("doawnload-container")}>
-          <h2>
+          <h2 className="text-3xl font-bold">
             Download Our <br /> Mobile App
           </h2>
           <span>Available for free these platforms</span>
