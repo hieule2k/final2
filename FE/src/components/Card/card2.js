@@ -30,6 +30,7 @@ const Card2 = ({ address, thumbnail, handleLike, id, wishlist, name, star, rate 
         }
     };
 
+<<<<<<< HEAD
     useEffect(() => {
         const handleFetchRoom = async () => {
             const res = await axios.get(`http://103.184.113.181:82/hotel/${id}/rooms?page=1&limit=10`);
@@ -68,6 +69,38 @@ const Card2 = ({ address, thumbnail, handleLike, id, wishlist, name, star, rate 
                     <button onClick={handleCompare}>{isInCompare ? 'Added' : 'Add to Compare'}</button>
                 </div>
             </div>
+=======
+  return (
+    <div className="relative flex flex-col w-[279px]  shadow-primeShadow rounded">
+      <div
+        className="absolute text-3xl hover:text-red-400 top-4 right-4"
+        onClick={() => {
+          handleLike(data);
+        }}
+      >
+        {itemExist ? (
+          <IconContext.Provider value={{ color: "red" }}>
+            <AiFillHeart />
+          </IconContext.Provider>
+        ) : (
+          <AiOutlineHeart />
+        )}
+      </div>
+      <Link to={`/Details/${id}`} className="">
+        <img src={thumbnail} alt="" className="h-[279px]" />
+      </Link>
+      <div className="px-4 py-2">
+        <h2 className="text-xl font-bold">{name}</h2>
+        <p className="opacity-70">{address}</p>
+        <div className="flex justify-between">
+          <div className="flex items-center justify-center gap-1">
+            <StarIcons customclass="text-[#FFFF8F]"></StarIcons>
+            <span>{rate}</span>
+          </div>
+          <button onClick={handleCompare} className="">
+            {isInCompare ? "Added" : "Add to Compare"}
+          </button>
+>>>>>>> 46530ee40fe840e7095359764594f4a41f48755a
         </div>
     );
 };

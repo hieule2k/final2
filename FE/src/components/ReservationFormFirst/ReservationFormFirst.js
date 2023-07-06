@@ -144,7 +144,6 @@ function ReservationFormFirst({ handleSetCheckBill, userData }) {
         "http://103.184.113.181:88/create_booking",
         JSON.stringify({ ...bookedData, total: totalFee })
       );
-      console.log({ ...bookedData, total: totalFee });
       cart.length > 0
         ? handleSetCheckBill()
         : alert("Vui long chon phong truoc");
