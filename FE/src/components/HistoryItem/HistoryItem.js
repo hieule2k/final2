@@ -20,7 +20,7 @@ function HistoryItem({
   // handleCancelReservation,
 }) {
   const dispatch = useDispatch();
-  const { id, book_date, total_price } = item;
+  const { id, book_date, total_price, hotel } = item;
   const [visible, setVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +49,7 @@ function HistoryItem({
         ></Modal>
       )}
 
-      {isOpen && <BookingModal closeModal={closeModal} />}
+      {isOpen && <BookingModal closeModal={closeModal} item={item} />}
 
       <div className={cx("item-container")}>
         <div className={cx("col-left")} onClick={openModal}>
@@ -61,7 +61,7 @@ function HistoryItem({
             />
           </div>
           <div className={cx("item-information")}>
-            <div className={cx("item-title")}>Hotel Name</div>
+            <div className={cx("item-title")}>{hotel.name}</div>
             <div className={cx("item-specific")}>
               <div className={cx("specific")}>
                 Booked Date:{" "}
@@ -72,7 +72,7 @@ function HistoryItem({
                 Check out: <span className={cx("time")}>12 Mar 2021</span>
               </div> */}
             </div>
-            <div className={cx("item-price")}>{total_price} VND</div>
+            <div className={cx("item-price")}>{total_price} $</div>
           </div>
         </div>
         <div className={cx("col-right")}>
@@ -84,20 +84,29 @@ function HistoryItem({
             </div>
           ) : (
             <div className={cx("button-wrapper")}>
-              <Button
-                mediumx
-                rounded
-                bgGray
-                className={cx("button-size")}
-                onClick={() => {
-                  dispatch(deleteHistoryBooking({ itemId: item.id }));
-                }}
-              >
-                Cancel Reservation
-              </Button>
-              <Button medium green orange onClick={handleModalVisible}>
-                Review
-              </Button>
+              {item.status === "completed" && (
+                <Button
+                  mediumx
+                  rounded
+                  bgGray
+                  className={cx("button-size")}
+                  onClick={() => {
+                    dispatch(deleteHistoryBooking({ itemId: item.id }));
+                  }}
+                >
+                  Cancel Reservation
+                </Button>
+              )}
+              {item.status === "completed" && (
+                <Button medium green orange onClick={handleModalVisible}>
+                  Review
+                </Button>
+              )}
+              {item.status === "cancelled" && (
+                <Button className={cx("cancelled")} medium red>
+                  Cancelled
+                </Button>
+              )}
               {past && (
                 <Button
                   mediumx

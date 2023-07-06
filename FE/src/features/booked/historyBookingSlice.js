@@ -10,7 +10,7 @@ export const fetchHistoryBooking = createAsyncThunk(
   "historyBooking,fetchHistoryBooking",
   async ({ userId }) => {
     const res = await axios.get(
-      `http://103.184.113.181:88/customer_bookings?limit=20&page=1&customer_id=${userId}`
+      `http://103.184.113.181:88/customer_bookings?limit=10&page=1&customer_id=${userId}`
     );
     return res.data.items;
   }
@@ -57,10 +57,14 @@ export const {} = historyBookingSlice.actions;
 export default historyBookingSlice.reducer;
 
 export const getAllHistory = (state) => state.historyBooking.data;
-export const getPendingHistory = (state) => {
-  state.historyBooking.data.find((hotel) => hotel.status === "pending");
+export const getCancelledHistory = (state) => {
+  return state.historyBooking.data.filter(
+    (hotel) => hotel.status === "cancelled"
+  );
 };
 
 export const getCompletedHistory = (state) => {
-  state.historyBooking.data.find((hotel) => hotel.status === "completed");
+  return state.historyBooking.data.filter(
+    (hotel) => hotel.status === "completed"
+  );
 };

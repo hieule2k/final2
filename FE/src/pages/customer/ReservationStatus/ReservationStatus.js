@@ -7,6 +7,7 @@ import LayoutPrimary from "layouts/LayoutPrimary";
 import {
   fetchHistoryBooking,
   getAllHistory,
+  getCancelledHistory,
   getCompletedHistory,
   getPendingHistory,
 } from "features/booked/historyBookingSlice";
@@ -17,9 +18,8 @@ const cx = classNames.bind(styles);
 function ReservationStatus() {
   const dispatch = useDispatch();
   const customerHistoryBooking = useSelector(getAllHistory);
-  const pendingHistory = useSelector(getPendingHistory);
   const completedHistory = useSelector(getCompletedHistory);
-
+  const cancelled = useSelector(getCancelledHistory);
   const [user, setUser] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("userData"));
 
@@ -38,6 +38,7 @@ function ReservationStatus() {
   useEffect(() => {
     dispatch(fetchHistoryBooking({ userId: user.id }));
   }, [user.id, dispatch]);
+
   return (
     <LayoutPrimary>
       <div className={cx("reservation-container")}>
@@ -101,8 +102,8 @@ function ReservationStatus() {
           </div>
         ) : (
           <div className={cx("status")}>
-            {customerHistoryBooking?.length > 0 &&
-              customerHistoryBooking.map((item) => (
+            {cancelled?.length > 0 &&
+              cancelled.map((item) => (
                 <HistoryItem
                   key={item.id}
                   item={item}

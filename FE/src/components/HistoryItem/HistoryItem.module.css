@@ -80,3 +80,8 @@
   gap: 50px;
   flex-direction: row-reverse;
 }
+
+.cancelled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
