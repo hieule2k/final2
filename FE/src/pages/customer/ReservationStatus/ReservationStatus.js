@@ -3,11 +3,12 @@ import styles from "./ReservationStatus.module.css";
 import HistoryItem from "../../../components/HistoryItem/HistoryItem";
 import classNames from "classnames/bind";
 import LayoutPrimary from "layouts/LayoutPrimary";
-import Modal from "../../../module/modal/Modal";
-import axios from "axios";
+
 import {
   fetchHistoryBooking,
   getAllHistory,
+  getCompletedHistory,
+  getPendingHistory,
 } from "features/booked/historyBookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,13 +17,14 @@ const cx = classNames.bind(styles);
 function ReservationStatus() {
   const dispatch = useDispatch();
   const customerHistoryBooking = useSelector(getAllHistory);
+  const pendingHistory = useSelector(getPendingHistory);
+  const completedHistory = useSelector(getCompletedHistory);
 
   const [user, setUser] = useState(() => {
     const storageRoomsData = JSON.parse(localStorage.getItem("userData"));
 
     return storageRoomsData ?? [];
   });
-
   const [tab, setTab] = useState(true);
   const [query, setQuery] = useState("");
 
@@ -87,8 +89,8 @@ function ReservationStatus() {
         </div>
         {tab ? (
           <div className={cx("status")}>
-            {customerHistoryBooking?.length > 0 &&
-              customerHistoryBooking.map((item) => (
+            {completedHistory?.length > 0 &&
+              completedHistory.map((item) => (
                 <HistoryItem
                   key={item.id}
                   item={item}

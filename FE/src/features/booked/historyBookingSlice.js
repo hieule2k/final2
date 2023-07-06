@@ -45,7 +45,6 @@ export const historyBookingSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(deleteHistoryBooking.fulfilled, (state, action) => {
-        console.log(action.payload);
         const newData = state.data.filter((item) => item.id !== action.payload);
         state.data = newData;
       });
@@ -58,3 +57,10 @@ export const {} = historyBookingSlice.actions;
 export default historyBookingSlice.reducer;
 
 export const getAllHistory = (state) => state.historyBooking.data;
+export const getPendingHistory = (state) => {
+  state.historyBooking.data.find((hotel) => hotel.status === "pending");
+};
+
+export const getCompletedHistory = (state) => {
+  state.historyBooking.data.find((hotel) => hotel.status === "completed");
+};

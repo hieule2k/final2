@@ -26,8 +26,6 @@ function ReservationPaymentMethod({ handleSetCheckBill }) {
 
   const confirmBooking = {
     id: bookingData.id,
-    customer_id: bookingData.bookedData.customer_id,
-    bookedroom: bookingData.bookedData.bookedroom,
     payment: {
       paypal_payment_id: "HEHE",
       status: "complete",

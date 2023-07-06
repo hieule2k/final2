@@ -5,7 +5,6 @@ import { IconContext } from "react-icons";
 import {
   AiOutlineHeart,
   AiFillHeart,
-  AiOutlineStar,
   AiOutlineCar,
   AiOutlineClose,
 } from "react-icons/ai";
@@ -17,7 +16,6 @@ import Button from "../Button/Button";
 const cx = classNames.bind(styles);
 
 function Card({
-  star = false,
   featured = false,
   row = false,
   guide = false,
@@ -110,21 +108,6 @@ function Card({
           className={cardClasses}
           style={{ backgroundImage: `url(${thumbnail})` }}
         >
-          {star && (
-            <div className={cx("star-rated")}>
-              <AiOutlineStar />
-              <AiOutlineStar />
-              <AiOutlineStar />
-              <AiOutlineStar />
-              <AiOutlineStar />
-            </div>
-          )}
-
-          {/* {wishlists && !add && (
-            <i className={cx("close-icon")} {...props}>
-              <AiOutlineClose />
-            </i>
-          )} */}
           {featured && !row && !guide && (
             <div className={cx("feature-information")}>
               <span className={cx("price")}>$ 1000 - 5000 USD</span>
